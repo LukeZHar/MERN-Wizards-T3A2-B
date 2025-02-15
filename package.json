@@ -1,0 +1,24 @@
+{
+  "name": "mern-wizards-t3a2-b",
+  "version": "1.0.0",
+  "description": "Code Requirements\r No. Requirement\r R1: At a minimum use the following technologies:\r - MongoDB\r - Express\r - React\r - Node",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LukeZHar/MERN-Wizards-T3A2-B.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/LukeZHar/MERN-Wizards-T3A2-B/issues"
+  },
+  "homepage": "https://github.com/LukeZHar/MERN-Wizards-T3A2-B#readme"
+}
