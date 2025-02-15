@@ -20,5 +20,13 @@
   "bugs": {
     "url": "https://github.com/LukeZHar/MERN-Wizards-T3A2-B/issues"
   },
-  "homepage": "https://github.com/LukeZHar/MERN-Wizards-T3A2-B#readme"
+  "homepage": "https://github.com/LukeZHar/MERN-Wizards-T3A2-B#readme",
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.10.1",
+    "react-router-dom": "^7.1.5"
+  },
+  "devDependencies": {
+    "node": "^23.8.0"
+  }
 }
