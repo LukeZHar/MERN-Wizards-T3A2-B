@@ -127,3 +127,19 @@ Meets D with project results demonstrating consideration of strength and weaknes
 D
 Excellent use of task delegation with Kanban board of tickets assigned to team members labelled with difficulty level and corresponding Git commits
 
+### 
+Folder Structure
+
+| - SRC
+| - Backend folders
+|	- Controllers
+|	- Models
+|	- Middlewares
+|	- Routes
+|	- Utils
+| - Frontend Folders
+|	- Assets
+|	- Contexts
+|	- Components
+|	- Pages
+| - Test Folder (outside SRC)
