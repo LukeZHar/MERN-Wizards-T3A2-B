@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { usePosts } from "../contexts/PostContext";
+import "../styles/PostCreation.css";
 
 export default function PostCreation() {
     // State for form inputs
@@ -86,8 +87,10 @@ export default function PostCreation() {
                     <option>Option 4</option>
                 </select>
 
-                <button type="button" onClick={handleClear}>Clear</button>
-                <button type="submit">Submit</button>
+                <div className="button-group">
+                    <button type="button" onClick={handleClear}>Clear</button>
+                    <button type="submit">Submit</button>
+                </div>
             </form>
         </div>
     );
