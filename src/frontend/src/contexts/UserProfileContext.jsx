@@ -15,7 +15,7 @@ export function UserProfileProvider({ children }) {
         userAccess: "Admin", 
         password: "############", // Hashed password
         changePassword: "",
-        isAdmin: true, 
+        isAdmin: false, 
         myTasks: {
             currentPosts: [],
             pastPosts: []

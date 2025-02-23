@@ -1,18 +1,23 @@
 import '../styles/App.css'
 import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import PostCreation from './PostCreation.jsx';
 import { PostProvider } from '../contexts/PostContext.jsx';
+import { UserProfileProvider } from '../contexts/UserProfileContext.jsx';
+import UserProfile from './UserProfile.jsx';
+import PostCreation from './PostCreation.jsx';
 
 function App() {
   return (
-    <PostProvider>
-    <Router>
-      <Routes>
-        <Route path='/add-post' element={<PostCreation /> } />
-      </Routes>
-    </Router>
-    </PostProvider>
+    <UserProfileProvider>
+      <PostProvider>
+        <Router>
+          <Routes>
+            <Route path='/add-post' element={<PostCreation />} />
+            <Route path='/user-profile' element={<UserProfile />} />
+          </Routes>
+        </Router>
+      </PostProvider>
+    </UserProfileProvider>
   )
 }
 
