@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
+import user_photo from "../assets/user.png";
 
 // Create an instance of Context
 const UserProfileContext = createContext();
@@ -9,13 +10,13 @@ export function UserProfileProvider({ children }) {
     const [user, setUser] = useState({
         name: "Jessica",
         businessUnit: "IT Department",
-        profilePic: "/images/profile-placeholder.png",
+        profilePic: user_photo,
         email: "jessica@example.com",
         phone: "123-456-7890",
         userAccess: "Admin", 
         password: "############", // Hashed password
         changePassword: "",
-        isAdmin: false, 
+        isAdmin: true, 
         myTasks: {
             currentPosts: [],
             pastPosts: []
@@ -28,7 +29,7 @@ export function UserProfileProvider({ children }) {
     };
 
     return (
-        <UserProfileContext.Provider value={{ user, updateUser }}>
+        <UserProfileContext.Provider value={{ user, updateUser}}>
             {children}
         </UserProfileContext.Provider>
     );
