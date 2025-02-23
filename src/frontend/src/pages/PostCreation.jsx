@@ -3,7 +3,7 @@ import { usePosts } from "../contexts/PostContext";
 import "../styles/PostCreation.css";
 
 export default function PostCreation() {
-    // State for form inputs
+    // State for Form inputs
     const [post, setPost] = useState({
         title: "",
         content: "",
