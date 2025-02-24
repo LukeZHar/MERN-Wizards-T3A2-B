@@ -2,8 +2,10 @@ const express = require("express");
 const router = express.Router();
 
 // POST localhost:5000/api/auth/register
-router.post("/register", () => {
-    console.log("register");
+router.post("/register", (req, res) => {
+  res.json({
+    "message": "This is the register screen"
+  })
 });
 
 // POST localhost:5000/api/auth/login
