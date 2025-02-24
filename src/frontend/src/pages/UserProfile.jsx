@@ -1,8 +1,10 @@
 import React from "react";
 import { useUserProfile } from "../contexts/UserProfileContext";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function UserProfileEdit() {
     const { user, updateUser } = useUserProfile();
+    const navigate = useNavigate();
 
     if (!user) {
         return <p>Loading...</p>
@@ -31,6 +33,7 @@ export default function UserProfileEdit() {
 
     return (
         <div className="profile-page">
+
             {/* User Profile Form, change code to support img upload */}
             <form onSubmit={handleProfileSubmit}>
                 <h2>User Profile</h2>
@@ -61,12 +64,13 @@ export default function UserProfileEdit() {
                     type="text"
                     name="businessUnit"
                     value={user.businessUnit}
-                    onChange={handleInputChange}
-                    required
+                    disabled
                 />
-
                 <button type="submit">Save Profile</button>
             </form>
+
+            {/* Directs user to admin only area */}
+            <button onClick={() => Navigate('/admin')}>Admin Tasks</button>
 
             {/* User Details Form */}
             <form onSubmit={handleDetailsSubmit}>
