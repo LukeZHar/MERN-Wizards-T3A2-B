@@ -1,4 +1,4 @@
-const User = require("../models/UserModel");
+const { User } = require("../models/UserModel");
 
 const bcrypt = require("bcrypt");
 const { response } = require("express");
@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 
 async function registerUser(req, res) {
     // Importing the username and password from the request body
-    const { email, username, password } = req.body;
+    const { username, password } = req.body;
 
     // Checking if the username already exists
     const existingUser = await User.findOne({ username });
@@ -24,7 +24,6 @@ async function registerUser(req, res) {
     const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt value
 
     const user = await User.create({
-        email,
         username,
         password: hashedPassword
     });

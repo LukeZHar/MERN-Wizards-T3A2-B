@@ -1,12 +1,14 @@
 const { response } = require("express");
-const Post = require("../models/PostModel");
+const { Post } = require("../models/PostModel");
 
 // CRUD operations to be defined here
 
 // Read - Get all posts
 async function getAllPosts(req, res) {
     try {
-        const posts = await Post.find();
+        const posts = await Post.find({
+            user: req.authUserData.userId
+        });
         res
         .status(200)
         .json(posts);
