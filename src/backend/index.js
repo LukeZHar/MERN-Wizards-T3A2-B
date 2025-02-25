@@ -2,6 +2,8 @@
 const { app } = require("./server.js");
 const { dbConnect } = require("./utils/database.js");
 
+require("dotenv").config();
+
 // Get the PORT
 const PORT = process.env.PORT || 8008;
 
