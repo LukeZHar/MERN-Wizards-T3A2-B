@@ -4,8 +4,10 @@ const express = require("express");
 // Instance of express for configuration
 const app = express();
 
-app.get("/", () => {
-    
+app.get("/", (req, res) => {
+    res.json({
+        message: "Hello World!"
+    })
 });
 
 // Export the server
