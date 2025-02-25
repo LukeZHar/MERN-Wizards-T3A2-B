@@ -19,6 +19,14 @@ async function createPost(title, content, priority, category, authorId, replies,
     return result;
 }
 
+// Function to get posts
+async function getPost(query) {
+    let result = await PostModel.findOne(query);
+
+    return result;
+}
+
 module.exports = {
-    createPost
+    createPost,
+    getPost
 }
