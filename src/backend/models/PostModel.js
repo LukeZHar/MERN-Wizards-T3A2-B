@@ -24,7 +24,7 @@ const PostSchema = new mongoose.Schema({
     category: {
         type: String
     },
-    authorID: {
+    authorId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User', // reference to User model
         required: true

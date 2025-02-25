@@ -1,4 +1,5 @@
 // Provide CRUD functionalities for Post Model
+const mongoose = require('mongoose');
 
 const { PostModel } = require("../models/PostModel")
 

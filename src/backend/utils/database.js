@@ -9,9 +9,21 @@ async function dbConnect() {
 
     console.log(databaseUrl);
     await mongoose.connect(databaseUrl);
-    console.log("DB connected!") 
-}
+    console.log("DB connected!");
+};
+
+// Disconnect DB
+async function dbDisconnect() {
+    await mongoose.disconnect();
+};
+
+// Drop DB
+async function dbDrop() {
+    await mongoose.connection.db.dropDatabase();
+};
 
 module.exports = {
-    dbConnect
-}
+    dbConnect,
+    dbDisconnect,
+    dbDrop
+};
