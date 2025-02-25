@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from 'axios';
 import "../styles/login.css"; // Import your CSS styles
 import { useUserAuthContext } from "../contexts/UserAuthContext"; // Import custom AuthContext
-import { Link } from "react-router-dom";
 
 export default function LoginPage() {
     // State variables for storing login input and error messages
