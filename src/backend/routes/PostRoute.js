@@ -1,14 +1,15 @@
 const express = require("express");
 
 const router = express.Router();
-const { getPost, getPosts } = require('../controllers/PostController'); 
+const { getPosts } = require('../controllers/PostController'); 
+const { getPostById } = require("../services/PostService");
 
 
 // Get One post by ID
 router.get("/search/:postId", async (request, response) => {
-    console.log("Getting post with ID: " + request.params.postId)
+    const postId = request.params.postId;
     
-    let result = await getPost({_id: request.params.postId});
+    const result = await getPostById(postId);
     console.log("Post has been found: " + result);
 
     response.json({
