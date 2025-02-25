@@ -17,7 +17,7 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
     res.json({
-        message: "Mern Wizards T3A2-B"
+        message: "Welcome to the backend of A Ticket a Task It"
     })
 })
 
