@@ -1,9 +1,20 @@
 const express = require("express");
 
 const router = express.Router();
-const { getPosts } = require('../controllers/PostController'); 
+const { getPosts, getPost } = require('../controllers/PostController'); 
 const { getPostById } = require("../services/PostService");
 
+
+// Get Post based on query
+router.get("/search/query", async (request, response) => {
+    let query = request.query;
+
+    let result = await getPost(query);
+
+    response.json({
+        data:result
+    });
+});
 
 // Get One post by ID
 router.get("/search/:postId", async (request, response) => {
@@ -26,5 +37,6 @@ router.get("/all", async (request, response) => {
         data: result
     });
 });
+
 
 module.exports = router;
