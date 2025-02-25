@@ -5,7 +5,7 @@ const { dbConnect } = require("./utils/database.js");
 require("dotenv").config();
 
 // Get the PORT
-const PORT = process.env.PORT || 8008;
+const PORT = process.env.PORT || 5173;
 
 // Listen to incoming traffic
 app.listen(PORT, async() => {

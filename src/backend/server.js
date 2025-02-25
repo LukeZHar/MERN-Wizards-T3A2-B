@@ -4,6 +4,11 @@ const express = require("express");
 // Instance of express for configuration
 const app = express();
 
+// Import Router
+const PostRoute = require("../backend/routes/PostRoute.js");
+app.use("/posts", PostRoute);
+
+
 app.get("/", (req, res) => {
     res.json({
         message: "Hello World!"

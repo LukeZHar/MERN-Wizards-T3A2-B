@@ -7,13 +7,13 @@ const { PostModel } = require("../models/PostModel")
 async function createPost(title, content, priority, category, authorId, replies, isArchived) {
     let result = await PostModel.create({
         // postID and date has default values
-        title: "Task to do",
-        content: "What to do",
-        priority: "high",
-        category: "example1",
-        authorId: new mongoose.Types.ObjectId(),
-        replies: [],
-        isArchived: false
+        title: title,
+        content: content,
+        priority: priority,
+        category: category,
+        authorId: new mongoose.Types.ObjectId(authorId),
+        replies: replies,
+        isArchived: isArchived
     })
 
     return result;
@@ -26,7 +26,15 @@ async function getPost(query) {
     return result;
 }
 
+async function getPosts() {
+    let result = await PostModel.find();
+
+    return result;
+
+}
+
 module.exports = {
     createPost,
-    getPost
+    getPost,
+    getPosts
 }
