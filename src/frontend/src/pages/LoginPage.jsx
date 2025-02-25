@@ -1,41 +1,42 @@
 import React, { useState } from "react";
-// import axios from 'axios';
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import "../styles/login.css";
+import axios from 'axios';
+import "../styles/login.css"; // Import your CSS styles
+import { useUserAuthContext } from "../contexts/UserAuthContext"; // Import custom AuthContext
+import { Link } from "react-router-dom";
 
 export default function LoginPage() {
-    const [email, setEmail] = useState('');
+    // State variables for storing login input and error messages
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [token, setToken] = useUserAuthContext(); // Access token state from context
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Prevent default form submission
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/login', {
-                email,
-                password,
-            });
-            localStorage.setItem('token', response.data.token); // Store JWT token
-            alert('Login successful!');
-            setError('');
+            // Send login request to the backend API
+            const response = await axios.post('http://localhost:5000/api/auth/login', { username, password });
+            localStorage.setItem('token', response.data.token); // Store JWT token in localStorage 
+            setToken(response.data.token); // Set the token in context
+            alert('Login successful!'); // Alert on successful login
+            setError(''); // Clear any previous error
         } catch (err) {
+            // Set error message to display if login fails
             setError(err.response?.data?.message || 'Login failed');
         }
-    }; 
+    };
 
     return (
         <div className="login-page">
-            <Header />
             <main>
                 <h2>Login</h2>
-                <form onSubmit={handleSubmit}> 
+                <form onSubmit={handleSubmit}>
                     <input
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        type="text" // Use text input for username
+                        name="username"
+                        placeholder="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)} // Update username state
                         required
                     />
                     <input
@@ -43,7 +44,7 @@ export default function LoginPage() {
                         name="password"
                         placeholder="Password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => setPassword(e.target.value)} // Update password state
                         required
                     />
                     <button type="submit">Login</button>
@@ -52,7 +53,6 @@ export default function LoginPage() {
                     {error && <p style={{ color: 'red' }}>{error}</p>}
                 </form>
             </main>
-            <Footer />
         </div>
-    )
+    );
 }
