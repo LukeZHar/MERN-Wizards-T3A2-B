@@ -1,28 +1,37 @@
 // Configure the server
 const express = require("express");
 
-// Instance of express for configuration
-const app = express();
-
 // Imports to secure the application
 const cors = require("cors");
 const helmet = require("helmet");
 
+// Import Router
+const authRoutes = require("./routes/authRoutes");
+const postRoutes = require("./routes/postRoutes");
+
+// Instance of express for configuration
+const app = express();
+
 // let corsOptions = {
 //     origin: ["http://localhost:3000", "http://localhost:5173", "https://reactapp.com"],
 //     methods:["GET", "POST"]
-// } Apply this later
+// }
 
 // Middlewares
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
 
-// Import Router
-const postRoute = require("./routes/postRoutes.js");
-app.use("/api/posts", postRoute);
+// Ackowledgment msg
+app.get("/", (req, res) => {
+    res.json({
+        message: "Welcome to the backend of A Ticket a Task It"
+    })
+})
+
+// Tell app to use routes
+app.use("/api/auth", authRoutes);
+app.use("/api/posts", postRoutes);
 
 // Export the server
-module.exports = {
-    app
-}
+module.exports = { app };

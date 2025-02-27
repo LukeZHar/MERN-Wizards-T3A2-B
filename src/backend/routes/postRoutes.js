@@ -1,19 +1,18 @@
 const express = require("express");
 const { createPost, getAllPosts, getUserPost } = require("../controllers/PostController");
-// const { validateToken } = require ("path")
-
+const { validateToken } = require("../middlewares/authMiddleware");
 const router = express.Router();
 
-// Import validateToken middleware, this will be checked when merging with User model
-// router.use(validateToken);
+// Use the validateToken middleware on this route
+router.use(validateToken);
 
-// GET localhost:8008/api/posts
+// GET localhost:5000/api/posts/
 router.get("/", getAllPosts);
 
 // GET localhost:8008/api/posts/:id
 router.get("/id", getUserPost);
 
-// POST localhost:8008/api/posts
+// POST localhost:5000/api/posts/
 router.post("/", createPost);
 
 module.exports = router;
