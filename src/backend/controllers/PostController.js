@@ -1,6 +1,8 @@
 // Provide CRUD functionalities for Post Model
 const mongoose = require('mongoose');
 
+
+
 const { PostModel } = require("../models/PostModel")
 
 // Function to create a post
@@ -22,6 +24,8 @@ async function createPost(title, content, priority, category, authorId, replies,
 // Function to get posts
 async function getPost(query) {
     let result = await PostModel.findOne(query);
+    // Function above to back populate when we integrate with User Model
+    // let result = await PostModel.findOne(query).populate("authorId"); 
 
     return result;
 }

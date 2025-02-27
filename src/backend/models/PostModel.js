@@ -8,22 +8,24 @@ const PostSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
-        minLength: 4,
-        unique: true
+        minLength: 4
     },
     content: {
         type: String,
-        required: true
+        required: true,
+        minLength: 6
     },
     creationDate: {
         type: Date,
         default: Date.now
     },
     priority: {
-        type: String
+        type: String,
+        required: true
     },
     category: {
-        type: String
+        type: String,
+        required: true
     },
     authorId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -36,7 +38,8 @@ const PostSchema = new mongoose.Schema({
     }],
     isArchived: {
         type: Boolean,
-        default: false
+        default: false,
+        required: true
     }
 });
 
