@@ -1,49 +1,72 @@
-const { response } = require("express");
-const { Post } = require("../models/PostModel");
+// Import Post model
+const { Post } = require("../models/PostModel")
 
-// CRUD operations to be defined here
-
-// Read - Get all posts
-async function getAllPosts(req, res) {
+// Function to create a post
+async function createPost(request, response) {
     try {
-        const posts = await Post.find({
-            user: req.authUserData.userId
-        });
-        res
-        .status(200)
-        .json(posts);
-    } catch (error) {
-        res
-        .status(500)
-        .json({ 
-            error: error.message 
-        });
-    }
-};
+        const { title, content, priority, category, authorId, replies, isArchived } = request.body;
 
-// Create - Create a new post
-async function createPost(req, res) {
-    try {
-        const { title, content } = req.body;
         const post = await Post.create({
             title,
             content,
-            user: req.authUserData.userId
+            priority,
+            category,
+            authorId: request.authUserData.userId,
+            replies: replies,
+            isArchived
         });
 
-        res
+        // send back acknowledgment msg
+        response
         .status(201)
         .json(post);
-    } catch (error) {
-        res
+    } catch (error) { // error msg
+        response
         .status(500)
-        .json({ 
-            error: error.message 
+        .json({
+            message: error.message
         });
     }
-};
+}
 
+// Function to get all posts
+async function getAllPosts(request, response) {
+    try {
+        const posts = await Post.find({});
+        response.json(posts);
+    } catch (error) {
+        response
+        .status(500)
+        .json({
+            message: error.message
+        });
+    }
+}
+
+// Function to get posts from a specific user
+async function getUserPost(request, response) {
+    try {
+        const posts = await Post.find({ 
+            authorId: request.authUserData.userId 
+        });
+
+        if (posts.length === 0) { 
+            return response
+            .status(404)
+            .json({ message: "No posts found for this user" });
+        }
+
+        response.json(posts);
+    } catch (error) {
+        response
+        .status(500)
+        .json({ message: error.message });
+    }
+}
+
+// Export functions
 module.exports = {
+    createPost,
     getAllPosts,
-    createPost
+    getUserPost
 }
