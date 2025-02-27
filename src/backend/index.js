@@ -1,15 +1,12 @@
-// Initialise the server
-const { app } = require("./server.js");
-const { dbConnect } = require("./utils/database.js");
+const { app } = require("./server");
+const { connectDB } = require("./utils/database");
 
 require("dotenv").config();
 
-// Get the PORT
-const PORT = process.env.PORT || 5173;
+// Get the port
+const PORT = process.env.PORT || 8008;
 
-// Listen to incoming traffic
-app.listen(PORT, async() => {
-    await dbConnect();
-
-    console.log(`Server is running on port: ${PORT}`);
+app.listen(PORT, async () => {
+    await connectDB();
+    console.log(`Server running on port ${PORT}`);
 });
