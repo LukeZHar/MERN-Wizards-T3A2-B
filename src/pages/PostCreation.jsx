@@ -1,16 +1,49 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useLocalStorage } from 'react-use';
+import { useNavigate } from 'react-router-dom';
 
 
 
-const PostCreation = () => (
+const PostCreation = () => {
+
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+
+    const [post, setPosts] = useLocalStorage('tasks',[]);
+    const navigate = useNavigate();
     
-    <div> 
-        <h2>New Post Details</h2>
-        <p>Create a task and all it's details.</p>
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
-    </div>
+        const newPost = {
+            id: Date.now(),
+            title,
+            description,
+        };
+
+        setPosts([...post, newPost]);
+        navigate('post');
+    }
+
+    return (
+    
+        <div> 
+             <h2>New Post Details</h2>
+             <form onSubmit={ handleSubmit }>
+                <div>
+                    <lable>Title: </lable>
+                    <input value={title} onChange={(e) => setTitle(e.target.value)} required />
+                </div>
+                <div>
+                    <lable>Description: </lable>
+                    <input value={description} onChange={(e) => setDescription(e.target.value)} required />
+                </div>
+                <button type='submit'>Add Post</button>
+             </form>
+           
+       
+         </div>
 
 );
-
+}
 export default PostCreation;

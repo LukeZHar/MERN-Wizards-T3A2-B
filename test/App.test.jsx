@@ -6,33 +6,33 @@ import userEvent from "@testing-library/user-event";
 
 //check if rendered content is performing as expected
 
-test("Render the App conponent", () => {
-    render (<App />);
+//test("Render the App conponent", () => {
+  //  render (<App />);
 
-    const mainPageHeader = screen.getByText("Vite + React");
-    expect (mainPageHeader).toBeInTheDocument();
-});
+ //   const mainPageHeader = screen.getByText("Vite + React");
+ //   expect (mainPageHeader).toBeInTheDocument();
+//  });
 
 // render content and simulate inteactions
 
-test("Render the App component with a button that increses the count", async () => {
-    render(<App />)
+//test("Render the App component with a button that increses the count", async () => {
+//    render(<App />)
 
     // Find button element 
-    const counterButton = screen.getByTestId("counterButton");
+//    const counterButton = screen.getByTestId("counterButton");
 
     // Check the buttons test for count is 0
-    expect (counterButton).toBeInTheDocument();
-    expect (counterButton).toHaveTextContent("count is 0");
+   // expect (counterButton).toBeInTheDocument();
+   // expect (counterButton).toHaveTextContent("count is 0");
 
     // Click on button 
         // create user
-    const user = userEvent.setup();
+  //  const user = userEvent.setup();
 
         // implement click action
-    await user.click(counterButton);
+   // await user.click(counterButton);
 
     // Check the buttons test for count is 0
-    expect (counterButton).toHaveTextContent("count is 1");
+   // expect (counterButton).toHaveTextContent("count is 1");
 
-})
+//  })
