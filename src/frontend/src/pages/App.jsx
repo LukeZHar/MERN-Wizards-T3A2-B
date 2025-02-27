@@ -1,28 +1,19 @@
-
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LoginPage from './LoginPage';
-import RegisterPage from './RegisterPage';
-import { UserAuthContextProvider } from '../contexts/UserAuthContext';
+import '../styles/App.css'
+import React from 'react';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import PostCreation from './PostCreation.jsx';
 import { PostProvider } from '../contexts/PostContext.jsx';
 
 function App() {
   return (
-    <UserAuthContextProvider>
-      <PostProvider>
-        <Router>
-          <div>
-            <Routes>
-              <Route path="/" element={<LoginPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path='/add-post' element={<PostCreation />} />
-            </Routes>
-          </div>
-        </Router>
-      </PostProvider>
-    </UserAuthContextProvider >
-  );
+    <PostProvider>
+    <Router>
+      <Routes>
+        <Route path='/add-post' element={<PostCreation /> } />
+      </Routes>
+    </Router>
+    </PostProvider>
+  )
 }
 
-export default App;
+export default App
