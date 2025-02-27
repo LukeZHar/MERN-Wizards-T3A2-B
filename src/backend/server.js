@@ -26,15 +26,3 @@ app.use("/api/posts", postRoute);
 module.exports = {
     app
 }
-
-//OLD CODE
-// app.get("/", (req, res) => {
-//     res.json({
-//         message: "Hello World!"
-//     })
-// });
-
-// // Export the server
-// module.exports = {
-//     app
-// }
