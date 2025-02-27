@@ -1,6 +1,5 @@
 // Drop values in DB
-const { createPost } = require("../controllers/postController");
-const { dbConnect, dbDisconnect, dbDrop} = require("./database");
+const { dbConnect, dbDisconnect, dbDrop} = require("./database.js");
 
 async function drop() {
     await dbDrop();

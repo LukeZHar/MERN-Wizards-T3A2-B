@@ -8,6 +8,11 @@ const app = express();
 const cors = require("cors");
 const helmet = require("helmet");
 
+// let corsOptions = {
+//     origin: ["http://localhost:3000", "http://localhost:5173", "https://reactapp.com"],
+//     methods:["GET", "POST"]
+// } Apply this later
+
 // Middlewares
 app.use(express.json());
 app.use(cors());

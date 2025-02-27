@@ -2,9 +2,6 @@ const mongoose = require("mongoose");
 
 // Make Schema
 const PostSchema = new mongoose.Schema({
-    postId: {
-        type: mongoose.Schema.Types.ObjectId,
-    },
     title: {
         type: String,
         required: true,
@@ -38,15 +35,14 @@ const PostSchema = new mongoose.Schema({
     }],
     isArchived: {
         type: Boolean,
-        default: false,
-        required: true
+        default: false
     }
 });
 
 // Make Model based on Schema
-const PostModel = mongoose.model("Post", PostSchema);
+const Post = mongoose.model("Post", PostSchema);
 
 // Export the model
 module.exports = {
-    PostModel
+    Post
 };

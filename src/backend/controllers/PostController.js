@@ -1,19 +1,17 @@
-// Provide CRUD functionalities for Post Model
-const mongoose = require('mongoose');
-
-const { PostModel } = require("../models/PostModel")
+// Import Post model
+const { Post } = require("../models/PostModel")
 
 // Function to create a post
 async function createPost(request, response) {
     try {
         const { title, content, priority, category, authorId, replies, isArchived } = request.body;
 
-        const post = await PostModel.create({
+        const post = await Post.create({
             title,
             content,
             priority,
             category,
-            authorId: request.authUserData,
+            authorId: request.authUserData.userId,
             replies: replies,
             isArchived
         });
@@ -45,21 +43,20 @@ async function getAllPosts(request, response) {
     }
 }
 
-// Function to get a specific post by the authenticated user
+// Function to get posts from a specific user
 async function getUserPost(request, response) {
     try {
-        // Extract user ID from authUserData
-        const userId = request.authUserData.id; 
+        const posts = await Post.find({ 
+            authorId: request.authUserData.userId 
+        });
 
-        const post = await Post.findOne({ user: userId });
-
-        if (!post) {
+        if (posts.length === 0) { 
             return response
             .status(404)
-            .json({ message: "Post not found for this user" });
+            .json({ message: "No posts found for this user" });
         }
 
-        response.json(post);
+        response.json(posts);
     } catch (error) {
         response
         .status(500)
