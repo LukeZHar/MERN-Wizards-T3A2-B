@@ -1,5 +1,5 @@
 const express = require("express");
-const { getAllPosts, createPost } = require("../controllers/postController");
+const { createPost, getAllPosts, getUserPost } = require("../controllers/PostController");
 const { validateToken } = require("../middlewares/authMiddleware");
 const router = express.Router();
 
@@ -8,6 +8,9 @@ router.use(validateToken);
 
 // GET localhost:5000/api/posts/
 router.get("/", getAllPosts);
+
+// GET localhost:8008/api/posts/:id
+router.get("/id", getUserPost);
 
 // POST localhost:5000/api/posts/
 router.post("/", createPost);
