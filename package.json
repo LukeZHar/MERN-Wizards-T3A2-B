@@ -9,7 +9,6 @@
   "scripts": {
     "start": "node src/backend/index.js",
     "dev": "node src/backend/index.js --watch",
-    "seed": "node src/backend/utils/seeding.js",
     "start:seed": "npm run seed && npm start",
     "db:drop": "node src/backend/utils/dropping.js",
     "db:drop-and-seed": "npm run db:drop && npm run seed"
