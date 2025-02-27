@@ -10,12 +10,12 @@ import PostEdit from './pages/PostEdit';
 
 function App() {
   return (
-    
+    <TaskProvider>
       <Router>
         <div>
           <h1>A Ticket A Task-it</h1>
+          <Home />
           <Routes>
-            <Route path="/" element={<Home />} />
             <Route path="/login" element={<LoginPage />} /> 
             <Route path="/register" element={<RegisterPage />} /> 
             <Route path="/post" element={<PostDetails />} />
@@ -24,6 +24,7 @@ function App() {
           </Routes>
         </div>
       </Router>
+      </TaskProvider>
       );
 };
 

@@ -9,7 +9,7 @@ const PostCreation = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
-    const [post, setPosts] = useLocalStorage('tasks',[]);
+    const [post, setPosts] = useLocalStorage('posts',[]);
     const navigate = useNavigate();
     
     const handleSubmit = (e) => {
@@ -31,11 +31,11 @@ const PostCreation = () => {
              <h2>New Post Details</h2>
              <form onSubmit={ handleSubmit }>
                 <div>
-                    <lable>Title: </lable>
+                    <label>Title: </label>
                     <input value={title} onChange={(e) => setTitle(e.target.value)} required />
                 </div>
                 <div>
-                    <lable>Description: </lable>
+                    <label>Description: </label>
                     <input value={description} onChange={(e) => setDescription(e.target.value)} required />
                 </div>
                 <button type='submit'>Add Post</button>
