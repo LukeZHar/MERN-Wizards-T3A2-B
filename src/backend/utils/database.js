@@ -7,9 +7,14 @@ async function dbConnect() {
 
     let databaseUrl = `mongodb://127.0.0.1:27017/${process.env.npm_package_name}`;
 
-    console.log(databaseUrl);
-    await mongoose.connect(databaseUrl);
-    console.log("DB connected!");
+    try {
+        console.log(databaseUrl);
+        await mongoose.connect(databaseUrl);
+        console.log("DB connected!");
+    } catch (error) {
+        console.error("Error connecting to MongoDB: ", error);
+        process.exit(1);
+    }
 };
 
 // Disconnect DB

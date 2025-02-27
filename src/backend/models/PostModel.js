@@ -27,14 +27,14 @@ const PostSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    authorId: {
+    authorId: { // reference to User model
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User', // reference to User model
+        ref: 'User', 
         required: true
     },
-    replies: [{
+    replies: [{ // reference to Reply model
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Reply' // reference to Reply model
+        ref: 'Reply' 
     }],
     isArchived: {
         type: Boolean,
@@ -49,4 +49,4 @@ const PostModel = mongoose.model("Post", PostSchema);
 // Export the model
 module.exports = {
     PostModel
-}
+};
