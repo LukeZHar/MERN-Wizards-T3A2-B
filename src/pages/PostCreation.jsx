@@ -1,49 +1,51 @@
 import React, { useState } from 'react';
-import { useLocalStorage } from 'react-use';
 import { useNavigate } from 'react-router-dom';
+import { usePosts } from '../frontend/contexts/PostContext';
 
 
 
 const PostCreation = () => {
+    const [post, setPost] = useState({
+        title: '', description: ''
+    });
 
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-
-    const [post, setPosts] = useLocalStorage('posts',[]);
+    const { addPost } = usePosts();
     const navigate = useNavigate();
+
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setPost((prev) => ({...prev, [name]: value}));
+    }
     
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const newPost = {
-            id: Date.now(),
-            title,
-            description,
-        };
-
-        setPosts([...post, newPost]);
-        navigate('post');
-    }
+        addPost({...post, id: Date.now().toString() });
+        navigate('/post');
+    };
 
     return (
-    
-        <div> 
+         <div> 
              <h2>New Post Details</h2>
              <form onSubmit={ handleSubmit }>
                 <div>
                     <label>Title: </label>
-                    <input value={title} onChange={(e) => setTitle(e.target.value)} required />
+                    <input 
+                    type='text' 
+                    name='title' 
+                    value={post.title} 
+                    onChange={handleChange} required />
                 </div>
                 <div>
                     <label>Description: </label>
-                    <input value={description} onChange={(e) => setDescription(e.target.value)} required />
+                    <textarea             
+                    name='description'
+                    value={post.description} 
+                    onChange={handleChange} required />
                 </div>
                 <button type='submit'>Add Post</button>
-             </form>
-           
-       
+             </form>       
          </div>
-
-);
+    );
 }
 export default PostCreation;

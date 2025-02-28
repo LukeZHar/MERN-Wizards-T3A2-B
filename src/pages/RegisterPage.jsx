@@ -7,7 +7,7 @@ const RegisterPage = () => (
         <h2>Register Here</h2>
         <p>Create a new user request.</p>
         <nav>
-            <Link to="/Home"> Retrun Home </Link> | <Link to="/PostCreation"> Create a new Post </Link> | <Link to="/PostEdit"> Edit a Post </Link>
+            <Link to="/"> Retrun Home </Link> | <Link to="/add-post"> Create a new Post </Link> | <Link to="/edit-post"> Edit a Post </Link>
         </nav>
     </div>
 

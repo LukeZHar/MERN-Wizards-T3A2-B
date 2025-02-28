@@ -1,19 +1,13 @@
 import { useContext } from 'react';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useLocalStorage } from 'react-use';
+import { usePosts } from "../frontend/contexts/PostContext";
 
-//const posts = usePosts(); 
-//console.log(posts);
 
 
 const PostDetails = () => {
-    const [posts, setPosts] = useLocalStorage('posts',[]);
+    const {posts, deletePost} = usePosts();
 
-    const deletePost = (id) => {
-        const updatedPosts = task.filter((task) => task.id != id);
-        setPosts(updatedPosts);
-    }
 
     return (
         <div> 
@@ -23,12 +17,12 @@ const PostDetails = () => {
                     <p>No posts found.  <Link to='/add-post'>Add your first post</Link></p>
             ) : (
                 <ul>
-                    {tasks.map((task) => 
-                        (<li key={task.id}>
-                            <strong>{task.title}</strong> : {task.description}
+                    {tasks.map((post) => 
+                        (<li key={post.id}>
+                            <strong>{post.title}</strong> : {post.description}
                             <div>
                                 <Link to={'/edit-post/${task.id}'}></Link> | {' '}
-                                <button onClick={() => deletePost(task.id)}>Delete</button>
+                                <button onClick={() => deletePost(post.id)}>Delete</button>
                             </div>
                         </li>)
                     )}

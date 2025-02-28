@@ -10,7 +10,7 @@ import PostEdit from './pages/PostEdit';
 
 function App() {
   return (
-    <TaskProvider>
+   
       <Router>
         <div>
           <h1>A Ticket A Task-it</h1>
@@ -24,7 +24,7 @@ function App() {
           </Routes>
         </div>
       </Router>
-      </TaskProvider>
+     
       );
 };
 

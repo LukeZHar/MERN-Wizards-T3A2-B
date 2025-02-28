@@ -5,8 +5,15 @@ const PostContext = createContext();
 
 export default function PostProvider(props){
     let [posts, setPosts] = useState([]);
+
+    // AppPost function
+    const addPost = (post) => setPosts((prev) => [...prev, post]);
+
+    // DeletePost function 
+    const deletePost = (id) => setPosts((prev) => prev.filter((post) => post.id != id))
+
     return (
-        <PostContext.Provider value={[posts, setPosts]}>
+        <PostContext.Provider value={{posts, addPost, deletePost}}>
             {/* const [posts, setPosts] setPostValue(); */}
             {props.children}
         </PostContext.Provider>
