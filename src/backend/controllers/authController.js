@@ -30,7 +30,7 @@ async function registerUser(req, res) {
     });
 
     // Send a acknowledgement response 
-    response
+    res
     .status(201)
     .json({
         "message": "User created successfully"

@@ -12,10 +12,10 @@ const postRoutes = require("./routes/postRoutes");
 // Instance of express for configuration
 const app = express();
 
-// let corsOptions = {
-//     origin: ["http://localhost:3000", "http://localhost:5173", "https://reactapp.com"],
-//     methods:["GET", "POST"]
-// }
+let corsOptions = {
+    origin: ["http://localhost:3000", "http://localhost:5173","http://localhost:8008", "https://reactapp.com"],
+    methods:["GET", "POST"]
+}
 
 // Middlewares
 app.use(express.json());

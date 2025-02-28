@@ -11,7 +11,7 @@ export default function RegisterPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/register', { username, email, password });
+            const response = await axios.post('http://localhost:8008/api/auth/register', { username, email, password });
             alert(response.data.message);
             setError('');
         } catch (err) {
