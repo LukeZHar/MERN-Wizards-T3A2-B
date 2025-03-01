@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from 'axios';
 import "../styles/register.css";
 
@@ -11,7 +11,7 @@ export default function RegisterPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8008/api/auth/register', { username, email, password });
+            const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/api/auth/register`, { username, email, password });
             alert(response.data.message);
             setError('');
         } catch (err) {
@@ -22,7 +22,8 @@ export default function RegisterPage() {
     return (
         <div className="register-page">
             <main>
-                <h2>Register</h2>
+                <h2>Welcome</h2>
+                <p>Please enter your details to continue</p>
                 <form onSubmit={handleSubmit}> 
                     <input
                         type="text"
@@ -43,13 +44,13 @@ export default function RegisterPage() {
                     <input
                         type="password"
                         name="password"
-                        placeholder="Password"
+                        placeholder="Enter your password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
                     <button type="submit">Register</button>
-                    {error && <p style={{ color: 'red' }}>{error}</p>}
+                    {error && <p className="error">{error}</p>}
                 </form>
             </main>
         </div>

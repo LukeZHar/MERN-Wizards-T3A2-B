@@ -1,82 +1,60 @@
 const { User } = require("../models/UserModel");
 
 const bcrypt = require("bcrypt");
-const { response } = require("express");
 const jwt = require("jsonwebtoken");
 
 async function registerUser(req, res) {
     // Importing the username and password from the request body
     const { username, email, password } = req.body;
 
-    // Checking if the username already exists
-    const existingUser = await User.findOne({ username });
+    try {
+        // Check if user already exists
+        const existingUser = await User.findOne({ username });
+        if (existingUser) {
+            return res.status(400).json({ message: "Username already in use" });
+        }
 
-    // If username already exists send error
-    if (existingUser) {
-        return res
-        .status(400)
-        .json({ 
-            "message": "Username already exists" 
-        });
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create and save the new user
+        const user = new User({ username, email, passwordHash: hashedPassword });
+        await user.save();
+
+        res.status(201).json({ message: "User registered successfully" });
+    } catch (error) {
+        console.error("Error during registration:", error); // Log error for debugging
+        res.status(500).json({ message: "Error registering user", error });
     }
-
-    // Hashing the password using bcrypt
-    const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt value
-
-    const user = await User.create({
-        username,
-        email,
-        password: hashedPassword
-    });
-
-    // Send a acknowledgement response 
-    res
-    .status(201)
-    .json({
-        "message": "User created successfully"
-    });
 }
 
+// Log in an existing user
 async function loginUser(req, res) {
-    // Importing the username and password from the request body 
     const { username, password } = req.body;
 
-    // Checking if the username already exists
-    const user = await User.findOne({ username });
+    try {
+        // Find the user by username
+        const user = await User.findOne({ username });
+        if (!user) {
+            return res.status(400).json({ message: "User does not exist" });
+        }
 
-    // If user does not exist send error
-    if (!user) {
-        return res
-        .status(400)
-        .json({ 
-            "message": "User does not exist" 
-        });
+        // Compare the provided password with the stored hash
+        const isPasswordCorrect = await bcrypt.compare(password, user.passwordHash);
+        if (!isPasswordCorrect) {
+            return res.status(400).json({ message: "Incorrect password" });
+        }
+        // Debugging log to check if JWT_SECRET is set
+        console.log("JWT Secret:", process.env.JWT_SECRET);
+        
+        // Generate a JWT token
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+
+        res.status(200).json({ token });
+    } catch (error) {
+        console.error("Error during login:", error); // Log error for debugging
+        res.status(500).json({ message: "Error logging in", error });
     }
-
-    // Checking if the password is correct, compare(password entered by the user, hashed in the database)
-    const isPasswordCorrect = await bcrypt.compare(password, user.password);
-
-    // If password is incorrect send error
-    if (!isPasswordCorrect) {
-        return res
-        .status(400)
-        .json({ 
-            "message": "Incorrect password" 
-        });
-    }
-
-    // Creating a JWT token
-    const token = jwt.sign({ userId: user._id }, // Payload data
-        process.env.JWT_SECRET, {
-        expiresIn: "1h"
-    });
-
-    // Send a response with the token
-    res
-    .status(200)
-    .json({
-        "token": token
-    });
 }
 
 module.exports = {

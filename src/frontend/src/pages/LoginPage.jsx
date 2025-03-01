@@ -12,10 +12,11 @@ export default function LoginPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
+        const userDetails = { username, password }; // Capture username and password
         try {
             // Send login request to the backend API
-            const response = await axios.post('http://localhost:5000/api/auth/login', { username, password });
-            localStorage.setItem('token', response.data.token); // Store JWT token in localStorage 
+            const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/api/auth/login`, { userDetails });
+            // localStorage.setItem('token', response.data.token); // Store JWT token in localStorage 
             setToken(response.data.token); // Set the token in context
             alert('Login successful!'); // Alert on successful login
             setError(''); // Clear any previous error
@@ -28,7 +29,8 @@ export default function LoginPage() {
     return (
         <div className="login-page">
             <main>
-                <h2>Login</h2>
+                <h2>Welcome</h2>
+                <p>Please enter your details to continue</p>
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text" // Use text input for username

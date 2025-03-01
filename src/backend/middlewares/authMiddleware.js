@@ -1,15 +1,24 @@
 const jwt = require("jsonwebtoken");
 
-async function validateToken (req, res, next) {
+// Middleware to validate a JWT token
+async function validateToken(req, res, next) {
+    const authHeader = req.headers.authorization;
 
-    const token = req.headers.jwt;
+    if (!authHeader) {
+        return res.status(401).json({ message: "Authorization header missing" });
+    }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.authUserData = decoded;
+    const token = authHeader.split(" ")[1]; // Remove "Bearer " prefix
 
-    next();
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.authUserData = decoded; // Attach user data to the request object
+        next(); // Proceed to the next middleware or route handler
+    } catch (error) {
+        res.status(403).json({ message: "Token validation failed", error });
+    }
 }
 
-module.exports = { 
-    validateToken 
+module.exports = {
+    validateToken
 };

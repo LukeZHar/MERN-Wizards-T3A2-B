@@ -19,12 +19,17 @@ body {
     border-radius: 10px;
     padding: 20px;
     width: 90%;
-    max-width: 400px; /* Adjust this for desktop */
+    max-width: 400px; /* Adjust for desktop */
     text-align: center;
 }
 
 h2 {
     color: #fffff0; /* Ivory */
+}
+
+p {
+    color: #fffff0; /* Ivory */
+    margin-bottom: 20px;
 }
 
 form {
@@ -51,8 +56,17 @@ button {
     font-weight: bold;
 }
 
+a {
+    color: #fffff0; /* Ivory */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
 .error {
-    color: red; /* Error message color */
+    color: red;
 }
 
 /* Responsive styles */

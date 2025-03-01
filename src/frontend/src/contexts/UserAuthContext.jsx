@@ -27,5 +27,9 @@ export function UserAuthContextProvider({ children }) {
 
 // Custom hook for accessing the auth context
 export function useUserAuthContext() {
-    return useContext(UserAuthContext);
+    const context = useContext(UserAuthContext);
+    if (context === undefined) {
+        throw new Error('useUserAuthContext must be used within a UserAuthContextProvider');
+    }
+    return context;
 }
