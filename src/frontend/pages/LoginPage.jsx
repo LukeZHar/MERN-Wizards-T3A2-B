@@ -16,7 +16,7 @@ export default function LoginPage() {
         try {
             // Send login request to the backend API
             const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/api/auth/login`, { userDetails });
-            // localStorage.setItem('token', response.data.token); // Store JWT token in localStorage 
+            localStorage.setItem('token', response.data.token); // Store JWT token in localStorage 
             setToken(response.data.token); // Set the token in context
             alert('Login successful!'); // Alert on successful login
             setError(''); // Clear any previous error
