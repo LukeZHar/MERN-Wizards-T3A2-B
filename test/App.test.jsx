@@ -6,12 +6,12 @@ import userEvent from "@testing-library/user-event";
 
 //check if rendered content is performing as expected
 
-//test("Render the App conponent", () => {
-  //  render (<App />);
+test("Render the App conponent", () => {
+    render (<App />);
 
- //   const mainPageHeader = screen.getByText("Vite + React");
- //   expect (mainPageHeader).toBeInTheDocument();
-//  });
+    const mainPageHeader = screen.getByText("Vite + React");
+    expect (mainPageHeader).toBeInTheDocument();
+    });
 
 // render content and simulate inteactions
 

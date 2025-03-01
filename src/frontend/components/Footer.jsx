@@ -1,16 +1,11 @@
-import react from "react";
-import "../styles/header.css";
+import React from 'react';
 
-export default function Header() {
-    const [isOpen, setIsOpen] = useState(false);
-
-    const toggleMenu = () => {
-        setIsOpen(!isOpen);
-    };
-
+const Footer = () => {
     return (
-        <header>
-            
-        </header>
-    )
-}
+        <footer>
+            <p>&copy; 2023 A Ticket a Task It. All rights reserved.</p>
+        </footer>
+    );
+};
+
+export default Footer;

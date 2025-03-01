@@ -1,48 +1,33 @@
-import { createContext, useContext } from "react";
 
+import { createContext, useContext, useState } from "react";
 
+// Create an instance of Context
 const PostContext = createContext();
 
-export default function PostProvider(props){
-    let [posts, setPosts] = useState([]);
+// Create the Provider function
+export function PostProvider({ children }) {
+    const [posts, setPosts] = useState([]);
 
-    // AppPost function
-    const addPost = (post) => setPosts((prev) => [...prev, post]);
-
-    // DeletePost function 
-    const deletePost = (id) => setPosts((prev) => prev.filter((post) => post.id != id))
-
-    // EditPost function
-    const editPost = (updatedPost) => {
-        setPosts((prev) => 
-            prev.map(
-                (post) => (
-                    post.id === updatedPost.id ?
-                {...post, ...updatedPost} :
-                post
-            )))
-
-    };
-
-    // post.id ===updatedPost.id ?
-        // {...post, ...updatedPost}
-        // post
-
+    // Add Post function using spread operator 
+    const addPost = (newPost) => {
+        setPosts((prevPosts) => [...prevPosts, newPost]);
+    }
 
     return (
-        <PostContext.Provider value={{posts, addPost, deletePost, editPost}}>
-            {/* const [posts, setPosts] setPostValue(); */}
-            {props.children}
+        <PostContext.Provider value={{ posts, addPost }}>
+            {children}
         </PostContext.Provider>
     )
 }
 
-// Custom hook!
-export function usePosts(){
-    console.log("Passing data around.");
+// Create custom hook
+export function usePosts() {
     let context = useContext(PostContext);
-    if (!context){
-        console.log("No Post found.");
+    if(!context) {
+        console.log("No Posts found!")
     }
     return context;
 }
+
+
+

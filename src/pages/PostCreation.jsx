@@ -1,53 +1,101 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePosts } from '../frontend/contexts/PostContext';
+import '../index.css';
+import '../frontend/styles/PostCreation.css';
 
 
 
-const PostCreation = () => {
+export default function PostCreation() {
+    // State for form inputs
     const [post, setPost] = useState({
-        title: '', description: ''
+        title: "",
+        content: "",
+        priority: "Low",
+        category: "Option 1"
     });
 
+    // Import addPost function from 'Post Context'
     const { addPost } = usePosts();
-    const navigate = useNavigate();
 
+    // Function to handle input changes
     const handleChange = (e) => {
-        const {name, value} = e.target;
-        setPost((prev) => ({...prev, [name]: value}));
-    }
-    
+        const { name, value } = e.target;
+        setPost((prev) => ({ ...prev, [name]: value }));
+    };
+
+    // Function to handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // add post in context
-        addPost({...post, id: Date.now().toString() });
-        //redirect to post details page
-        navigate('/post');
+        if (!post.title.trim() || !post.content.trim()) {
+            alert("Title and Content cannot be empty!");
+            return;
+        }
+
+        addPost({ ...post, id: Date.now() })
+        console.log("New Post Added:", post);
+
+        handleClear();
+    };
+
+    // Function to reset the form
+    const handleClear = () => {
+        setPost({
+            title: "",
+            content: "",
+            priority: "Low",
+            category: "Option 1"
+        });
+
+        console.log("Form has been cleared!");
     };
 
     return (
-         <div> 
-             <h2>New Post Details</h2>
-             <form onSubmit={ handleSubmit }>
-                <div>
-                    <label>Title: </label>
-                    <input 
-                    type='text' 
-                    name='title' 
-                    value={post.title} 
+        <div className="post-creation-container">
+            <h1>Post Creation</h1>
+            <form onSubmit={handleSubmit}>
+                <label>Title:</label>
+                <input
+                    type="text"
+                    name="title"
+                    placeholder="Please enter the title here..."
+                    value={post.title}
                     onChange={handleChange} required />
+
+                <label>Content:</label>
+                <textarea
+                    name="content"
+                    placeholder="Please enter the content here..."
+                    value={post.content}
+                    onChange={handleChange}
+                    style={{ resize: "none" }}
+                    required />
+
+                <label>Priority label:</label>
+                <select name="priority"
+                    value={post.priority}
+                    onChange={handleChange}>
+                    <option>Low</option>
+                    <option>Medium</option>
+                    <option>High</option>
+                </select>
+
+                <label>Category:</label>
+                <select name="category"
+                    value={post.category}
+                    onChange={handleChange}>
+                    <option>Option 1</option>
+                    <option>Option 2</option>
+                    <option>Option 3</option>
+                    <option>Option 4</option>
+                </select>
+
+                <div className="button-group">
+                    <button type="button" onClick={handleClear}>Clear</button>
+                    <button type="submit">Submit</button>
                 </div>
-                <div>
-                    <label>Description: </label>
-                    <textarea             
-                    name='description'
-                    value={post.description} 
-                    onChange={handleChange} required />
-                </div>
-                <button type='submit'>Add Post</button>
-             </form>       
-         </div>
+            </form>
+        </div>
     );
 }
-export default PostCreation;

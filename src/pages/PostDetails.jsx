@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { usePosts } from "../frontend/contexts/PostContext";
+import '../index.css';
+//import '../frontend/styles/PostDetails.css';
 
 
-const PostDetails = () => {
+export default function PostDetails() {
     const {posts, deletePost} = usePosts();
     const [visiblePosts, setVisiblePosts] =useState([]);
     const [isFetching, setIsFetching] = useState(false);
@@ -81,4 +83,4 @@ const PostDetails = () => {
 
 }
 
-export default PostDetails;
+

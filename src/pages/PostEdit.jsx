@@ -1,8 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { usePosts } from '../frontend/contexts/PostContext';
+import '../index.css';
+//import '../frontend/styles/PostEdit.css';
 
-const PostEdit = () => {
+export default function PostEdit () {
+
     const { postID } = useParams();  // gets ID from the URL
     const navigate = useNavigate();
     const { posts, editPost} = usePosts();
@@ -65,4 +68,3 @@ const PostEdit = () => {
     )
 };
 
-export default PostEdit;
