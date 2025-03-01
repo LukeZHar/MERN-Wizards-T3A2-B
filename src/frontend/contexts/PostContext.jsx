@@ -12,8 +12,25 @@ export default function PostProvider(props){
     // DeletePost function 
     const deletePost = (id) => setPosts((prev) => prev.filter((post) => post.id != id))
 
+    // EditPost function
+    const editPost = (updatedPost) => {
+        setPosts((prev) => 
+            prev.map(
+                (post) => (
+                    post.id === updatedPost.id ?
+                {...post, ...updatedPost} :
+                post
+            )))
+
+    };
+
+    // post.id ===updatedPost.id ?
+        // {...post, ...updatedPost}
+        // post
+
+
     return (
-        <PostContext.Provider value={{posts, addPost, deletePost}}>
+        <PostContext.Provider value={{posts, addPost, deletePost, editPost}}>
             {/* const [posts, setPosts] setPostValue(); */}
             {props.children}
         </PostContext.Provider>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import Home from './pages/Home';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -13,7 +14,6 @@ function App() {
    
       <Router>
         <div>
-          <h1>A Ticket A Task-it</h1>
           <Home />
           <Routes>
             <Route path="/login" element={<LoginPage />} /> 
@@ -22,6 +22,7 @@ function App() {
             <Route path="/add-post" element={<PostCreation />} />
             <Route path="/edit-post" element={<PostEdit />} />
           </Routes>
+          <h1>*Brand Icon*</h1>
         </div>
       </Router>
      

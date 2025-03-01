@@ -20,7 +20,9 @@ const PostCreation = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        // add post in context
         addPost({...post, id: Date.now().toString() });
+        //redirect to post details page
         navigate('/post');
     };
 
