@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { usePosts } from "../contexts/PostContext";
-import "../styles/PostCreation.css";
+// import "../styles/PostCreation.css";
+import { TextField, Divider, Button, Typography, Container, Select, MenuItem, Box } from "@mui/material";
+
 
 export default function PostCreation() {
     // State for form inputs
@@ -48,50 +50,87 @@ export default function PostCreation() {
     };
 
     return (
-        <div className="post-creation-container">
-            <h1>Post Creation</h1>
-            <form onSubmit={handleSubmit}>
-                <label>Title:</label>
-                <input
-                    type="text"
-                    name="title"
-                    placeholder="Please enter the title here..."
-                    value={post.title}
-                    onChange={handleChange} required />
+        // Page styling
+        <Container component="main" maxWidth="sm">
+            <Box sx={{
+                bgcolor: '#00cccc', // Background color of the container
+                borderRadius: 2,
+                padding: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: '100px', // Centered with margin above
+            }}>
+                <Typography variant="h5">
+                    Post Creation
+                </Typography>
 
-                <label>Content:</label>
-                <textarea
-                    name="content"
-                    placeholder="Please enter the content here..."
-                    value={post.content}
-                    onChange={handleChange}
-                    style={{ resize: "none" }}
-                    required />
+                {/* Post creation form */}
+                <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+                    <label>Title:</label>
+                    <TextField
+                        fullWidth
+                        label="Title"
+                        name="title"
+                        variant="outlined"
+                        value={post.title}
+                        onChange={handleChange}
+                        sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
+                    />
 
-                <label>Priority label:</label>
-                <select name="priority"
-                    value={post.priority}
-                    onChange={handleChange}>
-                    <option>Low</option>
-                    <option>Medium</option>
-                    <option>High</option>
-                </select>
+                    {/* Content */}
+                    <TextField
+                        fullWidth
+                        label="Content"
+                        name="content"
+                        variant="outlined"
+                        multiline
+                        rows={4}
+                        value={post.content}
+                        onChange={handleChange}
+                        sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
+                    />
 
-                <label>Category:</label>
-                <select name="category"
-                    value={post.category}
-                    onChange={handleChange}>
-                    <option>Option 1</option>
-                    <option>Option 2</option>
-                    <option>Option 3</option>
-                    <option>Option 4</option>
-                </select>
+                    {/* Priority label */}
+                    <Typography variant="body1">Priority:</Typography>
+                    <Select
+                        fullWidth
+                        name="priority"
+                        value={post.priority}
+                        onChange={handleChange}
+                        sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
+                    >
+                        <MenuItem value="Low">Low</MenuItem>
+                        <MenuItem value="Medium">Medium</MenuItem>
+                        <MenuItem value="High">High</MenuItem>
+                    </Select>
+                    {/* Category: */}
+                    <Typography variant="body1">Category:</Typography>
+                    <Select
+                        fullWidth
+                        name="category"
+                        value={post.category}
+                        onChange={handleChange}
+                        sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
+                    >
+                        <MenuItem value="Option 1">Option 1</MenuItem>
+                        <MenuItem value="Option 2">Option 2</MenuItem>
+                        <MenuItem value="Option 3">Option 3</MenuItem>
+                        <MenuItem value="Option 4">Option 4</MenuItem>
+                    </Select>
 
-                <div className="button-group">
-                    <button type="button" onClick={handleClear}>Clear</button>
-                    <button type="submit">Submit</button>
-                </div>
-            </form>
-        </div>
+                    {/* Buttons */}
+                    <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 2 }}>
+                        <Button variant="contained" color="secondary" onClick={handleClear}>
+                            Clear
+                        </Button>
+                        <Button variant="contained" color="primary" type="submit">
+                            Submit
+                        </Button>
+                    </Box>
+                </form>
+            </Box>
+        </Container>
     );
 }
