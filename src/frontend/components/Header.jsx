@@ -1,6 +1,7 @@
-import react from "react";
-import { Link } from 'react-router-dom';
-import "../styles/header.css";
+import React from 'react';
+import { AppBar, Toolbar, Typography, Button } from '@mui/material';
+import { Link } from 'react-router-dom'; // Import React Router for navigation
+import logo from '../assets/Mern.png';
 
 export default function Header() {
     // const [isOpen, setIsOpen] = useState(false);
@@ -10,14 +11,20 @@ export default function Header() {
     // };
 
     return (
-        <header>
-            <h1>A Ticket a Task It</h1>
-            <nav>
-                <ul>
-                    <li><Link to="/login">Login</Link></li>
-                    <li><Link to="/register">Register</Link></li>
-                </ul>
-            </nav>
-        </header>
-    )
-}
+        <AppBar position="static" sx={{ bgcolor: '#00cccc' }}>
+            <Toolbar>
+                {/* Logo section */}
+                <img
+                    src={logo}
+                    alt="MERN Logo"
+                    style={{ width: '50px', marginRight: '16px' }} // Adjust according to desired logo size
+                />
+                <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                    A Ticket a Task It
+                </Typography>
+                <Button color="inherit" component={Link} to="/login">Login</Button>
+                <Button color="inherit" component={Link} to="/register">Register</Button>
+            </Toolbar>
+        </AppBar>
+    );
+};

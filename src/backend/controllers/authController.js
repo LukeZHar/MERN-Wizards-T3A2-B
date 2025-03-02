@@ -14,6 +14,11 @@ async function registerUser(req, res) {
             return res.status(400).json({ message: "Username already in use" });
         }
 
+        const existingEmail = await User.findOne({ email });
+        if (existingEmail) {
+            return res.status(400).json({ message: "Email already in use" });
+        }
+
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -46,8 +51,6 @@ async function loginUser(req, res) {
         if (!isPasswordCorrect) {
             return res.status(400).json({ message: "Incorrect password" });
         }
-        // Debugging log to check if JWT_SECRET is set
-        console.log("JWT Secret:", process.env.JWT_SECRET);
         
         // Generate a JWT token
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
