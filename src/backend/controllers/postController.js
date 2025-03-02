@@ -11,7 +11,7 @@ async function createPost(request, response) {
             content,
             priority,
             category,
-            authorId: null, // null for testing with userID
+            authorId,
             replies,
             isArchived
         });

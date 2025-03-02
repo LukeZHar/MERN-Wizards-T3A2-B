@@ -26,27 +26,30 @@ export default function PostCreation() {
     // Function to handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         if (!post.title.trim() || !post.content.trim()) {
             alert("Title and Content cannot be empty!");
             return;
         }
-
+    
         try {
-            // Try API request 
-            const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/api/posts`, post);
-
-            // Log successful msg
-            console.log("Post created:", response);
-
-            // Add new post to UI
-            addPost({ ...post, id: Date.now() })
-
-            // Clear the form
+            const token = localStorage.getItem('token'); // Retrieve the token
+            const response = await axios.post(
+                `${import.meta.env.VITE_AUTH_API_URL}/api/posts`,
+                post,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`, // Include JWT token
+                    },
+                }
+            );
+    
+            console.log("Post created:", response.data);
+            alert("Post created successfully!");
             handleClear();
         } catch (error) {
             console.error("Error creating post:", error.response?.data || error.message);
-            alert("Failed to create post. Please try again.");
+            setError(error.response?.data?.message || "Failed to create post");
         }
     };
 
