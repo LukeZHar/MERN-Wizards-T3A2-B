@@ -11,9 +11,9 @@ async function createPost(request, response) {
             content,
             priority,
             category,
-            authorId: request.authUserData.userId,
-            replies: replies,
-            isArchived
+            authorId: null,
+            replies: replies || [],
+            isArchived: isArchived || false
         });
 
         // send back acknowledgment msg

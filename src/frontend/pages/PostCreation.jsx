@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { usePosts } from "../contexts/PostContext";
 // import "../styles/PostCreation.css";
 import { TextField, Divider, Button, Typography, Container, Select, MenuItem, Box } from "@mui/material";
+import axios from "axios";
 
 
 export default function PostCreation() {
@@ -23,7 +24,7 @@ export default function PostCreation() {
     };
 
     // Function to handle form submission
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!post.title.trim() || !post.content.trim()) {
@@ -31,10 +32,22 @@ export default function PostCreation() {
             return;
         }
 
-        addPost({ ...post, id: Date.now() })
-        console.log("New Post Added:", post);
+        try {
+            // Try API request 
+            const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/api/posts`, post);
 
-        handleClear();
+            // Log successful msg
+            console.log("Post created:", response);
+
+            // Add new post to UI
+            addPost({ ...post, id: Date.now() })
+
+            // Clear the form
+            handleClear();
+        } catch (error) {
+            console.error("Error creating post:", error.response?.data || error.message);
+            alert("Failed to create post. Please try again.");
+        }
     };
 
     // Function to reset the form

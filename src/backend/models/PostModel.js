@@ -26,8 +26,7 @@ const PostSchema = new mongoose.Schema({
     },
     authorId: { // reference to User model
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User', 
-        required: true
+        ref: 'User',
     },
     replies: [{ // reference to Reply model
         type: mongoose.Schema.Types.ObjectId,
