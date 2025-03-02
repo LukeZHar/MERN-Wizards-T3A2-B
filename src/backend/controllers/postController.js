@@ -1,24 +1,72 @@
-const jwt = require("jsonwebtoken");
+// Import Post model
+const { Post } = require("../models/PostModel")
 
-// Middleware to validate a JWT token
-async function validateToken(req, res, next) {
-    const authHeader = req.headers.authorization;
-
-    if (!authHeader) {
-        return res.status(401).json({ message: "Authorization header missing" });
-    }
-
-    const token = authHeader.split(" ")[1]; // Remove "Bearer " prefix
-
+// Function to create a post
+async function createPost(request, response) {
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.authUserData = decoded; // Attach user data to the request object
-        next(); // Proceed to the next middleware or route handler
-    } catch (error) {
-        res.status(403).json({ message: "Token validation failed", error });
+        const { title, content, priority, category, authorId, replies, isArchived } = request.body;
+
+        const post = await Post.create({
+            title,
+            content,
+            priority,
+            category,
+            authorId: request.authUserData.userId,
+            replies: replies,
+            isArchived
+        });
+
+        // send back acknowledgment msg
+        response
+        .status(201)
+        .json(post);
+    } catch (error) { // error msg
+        response
+        .status(500)
+        .json({
+            message: error.message
+        });
     }
 }
 
+// Function to get all posts
+async function getAllPosts(request, response) {
+    try {
+        const posts = await Post.find({});
+        response.json(posts);
+    } catch (error) {
+        response
+        .status(500)
+        .json({
+            message: error.message
+        });
+    }
+}
+
+// Function to get posts from a specific user
+async function getUserPost(request, response) {
+    try {
+        const posts = await Post.find({ 
+            authorId: request.authUserData.userId 
+        });
+
+        if (posts.length === 0) { 
+            return response
+            .status(404)
+            .json({ message: "No posts found for this user" });
+        }
+
+        response.json(posts);
+    } catch (error) {
+        response
+        .status(500)
+        .json({ message: error.message });
+    }
+}
+
+// Export functions
 module.exports = {
-    validateToken
-};
+    createPost,
+    getAllPosts,
+    getUserPost
+}
