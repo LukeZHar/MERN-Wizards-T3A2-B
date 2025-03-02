@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { usePosts } from '../frontend/contexts/PostContext';
 import '../index.css';
 //import '../frontend/styles/PostEdit.css';
+import { TextField, Divider, Button, Typography, Container, Select, MenuItem, Box } from "@mui/material"; 
 
 export default function PostEdit () {
 
