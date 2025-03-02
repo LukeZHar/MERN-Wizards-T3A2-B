@@ -18,10 +18,12 @@ const PostSchema = new mongoose.Schema({
     },
     priority: {
         type: String,
+        enum: ["Low", "Medium", "High"],
         required: true
     },
     category: {
         type: String,
+        enum: ["Option 1", "Option 2", "Option 3", "Option 4"],
         required: true
     },
     authorId: { // reference to User model
@@ -30,7 +32,8 @@ const PostSchema = new mongoose.Schema({
     },
     replies: [{ // reference to Reply model
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Reply' 
+        ref: 'Reply',
+        default: []
     }],
     isArchived: {
         type: Boolean,
