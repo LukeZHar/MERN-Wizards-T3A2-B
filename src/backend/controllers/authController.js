@@ -26,10 +26,12 @@ async function registerUser(req, res) {
         console.error("Error during registration:", error); // Log error for debugging
         res.status(500).json({ message: "Error registering user", error });
     }
+    console.log("Registering user:", username);
 }
 
 // Log in an existing user
 async function loginUser(req, res) {
+    console.log("Received login data:", req.body)
     const { username, password } = req.body;
 
     try {
@@ -55,6 +57,7 @@ async function loginUser(req, res) {
         console.error("Error during login:", error); // Log error for debugging
         res.status(500).json({ message: "Error logging in", error });
     }
+    console.log("Logging in user:", username);
 }
 
 module.exports = {

@@ -6,13 +6,13 @@ const router = express.Router();
 // Use the validateToken middleware on this route
 router.use(validateToken);
 
-// GET localhost:5000/api/posts/
+// GET /api/posts/
 router.get("/", getAllPosts);
 
-// GET localhost:8008/api/posts/:id
+// GET api/posts/:id
 router.get("/id", getUserPost);
 
-// POST localhost:5000/api/posts/
+// POST /api/posts/
 router.post("/", createPost);
 
 module.exports = router;
