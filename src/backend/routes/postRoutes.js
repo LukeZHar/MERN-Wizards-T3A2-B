@@ -11,7 +11,7 @@ router.get("/", getAllPosts);
 
 // GET api/posts/:id
 // router.get("/:id", getUserPost);
-router.get("/user/:id", getUserPost);
+router.get("/user/:id", getUserPost); 
 
 // POST /api/posts/
 router.post("/", createPost);
