@@ -8,7 +8,9 @@ const helmet = require("helmet");
 // Import Routes
 const authRoutes = require("./routes/authRoutes");
 const postRoutes = require("./routes/postRoutes");
+const notificationRoutes = require('./routes/notificationRoutes'); // Import notification routes
 
+require('dotenv').config(); // Load environment variables
 const { connectDB } = require("./utils/database");
 
 // Instance of express for configuration
@@ -37,6 +39,13 @@ app.get("/", (req, res) => {
 // Tell app to use routes
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
+app.use("/api/notifications", notificationRoutes); // Use notification-related routes
+
+// Error Handling Middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack); // Log the error stack for debugging
+    res.status(500).json({ message: "An unexpected error occurred" }); // Send a generic error response
+});
 
 // Export the server
 module.exports = { app };

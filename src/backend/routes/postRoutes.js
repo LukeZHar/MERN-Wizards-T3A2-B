@@ -1,5 +1,5 @@
 const express = require("express");
-const { createPost, getAllPosts } = require("../controllers/PostController");
+const { createPost, getAllPosts } = require("../controllers/postController");
 const { validateToken } = require("../middlewares/authMiddleware");
 const router = express.Router();
 

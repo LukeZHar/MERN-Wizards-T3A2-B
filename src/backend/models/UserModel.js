@@ -7,8 +7,8 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        minLength: 3,
-        trim: true,
+        minLength: 3, // Minimum length for username
+        trim: true, // Trim whitespace
     },
     email: {
         type: String,
@@ -22,16 +22,16 @@ const userSchema = new mongoose.Schema({
     },
     userClass: {
         type: String,
-        enum: ['Admin', 'Regular User'],
-        default: 'Regular User',
+        enum: ['Admin', 'Regular User'], // Role-based user classification
+        default: 'Regular User', // Default to Regular User
     },
     userAdmin: {
         type: Boolean,
-        default: false,
+        default: false, // Indicates if the user has admin privileges
     },
     registrationDate: {
         type: Date,
-        default: Date.now,
+        default: Date.now, // Default registration date
     },
 });
 
