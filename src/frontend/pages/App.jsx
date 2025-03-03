@@ -8,6 +8,7 @@ import '../styles/App.css';
 import DashboardPage from './DashboardPage.jsx';
 import Layout from '../components/Layout.jsx';
 
+
 function App() {
   return (
     <PostProvider>
@@ -18,8 +19,8 @@ function App() {
               <Route path="/" element={<LoginPage />} /> {/* Default route redirects to Login */}
               <Route path="/login" element={<LoginPage />} /> {/* Login route */}
               <Route path="/register" element={<RegisterPage />} /> {/* Registration route */}
-              <Route path='/add-post' element={<PostCreation />} />
-              <Route path='/dashboard' element={<DashboardPage />} />
+              <Route path="/add-post" element={<PostCreation />} />
+              <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="*" element={<NotFoundPage />} />       {/* Catch-all route for 404 pages */}
             </Routes>
           </div>

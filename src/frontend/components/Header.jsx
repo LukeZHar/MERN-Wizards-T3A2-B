@@ -1,19 +1,9 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, Button, Menu, MenuItem, Slide, useScrollTrigger } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, Menu, MenuItem } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom'; // Import React Router for navigation
 import logo from '../assets/Mern.png';
 import { useUserAuthContext } from '../contexts/UserAuthContext';
-
-const HideOnScroll = (props) => {
-    const { children } = props;
-    const trigger = useScrollTrigger();
-
-    return (
-        <Slide appear={false} direction="down" in={!trigger}>
-            {children}
-        </Slide>
-    );
-};
+import HideOnScroll from './HideOnScroll';
 
 export default function Header() {
     const [anchorElProfile, setAnchorElProfile] = React.useState(null);
@@ -44,7 +34,13 @@ export default function Header() {
         <HideOnScroll>
             <AppBar position="fixed" sx={{ bgcolor: '#00cccc' }}>
                 <Toolbar>
-                    <img src={logo} alt="MERN Logo" style={{ width: '50px', marginRight: '16px' }} />
+                    <Link to="/dashboard" style={{ display: 'flex', alignItems: 'center' }}>
+                        <img
+                            src={logo}
+                            alt="MERN Logo"
+                            style={{ width: '50px', marginRight: '16px', borderRadius: '50%' }} // Circular logo
+                        />
+                    </Link>
                     <Typography variant="h6" sx={{ flexGrow: 1 }}>
                         A Ticket a Task It
                     </Typography>

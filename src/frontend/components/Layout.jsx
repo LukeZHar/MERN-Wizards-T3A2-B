@@ -1,18 +1,23 @@
 import React from 'react';
+import { Stack } from '@mui/material'; // Import Stack component
 import Header from './Header';
 import Footer from './Footer';
-import ScrollTop from './ScrollTop';
+import ScrollTop from './ScrollTop'; // Import ScrollTop component
 
 const Layout = ({ children }) => {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <Stack sx={{ minHeight: '100vh' }} spacing={0}>
             <Header />
-            <main style={{ flex: 1, padding: '20px' }}> 
-                {children}
-            </main>
-            <Footer />
+            <Stack sx={{ flex: 1 }}>
+                <main style={{ padding: '20px' }}>
+                    {children}
+                </main>
+            </Stack>
             <ScrollTop />
-        </div>
+            <Stack justifyContent="flex-end">
+                <Footer />
+            </Stack>
+        </Stack>
     );
 };
 
