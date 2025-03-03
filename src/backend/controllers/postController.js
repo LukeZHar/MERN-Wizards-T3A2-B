@@ -8,7 +8,7 @@ async function createPost(request, response) {
         const { title, content, priority, category } = request.body;
 
         // Extract `authorId` from the authenticated user
-        const authorId = request.user.id;
+        const authorId = request.authUserData.userId;
 
         const post = await Post.create({
             title,
