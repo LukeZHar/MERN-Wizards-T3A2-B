@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './Home.jsx';
 import LoginPage from './LoginPage';
 import RegisterPage from './RegisterPage';
 import PostCreation from './PostCreation.jsx';
@@ -16,7 +17,7 @@ function App() {
         <Layout>
           <div>
             <Routes>
-              <Route path="/" element={<LoginPage />} /> {/* Default route redirects to Login */}
+              <Route path="/" element={<Home />} /> {/* Default route Home */}
               <Route path="/login" element={<LoginPage />} /> {/* Login route */}
               <Route path="/register" element={<RegisterPage />} /> {/* Registration route */}
               <Route path="/add-post" element={<PostCreation />} />
