@@ -5,16 +5,17 @@ const { Post } = require("../models/PostModel")
 async function createPost(request, response) {
     try {
         // Fetch fields to create a post
-        const { title, content, priority, category, authorId, replies, isArchived } = request.body;
+        const { title, content, priority, category } = request.body;
+
+        // Extract `authorId` from the authenticated user
+        const authorId = request.authUserData.userId;
 
         const post = await Post.create({
             title,
             content,
             priority,
             category,
-            authorId,
-            replies,
-            isArchived
+            authorId
         });
 
         // send back acknowledgment msg
@@ -72,11 +73,11 @@ async function editPost(request, response) {
     try {
         // Fetch ID from parameters and fields from req.body
         const { id } = request.params;
-        const { title, content, priority, category, isArchived } = request.body;
+        const { title, content, priority, category } = request.body;
 
         const post = await Post.findByIdAndUpdate(
             id,
-            { title, content, priority, category, isArchived },
+            { title, content, priority, category },
             { new: true, runValidators: true }
         );
 
