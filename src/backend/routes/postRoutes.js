@@ -1,12 +1,20 @@
+// Imports
 const express = require("express");
-const { createPost, getAllPosts } = require("../controllers/postController");
+const { createPost, getAllPosts, editPost, deletePost } = require("../controllers/postController");
 const { validateToken } = require("../middlewares/authMiddleware");
 const router = express.Router();
 
-// GET /api/posts/
+// GET /api/posts/ - See all posts
 router.get("/", getAllPosts);
 
-// POST /api/posts/
+// POST /api/posts/ - Creates a post
 router.post('/', validateToken, createPost);
 
+// PUT /api/posts/:id - Update a post 
+router.patch("/:id", validateToken, editPost);
+
+// DELETE /api/posts/:id - Delete a post 
+router.delete("/:id", validateToken, deletePost);
+
+// Export the router
 module.exports = router;
