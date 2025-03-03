@@ -18,8 +18,12 @@ export function UserAuthContextProvider({ children }) {
         }
     }, [token]);
 
+    const logout = () => {
+        setToken(''); // Clear the token
+    };
+
     return (
-        <UserAuthContext.Provider value={[token, setToken]}>
+        <UserAuthContext.Provider value={[token, setToken, logout]}>
             {children}
         </UserAuthContext.Provider>
     );

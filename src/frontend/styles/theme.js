@@ -28,6 +28,16 @@ const theme = createTheme({
             fontSize: '1rem', // Base font size
             color: '#000000', // Base color for body text
         },
+        h1: {
+            fontWeight: 700,
+            fontSize: '2rem',
+            color: '#000000',
+        },
+        h2: {
+            fontWeight: 600,
+            fontSize: '1.75rem',
+            color: '#000000',
+        },
     },
     components: {
         MuiButton: {
@@ -50,6 +60,24 @@ const theme = createTheme({
                     "&:hover": {
                         borderColor: '#004d4d', // Darker border on hover
                     },
+                },
+            },
+        },
+        MuiCard: {
+            styleOverrides: {
+                root: {
+                    borderRadius: '10px',
+                    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
+                    padding: '20px',
+                },
+            },
+        },
+        MuiContainer: {
+            styleOverrides: {
+                root: {
+                    marginTop: '64px', // Space from top
+                    padding: '16px', // General padding
+                    maxWidth: 'lg', // Constrain max width
                 },
             },
         },
