@@ -69,6 +69,7 @@ export default function PostCreation() {
 
     return (
         // Page styling
+    
         <Container component="main" maxWidth="sm">
             <Box sx={{
                 bgcolor: '#00cccc', // Background color of the container

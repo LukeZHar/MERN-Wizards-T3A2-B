@@ -1,30 +1,45 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LoginPage from './LoginPage';
-import RegisterPage from './RegisterPage';
-import PostCreation from './PostCreation.jsx';
-import NotFoundPage from './NotFoundPage.jsx'; //  Not Found page for undefined routes
-import { PostProvider } from '../contexts/PostContext.jsx';
-import '../styles/App.css';
-import DashboardPage from './DashboardPage.jsx';
-import Layout from '../components/Layout.jsx';
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import LoginPage from "./LoginPage";
+import RegisterPage from "./RegisterPage";
+import PostCreation from "./PostCreation.jsx";
+import NotFoundPage from "./NotFoundPage.jsx";
+import { PostProvider } from "../contexts/PostContext.jsx";
+import DashboardPage from "./DashboardPage.jsx";
+import Layout from "../components/Layout.jsx";
+import { Box } from "@mui/material";
+import NavBar from "../components/NavBar.jsx";
 
+// Component to wrap pages with conditional NavBar
+const LayoutWithNav = ({ children }) => {
+  const location = useLocation(); // Get current route
+
+  // Define paths where NavBar should be hidden
+  const hideNavBar = ["/", "/login", "/register"].includes(location.pathname);
+
+  return (
+    <Box sx={{ display: "flex", minHeight: "100vh" }}>
+      {!hideNavBar && <NavBar />} {/* Show NavBar only if NOT on login/register */}
+      <Box sx={{ flexGrow: 1 }}>
+        <Layout>{children}</Layout> {/* Layout wraps the content properly */}
+      </Box>
+    </Box>
+  );
+};
 
 function App() {
   return (
     <PostProvider>
       <Router>
-        <Layout>
-          <div>
-            <Routes>
-              <Route path="/" element={<LoginPage />} /> {/* Default route redirects to Login */}
-              <Route path="/login" element={<LoginPage />} /> {/* Login route */}
-              <Route path="/register" element={<RegisterPage />} /> {/* Registration route */}
-              <Route path="/add-post" element={<PostCreation />} />
-              <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="*" element={<NotFoundPage />} />       {/* Catch-all route for 404 pages */}
-            </Routes>
-          </div>
-        </Layout>
+        <LayoutWithNav>
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/add-post" element={<PostCreation />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </LayoutWithNav>
       </Router>
     </PostProvider>
   );

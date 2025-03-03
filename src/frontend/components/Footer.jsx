@@ -5,7 +5,7 @@ import { Facebook, Twitter, Instagram } from '@mui/icons-material';
 export default function Footer() {
     return (
         <footer style={{ width: '100%', position: 'relative', margin: 0}}>
-            <Container maxWidth="false" sx={{ padding: '16px', bgcolor: '#00cccc', color: '#fffff0', margin: 0 }}>
+            <Container maxWidth="false" sx={{ padding: '8px', bgcolor: '#00cccc', color: '#fffff0', margin: 0 }}>
                 <Grid2 container spacing={2}>
                     <Grid2 xs={12} sm={6}>
                         <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Quick Links</Typography>
