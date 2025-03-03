@@ -10,8 +10,8 @@ router.get("/", getAllPosts);
 // POST /api/posts/ - Creates a post
 router.post('/', validateToken, createPost);
 
-// PUT /api/posts/:id - Update a post 
-router.patch("/:id", validateToken, editPost);
+// PATCH /api/posts/:id - Update a post 
+router.patch("/:id", editPost);
 
 // DELETE /api/posts/:id - Delete a post 
 router.delete("/:id", validateToken, deletePost);
