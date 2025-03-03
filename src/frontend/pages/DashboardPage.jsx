@@ -50,11 +50,20 @@ export default function DashboardPage() {
     return (
         <Container component="main" maxWidth="md">
             <Typography variant="h4" gutterBottom>
-                Your Dashboard
+                Dashboard
             </Typography>
             {error && <Alert severity="error">{error}</Alert>} {/* Show error if it exists */}
 
-            <Typography variant="h6">Your Posts</Typography>
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={() => {/* Logic to navigate to the post creation page */ }}
+                sx={{ mt: 2 }}
+            >
+                Create New Post
+            </Button>
+
+            <Typography variant="h6">Posts</Typography>
             <Grid2 container spacing={2}>
                 {posts.length > 0 ? (
                     posts.map((post) => (
@@ -82,15 +91,6 @@ export default function DashboardPage() {
                     <Typography variant="body1">No posts to display.</Typography>
                 )}
             </Grid2>
-
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={() => {/* Logic to navigate to the post creation page */ }}
-                sx={{ mt: 2 }}
-            >
-                Create New Post
-            </Button>
         </Container>
     );
 }
