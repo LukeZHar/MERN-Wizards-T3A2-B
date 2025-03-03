@@ -4,13 +4,15 @@ import { useUserAuthContext } from "../contexts/UserAuthContext"; // Import the 
 import { PostProvider as Post } from "../contexts/PostContext"; // Import Post component to display posts
 import axios from "axios"; // Import axios for making API requests
 import { useSnackbar } from '../contexts/SnackbarContext';
-
+import { useNavigate } from "react-router-dom";
 
 export default function DashboardPage() {
     const [posts, setPosts] = useState([]); // State for storing posts
     const [error, setError] = useState(''); // State for capturing errors
     const [token] = useUserAuthContext(); // Get JWT token from context
     const showSnackbar = useSnackbar(); // Access Snackbar
+
+    const navigate = useNavigate();
 
     // Fetch posts on component mount
     useEffect(() => {
@@ -57,7 +59,7 @@ export default function DashboardPage() {
             <Button
                 variant="contained"
                 color="primary"
-                onClick={() => {/* Logic to navigate to the post creation page */ }}
+                onClick={() => navigate("/add-post")} // Navigates to create post page
                 sx={{ mt: 2 }}
             >
                 Create New Post
