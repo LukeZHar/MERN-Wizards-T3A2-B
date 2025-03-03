@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import logo from "../assets/Mern.png"
 import { usePosts } from "../contexts/PostContext";
-import { TextField, Divider, Button, Typography, Container, Select, MenuItem, Box } from "@mui/material";
+import { TextField, Button, Typography, Container, Select, MenuItem, Box } from "@mui/material";
 import axios from "axios";
 import { useSnackbar } from "../contexts/SnackbarContext";
-
 
 export default function PostCreation() {
     // State for form inputs
@@ -15,7 +15,7 @@ export default function PostCreation() {
     });
 
     // Import addPost function from 'Post Context'
-    const { addPost } = usePosts();
+    // const { addPost } = usePosts();
 
     const showSnackbar = useSnackbar(); // Access Snackbar
 
@@ -80,6 +80,7 @@ export default function PostCreation() {
                 justifyContent: 'center',
                 marginTop: '100px', // Centered with margin above
             }}>
+                <img src={logo} alt="Logo" style={{ display: 'block', margin: '0 auto', width: '20%', maxWidth: '200px', borderRadius: '50%' }} />
                 <Typography variant="h5">
                     Post Creation
                 </Typography>
@@ -123,6 +124,7 @@ export default function PostCreation() {
                         <MenuItem value="Medium">Medium</MenuItem>
                         <MenuItem value="High">High</MenuItem>
                     </Select>
+                    
                     {/* Category: */}
                     <Typography variant="body1">Category:</Typography>
                     <Select

@@ -5,7 +5,10 @@ const { Post } = require("../models/PostModel")
 async function createPost(request, response) {
     try {
         // Fetch fields to create a post
-        const { title, content, priority, category, authorId } = request.body;
+        const { title, content, priority, category } = request.body;
+
+        // Extract `authorId` from the authenticated user
+        const authorId = request.user.id;
 
         const post = await Post.create({
             title,
