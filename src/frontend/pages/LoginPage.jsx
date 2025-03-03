@@ -1,10 +1,10 @@
 import { useState } from "react";
 import axios from 'axios';
-// import "../styles/login.css"; // Import your CSS styles
-import { TextField, Button, Typography, Container, Alert, Divider, InputAdornment } from '@mui/material'; // Import MUI components
+import { TextField, Button, Typography, Container, Divider, InputAdornment } from '@mui/material'; // Import MUI components
 import { AccountCircle, Lock } from '@mui/icons-material';
 import GoogleIcon from '@mui/icons-material/Google'
 import { useUserAuthContext } from "../contexts/UserAuthContext"; // Import custom AuthContext
+import { useSnackbar } from "../contexts/SnackbarContext";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/Mern.png"
 
@@ -14,6 +14,7 @@ export default function LoginPage() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [token, setToken] = useUserAuthContext(); // Access token state from context
+    const showSnackbar = useSnackbar(); // Access Snackbar
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -23,12 +24,11 @@ export default function LoginPage() {
             const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/api/auth/login`, { username, password });
             localStorage.setItem('token', response.data.token); // Store JWT token in localStorage 
             setToken(response.data.token); // Set the token in context
-            alert('Login successful!'); // Alert on successful login
-            setError(''); // Clear any previous error
+            showSnackbar('Login successful!'); // Show message on successful login
             navigate('/dashboard');
         } catch (err) {
             // Set error message to display if login fails
-            setError(err.response?.data?.message || 'Login failed');
+            showSnackbar(err.response?.data?.message || 'Login failed');
         }
     };
 

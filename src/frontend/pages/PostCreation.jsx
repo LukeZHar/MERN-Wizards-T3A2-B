@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { usePosts } from "../contexts/PostContext";
-// import "../styles/PostCreation.css";
 import { TextField, Divider, Button, Typography, Container, Select, MenuItem, Box } from "@mui/material";
 import axios from "axios";
+import { useSnackbar } from "../contexts/SnackbarContext";
 
 
 export default function PostCreation() {
@@ -17,6 +17,8 @@ export default function PostCreation() {
     // Import addPost function from 'Post Context'
     const { addPost } = usePosts();
 
+    const showSnackbar = useSnackbar(); // Access Snackbar
+
     // Function to handle input changes
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -28,7 +30,7 @@ export default function PostCreation() {
         e.preventDefault();
     
         if (!post.title.trim() || !post.content.trim()) {
-            alert("Title and Content cannot be empty!");
+            showSnackbar("Title and Content cannot be empty!");
             return;
         }
     
@@ -45,11 +47,11 @@ export default function PostCreation() {
             );
     
             console.log("Post created:", response.data);
-            alert("Post created successfully!");
+            showSnackbar("Post created successfully!");
             handleClear();
         } catch (error) {
             console.error("Error creating post:", error.response?.data || error.message);
-            setError(error.response?.data?.message || "Failed to create post");
+            showSnackbar(error.response?.data?.message || "Failed to create post");
         }
     };
 

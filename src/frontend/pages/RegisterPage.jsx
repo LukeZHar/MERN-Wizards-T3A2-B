@@ -1,28 +1,28 @@
 import { useState } from "react";
 import axios from 'axios';
-// import "../styles/register.css";
 import logo from "../assets/Mern.png"
 import { useNavigate } from "react-router-dom";
 import { TextField, Button, Typography, Container, Alert, Divider, InputAdornment } from '@mui/material'; // Import MUI components
 import { AccountCircle, Lock, MailOutline } from '@mui/icons-material';
 import GoogleIcon from '@mui/icons-material/Google';
+import { useSnackbar } from "../contexts/SnackbarContext";
 
 export default function RegisterPage() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const showSnackbar = useSnackbar(); // Access Snackbar hook
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/api/auth/register`, { username, email, password });
-            alert(response.data.message);
-            setError('');
+            showSnackbar(response.data.message);
             navigate('/login');
         } catch (err) {
-            setError(err.response?.data?.message || 'Registration failed');
+            showSnackbar(err.response?.data?.message || 'Registration failed');
         }
     };
 
@@ -115,7 +115,7 @@ export default function RegisterPage() {
                     <GoogleIcon sx={{ marginRight: 1 }} /> {/* Google icon */}
                     Register with Google
                 </Button>
-                {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>} {/* Display error message */}
+                {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>} 
                 <Typography variant="body2" color="#fffff0" align="center" sx={{ mt: 2 }}>
                     Already have an account? <a href="/login" style={{ color: '#fffff0' }}>Login</a>
                 </Typography>
