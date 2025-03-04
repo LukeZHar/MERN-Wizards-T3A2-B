@@ -18,12 +18,17 @@ export function UserAuthContextProvider({ children }) {
         }
     }, [token]);
 
+    const login = async (userData) => {
+        setToken(userData.token);
+        localStorage.setItem('userId', userData.id); // Store user ID after login
+    };
+
     const logout = () => {
         setToken(''); // Clear the token
     };
 
     return (
-        <UserAuthContext.Provider value={[token, setToken, logout]}>
+        <UserAuthContext.Provider value={[token, setToken, login, logout]}>
             {children}
         </UserAuthContext.Provider>
     );

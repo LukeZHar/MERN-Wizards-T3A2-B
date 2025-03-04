@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, Button, Menu, MenuItem } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { AppBar, Toolbar, Typography, Button, Menu, MenuItem, IconButton } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom'; // Import React Router for navigation
 import logo from '../assets/Mern.png';
 import { useUserAuthContext } from '../contexts/UserAuthContext';
@@ -9,11 +9,15 @@ import CreateIcon from '@mui/icons-material/Create'; // Icon for Create Post
 import DashboardIcon from '@mui/icons-material/Dashboard'; // Icon for Dashboard
 import LogoutIcon from '@mui/icons-material/Logout'; // Icon for Logout
 import PersonIcon from '@mui/icons-material/Person'; // Profile icon
+import NotificationsIcon from '@mui/icons-material/Notifications'; // Notifications icon
+import { getUserNotifications } from '../services/notificationService';
 
 export default function Header() {
     const [anchorElNav, setAnchorElNav] = useState(null);;
     const [anchorElSignIn, setAnchorElSignIn] = React.useState(null);
     const [token, setToken, logout] = useUserAuthContext(); // Get the authentication token from context
+    const [anchorElNotifications, setAnchorElNotifications] = useState(null); // State for Notifications Menu
+    const [notifications, setNotifications] = useState([]); // State to hold notifications
     const navigate = useNavigate(); // For navigation after logout
 
     const handleNavMenu = (event) => {
@@ -26,9 +30,15 @@ export default function Header() {
         setAnchorElNav(null);
     };
 
+    const handleNotificationMenu = (event) => {
+        setAnchorElNotifications(event.currentTarget);
+        fetchNotifications(); // Fetch notifications when menu is opened
+    };
+
     const handleClose = () => {
         setAnchorElNav(null);
         setAnchorElSignIn(null);
+        setAnchorElNotifications(null);
     };
 
     const handleLogout = () => {
@@ -36,6 +46,35 @@ export default function Header() {
         handleClose(); // Close the menu
         navigate('/login'); // Redirect to login page
     };
+
+    const fetchNotifications = async () => {
+        const userId = localStorage.getItem('userId');
+        
+        if (!userId) {
+            console.error("User ID is not available. User might not be logged in.");
+            return; // Exit if userId is not found
+        }
+    
+        if (token) {
+            try {
+                const fetchedNotifications = await getUserNotifications(userId); // Ensure userId is defined here
+                setNotifications(fetchedNotifications); // Set notifications in state
+            } catch (error) {
+                console.error("Failed to fetch notifications:", error);
+            }
+        }
+    };
+
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        if (!userId) {
+            console.error("User ID is not available. User might not be logged in.");
+        } else {
+            // Proceed to use userId as needed
+        }
+    }, [token]); // Depend on token to refetch when it changes
+
+
 
     return (
         <HideOnScroll>
@@ -53,9 +92,12 @@ export default function Header() {
                     </Typography>
                     {token ? (
                         <>
+                            <IconButton onClick={handleNotificationMenu} color="inherit">
+                                <NotificationsIcon />
+                            </IconButton>
                             <Button color="inherit" onClick={handleNavMenu}>Menu</Button>
                             <Menu anchorEl={anchorElNav} open={Boolean(anchorElNav)} onClose={handleClose}>
-                            <MenuItem component={Link} to="/home" onClick={handleClose}>
+                                <MenuItem component={Link} to="/home" onClick={handleClose}>
                                     <HomeIcon sx={{ marginRight: 1 }} /> Home
                                 </MenuItem>
                                 <MenuItem component={Link} to="/add-post" onClick={handleClose}>
@@ -67,9 +109,23 @@ export default function Header() {
                                 <MenuItem component={Link} to="/profile" onClick={handleClose}>
                                     <PersonIcon sx={{ marginRight: 1 }} /> Profile
                                 </MenuItem>
+                                <MenuItem component={Link} to="/notifications" onClick={handleClose}>
+                                    <NotificationsIcon sx={{ marginRight: 1 }} /> Notifications
+                                </MenuItem>
                                 <MenuItem onClick={handleLogout}>
                                     <LogoutIcon sx={{ marginRight: 1 }} /> Logout
                                 </MenuItem>
+                            </Menu>
+                            <Menu anchorEl={anchorElNotifications} open={Boolean(anchorElNotifications)} onClose={handleClose}>
+                                {notifications.length === 0 ? (
+                                    <MenuItem onClick={handleClose}>No notifications</MenuItem>
+                                ) : (
+                                    notifications.map(note => (
+                                        <MenuItem key={note._id} onClick={handleClose}>
+                                            {note.message}
+                                        </MenuItem>
+                                    ))
+                                )}
                             </Menu>
                         </>
                     ) : (
