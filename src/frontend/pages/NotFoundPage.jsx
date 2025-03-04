@@ -6,7 +6,7 @@ const NotFoundPage = () => {
     const navigate = useNavigate(); // Use the navigate hook from react-router-dom
 
     const handleGoHome = () => {
-        navigate('/'); // Redirect to the home page
+        navigate('/dashboard'); // Redirect to the Dash
     };
 
     return (
@@ -22,7 +22,7 @@ const NotFoundPage = () => {
                 onClick={handleGoHome} 
                 sx={{ mt: 2, bgcolor: '#00cccc', color: '#fffff0'}}
             >
-                Go to Home
+                Go to Dashboard
             </Button>
         </Container>
     );

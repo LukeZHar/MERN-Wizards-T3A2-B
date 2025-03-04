@@ -36,6 +36,34 @@ async function getUserNotifications(req, res) {
     }
 }
 
+// Notify users when a new post is created
+async function notifyOnNewPost(userId, postId) {
+    const message = "A new post has been created.";
+    try {
+        await createNotification({
+            recipientID: userId,
+            relatedPostID: postId,
+            message,
+        });
+    } catch (error) {
+        console.error("Error notifying on new post:", error);
+    }
+}
+
+// Notify users when someone replies to a post
+async function notifyOnReply(userId, postId) {
+    const message = "Someone replied to your post.";
+    try {
+        await createNotification({
+            recipientID: userId,
+            relatedPostID: postId,
+            message,
+        });
+    } catch (error) {
+        console.error("Error notifying on reply:", error);
+    }
+}
+
 // Mark a notification as read
 async function markAsRead(req, res) {
     const notificationId = req.params.id; // Get notification ID from request parameters
@@ -75,5 +103,7 @@ module.exports = {
     createNotification,
     getUserNotifications,
     markAsRead,
-    deleteNotification
+    deleteNotification,
+    notifyOnNewPost, 
+    notifyOnReply
 };
