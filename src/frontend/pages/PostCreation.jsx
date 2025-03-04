@@ -4,6 +4,7 @@ import { usePosts } from "../contexts/PostContext";
 import { TextField, Button, Typography, Container, Select, MenuItem, Box } from "@mui/material";
 import axios from "axios";
 import { useSnackbar } from "../contexts/SnackbarContext";
+import { useNavigate } from "react-router-dom";
 
 export default function PostCreation() {
     // State for form inputs
@@ -13,11 +14,12 @@ export default function PostCreation() {
         priority: "Low",
         category: "Option 1"
     });
+    
+    // Navigate to dashboard page after creating post
+    const navigate = useNavigate(); 
 
-    // Import addPost function from 'Post Context'
-    // const { addPost } = usePosts();
-
-    const showSnackbar = useSnackbar(); // Access Snackbar
+    // Access Snackbar
+    const showSnackbar = useSnackbar(); 
 
     // Function to handle input changes
     const handleChange = (e) => {
@@ -49,6 +51,7 @@ export default function PostCreation() {
             console.log("Post created:", response.data);
             showSnackbar("Post created successfully!");
             handleClear();
+            navigate("/dashboard");
         } catch (error) {
             console.error("Error creating post:", error.response?.data || error.message);
             showSnackbar(error.response?.data?.message || "Failed to create post");

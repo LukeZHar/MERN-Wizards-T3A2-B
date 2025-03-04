@@ -11,7 +11,7 @@ router.get("/", getAllPosts);
 router.post('/', validateToken, createPost);
 
 // PATCH /api/posts/:id - Update a post 
-router.patch("/:id", editPost);
+router.patch("/:id", validateToken, editPost);
 
 // DELETE /api/posts/:id - Delete a post 
 router.delete("/:id", validateToken, deletePost);
