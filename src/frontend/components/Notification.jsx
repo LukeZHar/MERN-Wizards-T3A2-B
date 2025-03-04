@@ -7,41 +7,37 @@ import {
     List,
     ListItem,
     ListItemText,
-    Alert
+    Alert,
+    Box
 } from '@mui/material';
 
-import { useSnackbar } from '../contexts/SnackbarContext';
-
 export default function Notification({ notifications, onMarkAsRead }) {
-    const showSnackbar = useSnackbar();
-
     if (notifications.length === 0) {
         return <Alert severity="info">No notifications available.</Alert>; // Message when no notifications exist
     }
 
-    const handleMarkAsRead = (notificationId) => {
-        onMarkAsRead(notificationId); // Call the function passed as a prop
-        showSnackbar('Notification marked as read!'); // Show success message
-    };
-
     return (
-        <div className="notification-container">
+        <Box sx={{ width: '100%', bgcolor: '#00cccc', padding: 2 }}> {/* Main container for notifications */}
             <Typography variant="h5" gutterBottom>
                 Notifications
             </Typography>
-            <List sx={{ width: '100%', bgcolor: '#00cccc' }}> 
+            <List>
                 {notifications.map((notification) => (
                     <ListItem key={notification._id} divider>
                         <ListItemText
-                            primary={notification.message}
-                            secondary={notification.creationDate ? new Date(notification.creationDate).toLocaleString() : null} // Format date
+                            primary={notification.message} // Display notification message
+                            secondary={notification.creationDate ? new Date(notification.creationDate).toLocaleString() : null} // Display formatted creation date
                         />
-                        <Button onClick={() => handleMarkAsRead(notification._id)} variant="outlined" size="small">
+                        <Button 
+                            onClick={() => onMarkAsRead(notification._id)} // Function to mark as read
+                            variant="outlined" 
+                            size="small"
+                        >
                             Mark as Read
                         </Button>
                     </ListItem>
                 ))}
             </List>
-        </div>
+        </Box>
     );
 }

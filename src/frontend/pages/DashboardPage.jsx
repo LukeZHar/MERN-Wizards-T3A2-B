@@ -76,10 +76,10 @@ export default function DashboardPage() {
                                     <Typography variant="body2">{post.content.substring(0, 100)}...</Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <Button size="small" onClick={() => {/* Logic to navigate to post details */ }}>
+                                    <Button size="small" onClick={() => navigate(`/post/${post._id}`)}>
                                         View
                                     </Button>
-                                    <Button size="small" onClick={() => {/* Logic to navigate to edit post */ }}>
+                                    <Button size="small" onClick={() => navigate(`/edit-post/${post._id}`)}>
                                         Edit
                                     </Button>
                                     <Button size="small" onClick={() => {() => handleDelete(post._id)}}>
