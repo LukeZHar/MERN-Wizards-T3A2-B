@@ -1,29 +1,29 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LoginPage from './LoginPage';
-import RegisterPage from './RegisterPage';
-import PostCreation from './PostCreation.jsx';
-import NotFoundPage from './NotFoundPage.jsx'; //  Not Found page for undefined routes
-import { PostProvider } from '../contexts/PostContext.jsx';
-import '../styles/App.css';
-import DashboardPage from './DashboardPage.jsx';
-import Layout from '../components/Layout.jsx';
-
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import LoginPage from "./LoginPage";
+import RegisterPage from "./RegisterPage";
+import PostCreation from "./PostCreation.jsx";
+import NotFoundPage from "./NotFoundPage.jsx";
+import { PostProvider } from "../contexts/PostContext.jsx";
+import DashboardPage from "./DashboardPage.jsx";
+import Layout from "../components/Layout.jsx";
+import "../styles/App.css"
+import NotificationsPage from "./NotificationsPage.jsx";
+import Home from "./Home.jsx";
 
 function App() {
   return (
     <PostProvider>
       <Router>
         <Layout>
-          <div>
-            <Routes>
-              <Route path="/" element={<LoginPage />} /> {/* Default route redirects to Login */}
-              <Route path="/login" element={<LoginPage />} /> {/* Login route */}
-              <Route path="/register" element={<RegisterPage />} /> {/* Registration route */}
-              <Route path="/add-post" element={<PostCreation />} />
-              <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="*" element={<NotFoundPage />} />       {/* Catch-all route for 404 pages */}
-            </Routes>
-          </div>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/add-post" element={<PostCreation />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/notifications" element={<NotificationsPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
         </Layout>
       </Router>
     </PostProvider>

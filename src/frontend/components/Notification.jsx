@@ -7,7 +7,8 @@ import {
     List,
     ListItem,
     ListItemText,
-    Alert
+    Alert,
+    Box
 } from '@mui/material';
 
 export default function Notification({ notifications, onMarkAsRead }) {
@@ -16,23 +17,27 @@ export default function Notification({ notifications, onMarkAsRead }) {
     }
 
     return (
-        <div className="notification-container">
+        <Box sx={{ width: '100%', bgcolor: '#00cccc', padding: 2 }}> {/* Main container for notifications */}
             <Typography variant="h5" gutterBottom>
                 Notifications
             </Typography>
-            <List sx={{ width: '100%', bgcolor: '#00cccc' }}> {/* Style the list */}
+            <List>
                 {notifications.map((notification) => (
                     <ListItem key={notification._id} divider>
                         <ListItemText
-                            primary={notification.message}
-                            secondary={notification.creationDate ? new Date(notification.creationDate).toLocaleString() : null} // Format date
+                            primary={notification.message} // Display notification message
+                            secondary={notification.creationDate ? new Date(notification.creationDate).toLocaleString() : null} // Display formatted creation date
                         />
-                        <Button onClick={() => onMarkAsRead(notification._id)} variant="outlined" size="small">
+                        <Button 
+                            onClick={() => onMarkAsRead(notification._id)} // Function to mark as read
+                            variant="outlined" 
+                            size="small"
+                        >
                             Mark as Read
                         </Button>
                     </ListItem>
                 ))}
             </List>
-        </div>
+        </Box>
     );
 }
