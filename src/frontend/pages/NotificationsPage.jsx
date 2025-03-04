@@ -10,18 +10,19 @@ const NotificationsPage = () => {
     const [token, setToken] = useUserAuthContext(); // Get the authentication token and state setter
 
     const fetchNotifications = async () => {
-        if (token) {
-            try {
-                const userId = localStorage.getItem('userId');
-                if (!userId) {
-                    console.error("User ID is not available. User might not be logged in.");
-                    return;
-                }
-                const fetchedNotifications = await getUserNotifications(userId);
-                setNotifications(fetchedNotifications); // Set notifications in state
-            } catch (error) {
-                console.error("Failed to fetch notifications:", error);
-            }
+        const userId = localStorage.getItem('userId'); // Retrieve user ID
+    
+        // Check for userId before proceeding
+        if (!userId) {
+            console.error("User ID is not available. User might not be logged in.");
+            return; // Exit early if no user ID available
+        }
+    
+        try {
+            const fetchedNotifications = await getUserNotifications(userId); // Correctly use userId
+            setNotifications(fetchedNotifications); // Set notifications in state
+        } catch (error) {
+            console.error("Failed to fetch notifications:", error);
         }
     };
 

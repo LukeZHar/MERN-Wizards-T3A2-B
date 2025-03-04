@@ -48,30 +48,24 @@ export default function Header() {
     };
 
     const fetchNotifications = async () => {
-        const userId = localStorage.getItem('userId');
-        
+        const userId = localStorage.getItem('userId'); // Retrieve user ID
+    
+        // Check for userId before proceeding
         if (!userId) {
             console.error("User ID is not available. User might not be logged in.");
-            return; // Exit if userId is not found
+            return; // Exit early if no user ID available
         }
     
-        if (token) {
-            try {
-                const fetchedNotifications = await getUserNotifications(userId); // Ensure userId is defined here
-                setNotifications(fetchedNotifications); // Set notifications in state
-            } catch (error) {
-                console.error("Failed to fetch notifications:", error);
-            }
+        try {
+            const fetchedNotifications = await getUserNotifications(userId); // Correctly use userId
+            setNotifications(fetchedNotifications); // Set notifications in state
+        } catch (error) {
+            console.error("Failed to fetch notifications:", error);
         }
     };
 
     useEffect(() => {
-        const userId = localStorage.getItem('userId');
-        if (!userId) {
-            console.error("User ID is not available. User might not be logged in.");
-        } else {
-            // Proceed to use userId as needed
-        }
+        fetchNotifications(); // Fetch notifications on component mount and whenever the token changes
     }, [token]); // Depend on token to refetch when it changes
 
 
