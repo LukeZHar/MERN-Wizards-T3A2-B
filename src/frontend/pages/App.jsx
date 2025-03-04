@@ -9,6 +9,7 @@ import Layout from "../components/Layout.jsx";
 import "../styles/App.css"
 import NotificationsPage from "./NotificationsPage.jsx";
 import Home from "./Home.jsx";
+import ProfilePage from "./ProfilePage.jsx";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/add-post" element={<PostCreation />} />
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/notifications" element={<NotificationsPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Layout>
