@@ -91,14 +91,14 @@ export default function Header() {
                             </IconButton>
                             <Button color="inherit" onClick={handleNavMenu}>Menu</Button>
                             <Menu anchorEl={anchorElNav} open={Boolean(anchorElNav)} onClose={handleClose}>
-                                <MenuItem component={Link} to="/home" onClick={handleClose}>
+                                <MenuItem component={Link} to="/" onClick={handleClose}>
                                     <HomeIcon sx={{ marginRight: 1 }} /> Home
-                                </MenuItem>
-                                <MenuItem component={Link} to="/add-post" onClick={handleClose}>
-                                    <CreateIcon sx={{ marginRight: 1 }} /> Create Post
                                 </MenuItem>
                                 <MenuItem component={Link} to="/dashboard" onClick={handleClose}>
                                     <DashboardIcon sx={{ marginRight: 1 }} /> Dashboard
+                                </MenuItem>
+                                <MenuItem component={Link} to="/add-post" onClick={handleClose}>
+                                    <CreateIcon sx={{ marginRight: 1 }} /> Create Post
                                 </MenuItem>
                                 <MenuItem component={Link} to="/profile" onClick={handleClose}>
                                     <PersonIcon sx={{ marginRight: 1 }} /> Profile
