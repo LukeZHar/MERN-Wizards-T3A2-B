@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { usePosts } from "../frontend/contexts/PostContext";
+//import React, { useContext, useEffect, useRef, useState } from 'react';
+//import { Link } from 'react-router-dom';
+//import { usePosts } from "../frontend/contexts/PostContext";
 //import '../index.css';
 //import '../frontend/styles/PostDetails.css';
-import { TextField, Divider, Button, Typography, Container, Select, MenuItem, Box } from "@mui/material"; 
+//import { TextField, Divider, Button, Typography, Container, Select, MenuItem, Box } from "@mui/material"; 
 
-
+```
 export default function PostDetails() {
     const {posts, deletePost} = usePosts();
     const [visiblePosts, setVisiblePosts] =useState([]);
@@ -82,4 +82,4 @@ export default function PostDetails() {
         </div>
     );
 
-}
+}```
