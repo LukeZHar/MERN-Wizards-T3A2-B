@@ -67,13 +67,12 @@ export default function PostCreation() {
             priority: "Low",
             category: "Option 1"
         });
-
+        
         console.log("Form has been cleared!");
     };
 
     return (
         // Page styling
-    
         <Container component="main" maxWidth="sm">
             <Box sx={{
                 bgcolor: '#00cccc', // Background color of the container

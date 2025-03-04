@@ -9,6 +9,7 @@ const helmet = require("helmet");
 const authRoutes = require("./routes/authRoutes");
 const postRoutes = require("./routes/postRoutes");
 const notificationRoutes = require('./routes/notificationRoutes'); // Import notification routes
+const userRoutes = require("./routes/userRoutes");
 
 require('dotenv').config(); // Load environment variables
 const { connectDB } = require("./utils/database");
@@ -37,9 +38,10 @@ app.get("/", (req, res) => {
 })
 
 // Tell app to use routes
-app.use("/api/auth", authRoutes);
-app.use("/api/posts", postRoutes);
+app.use("/api/auth", authRoutes); // Use auth routes
+app.use("/api/posts", postRoutes); // Use post-related routes
 app.use("/api/notifications", notificationRoutes); // Use notification-related routes
+app.use("/api/users", userRoutes); // Use users-related routes
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
