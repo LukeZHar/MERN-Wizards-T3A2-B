@@ -1,11 +1,11 @@
-
 import React, { useState } from "react";
 import logo from "../assets/Mern.png"
-import { usePosts } from "../contexts/PostContext";
 import { TextField, Button, Typography, Container, Select, MenuItem, Box } from "@mui/material";
 import axios from "axios";
 import { useSnackbar } from "../contexts/SnackbarContext";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth"
+import LoginPrompt from "../components/LoginPrompt";
 
 export default function PostCreation() {
     // State for form inputs
@@ -15,12 +15,15 @@ export default function PostCreation() {
         priority: "Low",
         category: "Option 1"
     });
-    
-    // Navigate to dashboard page after creating post
-    const navigate = useNavigate(); 
 
-    // Access Snackbar
-    const showSnackbar = useSnackbar(); 
+    const { isLoggedIn } = useAuth(); // Get auth status
+    const navigate = useNavigate(); // Navigate to dashboard page 
+    const showSnackbar = useSnackbar(); // Access Snackbar
+
+    // Redirects user to login page if not logged in
+    if (!isLoggedIn()) {
+        return <LoginPrompt message="You must be logged in to view your profile." />;
+    }
 
     // Function to handle input changes
     const handleChange = (e) => {
@@ -31,12 +34,12 @@ export default function PostCreation() {
     // Function to handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         if (!post.title.trim() || !post.content.trim()) {
             showSnackbar("Title and Content cannot be empty!");
             return;
         }
-    
+
         try {
             const token = localStorage.getItem('token'); // Retrieve the token
             const response = await axios.post(
@@ -48,7 +51,7 @@ export default function PostCreation() {
                     },
                 }
             );
-    
+
             console.log("Post created:", response.data);
             showSnackbar("Post created successfully!");
             handleClear();
@@ -67,7 +70,7 @@ export default function PostCreation() {
             priority: "Low",
             category: "Option 1"
         });
-        
+
         console.log("Form has been cleared!");
     };
 
@@ -128,7 +131,7 @@ export default function PostCreation() {
                         <MenuItem value="Medium">Medium</MenuItem>
                         <MenuItem value="High">High</MenuItem>
                     </Select>
-                    
+
                     {/* Category: */}
                     <Typography variant="body1">Category:</Typography>
                     <Select
