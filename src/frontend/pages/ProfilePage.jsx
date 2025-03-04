@@ -4,7 +4,9 @@ import axios from "axios";
 import { jwtDecode } from 'jwt-decode';
 import logo from "../assets/Mern.png";
 import { useSnackbar } from "../contexts/SnackbarContext";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth"
+import LoginPrompt from "../components/LoginPrompt";
 
 export default function ProfilePage() {
     const [user, setUser] = useState({
@@ -13,11 +15,14 @@ export default function ProfilePage() {
         registrationDate: "",
     });
 
-    // Redirects to another page
+    const { isLoggedIn } = useAuth();
     const navigate = useNavigate();
-
-    // display msgs back to user
     const showSnackbar = useSnackbar();
+
+    // Redirects user to login page if not logged in
+    if (!isLoggedIn()) {
+        return <LoginPrompt message="You must be logged in to view your profile." />;
+    }
 
     // Fetch user data
     useEffect(() => {
