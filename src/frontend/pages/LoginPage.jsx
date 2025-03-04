@@ -7,6 +7,7 @@ import { useUserAuthContext } from "../contexts/UserAuthContext"; // Import cust
 import { useSnackbar } from "../contexts/SnackbarContext";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/Mern.png"
+import GoogleSignInButton from '../components/GoogleSignInButton';
 
 export default function LoginPage() {
     // State variables for storing login input and error messages
@@ -96,15 +97,14 @@ export default function LoginPage() {
                 <Divider sx={{ my: 2 }}>
                     <Typography variant="body2">OR</Typography>
                 </Divider>
-                <Button
+                <GoogleSignInButton 
                     fullWidth
                     variant="contained"
                     sx={{ mb: 2, mt: 1 }}
-                    onClick={() => window.location.href = 'http://localhost:5000/api/auth/google'}
                 >
                     <GoogleIcon sx={{ marginRight: 1 }} /> {/* Google icon */}
                     Login with Google
-                </Button>
+                </GoogleSignInButton>
                 <Typography variant="body2" align="center" sx={{ mt: 2 }}>
                     Don't have an account? <a href="/register" style={{ color: '#fffff0' }}>Register</a>
                 </Typography>
