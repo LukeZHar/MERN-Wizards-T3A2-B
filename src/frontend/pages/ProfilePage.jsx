@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
-import { TextField, Button, Typography, Container, Select, MenuItem, Box } from "@mui/material";
+import { TextField, Button, Typography, Container, Box } from "@mui/material";
 import axios from "axios";
-import logo from "../assets/Mern.png"
+import { jwtDecode } from 'jwt-decode';
+import logo from "../assets/Mern.png";
 
 export default function ProfilePage() {
     const [user, setUser] = useState({
@@ -15,22 +15,26 @@ export default function ProfilePage() {
     // Fetch user data
     useEffect(() => {
         const fetchUserData = async () => {
-            try {
-                const token = localStorage.getItem('token'); // Retrieve the token
-                const response = await axios.get(
-                    `${import.meta.env.VITE_AUTH_API_URL}/api/users/profile`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`, // Include JWT token
-                        },
-                    }
-                );
-                setUser(response.data);
-            } catch (err) {
-                console.error("Error fetching user data:", err);
+            const token = localStorage.getItem('token'); // Retrieve the token
+            if (token) {
+                const decodedToken = jwtDecode(token);
+                const userId = decodedToken.userId; // Ensure 'userId' is included in your JWT payload
+
+                try {
+                    const response = await axios.get(
+                        `${import.meta.env.VITE_AUTH_API_URL}/api/users/${userId}`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`, // Include JWT token
+                            },
+                        }
+                    );
+                    setUser(response.data);
+                } catch (err) {
+                    console.error("Error fetching user data:", err);
+                }
             }
         };
-
         fetchUserData();
     }, []);
 
@@ -46,19 +50,25 @@ export default function ProfilePage() {
     // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const token = localStorage.getItem('token'); // Retrieve the token
-            await axios.put(
-                `${import.meta.env.VITE_AUTH_API_URL}/api/users/profile`,
-                user,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`, // Include JWT token
-                    },
-                }
-            );
-        } catch (err) {
-            console.error("Error updating profile:", err);
+        const token = localStorage.getItem('token');
+        if (token) {
+            const decodedToken = jwtDecode(token);
+            const userId = decodedToken.userId;
+
+            try {
+                await axios.patch(
+                    `${import.meta.env.VITE_AUTH_API_URL}/api/users/${userId}`,
+                    user,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+                // Handle successful update, e.g., show a success message
+            } catch (err) {
+                console.error("Error updating profile:", err);
+            }
         }
     };
 
@@ -69,8 +79,8 @@ export default function ProfilePage() {
             email: "",
             name: "",
             registrationDate: "",
-        })
-    }
+        });
+    };
 
     return (
         <Container component="main" maxWidth="sm">
@@ -130,17 +140,8 @@ export default function ProfilePage() {
                         sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
                     />
 
-                    <TextField
-                        fullWidth
-                        label="Password"
-                        name="password"
-                        type="password"
-                        variant="outlined"
-                        sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
-                    />
-
                     <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 2 }}>
-                        <Button variant="contained" color="secondary" onClick={handleClear} >
+                        <Button variant="contained" color="secondary" onClick={handleClear}>
                             Clear
                         </Button>
                         <Button variant="contained" color="primary" type="submit">
