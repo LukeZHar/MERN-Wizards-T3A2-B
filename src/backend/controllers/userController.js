@@ -85,7 +85,6 @@ async function updateUserPassword(req, res) {
     }
 }
 
-
 // Export functions
 module.exports = {
     getUserProfile,
