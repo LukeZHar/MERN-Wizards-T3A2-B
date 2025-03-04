@@ -11,13 +11,13 @@ const Home = () => {
     };
 
     return (
-        <Container component="main" maxWidth="sm" sx={{ marginTop: '100px', textAlign: 'left' }}>
+        <Container component="main" maxWidth="sm" sx={{ marginTop: '100px', textAlign: 'center' }}>
             <Typography variant="h4" gutterBottom>
-                Welcome to A Ticket A Task-it
+                Welcome to freindly and efficient task management
             </Typography>
             <img src={brandLogo} alt="Brand Logo" style={{ display: 'block', margin: '0 auto', width: '80%', maxWidth: '500px', borderRadius: '50%' }} />
             <Typography variant="body1" gutterBottom>
-                A user freindly and efficient task management tool to make your collaboration and workflow planning simple.
+            Simplify your collaboration and workflow planning .
             </Typography>
             <Typography>
             Don't have an account?
