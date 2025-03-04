@@ -8,7 +8,6 @@ export default function ProfilePage() {
     const [user, setUser] = useState({
         username: "",
         email: "",
-        name: "",
         registrationDate: "",
     });
 
@@ -77,7 +76,6 @@ export default function ProfilePage() {
         setUser({
             username: "",
             email: "",
-            name: "",
             registrationDate: "",
         });
     };
@@ -116,16 +114,6 @@ export default function ProfilePage() {
                         name="email"
                         variant="outlined"
                         value={user.email}
-                        onChange={handleChange}
-                        sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
-                    />
-
-                    <TextField
-                        fullWidth
-                        label="Name"
-                        name="name"
-                        variant="outlined"
-                        value={user.name}
                         onChange={handleChange}
                         sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
                     />
