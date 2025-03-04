@@ -4,13 +4,15 @@ import { useUserAuthContext } from "../contexts/UserAuthContext"; // Import the 
 import { PostProvider as Post } from "../contexts/PostContext"; // Import Post component to display posts
 import axios from "axios"; // Import axios for making API requests
 import { useSnackbar } from '../contexts/SnackbarContext';
-
+import { useNavigate } from "react-router-dom";
 
 export default function DashboardPage() {
     const [posts, setPosts] = useState([]); // State for storing posts
     const [error, setError] = useState(''); // State for capturing errors
     const [token] = useUserAuthContext(); // Get JWT token from context
     const showSnackbar = useSnackbar(); // Access Snackbar
+
+    const navigate = useNavigate();
 
     // Fetch posts on component mount
     useEffect(() => {
@@ -50,11 +52,20 @@ export default function DashboardPage() {
     return (
         <Container component="main" maxWidth="md">
             <Typography variant="h4" gutterBottom>
-                Your Dashboard
+                Dashboard
             </Typography>
             {error && <Alert severity="error">{error}</Alert>} {/* Show error if it exists */}
 
-            <Typography variant="h6">Your Posts</Typography>
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={() => navigate("/add-post")} // Navigates to create post page
+                sx={{ mt: 2 }}
+            >
+                Create New Post
+            </Button>
+
+            <Typography variant="h6">Posts</Typography>
             <Grid2 container spacing={2}>
                 {posts.length > 0 ? (
                     posts.map((post) => (
@@ -82,15 +93,6 @@ export default function DashboardPage() {
                     <Typography variant="body1">No posts to display.</Typography>
                 )}
             </Grid2>
-
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={() => {/* Logic to navigate to the post creation page */ }}
-                sx={{ mt: 2 }}
-            >
-                Create New Post
-            </Button>
         </Container>
     );
 }
