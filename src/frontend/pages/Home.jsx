@@ -27,7 +27,7 @@ const Home = () => {
                 onClick={handleRegister} 
                 sx={{ mt: 2, bgcolor: '#00cccc', color: '#fffff0'}}
             >
-                Login to your account
+                Register for access
             </Button>
         </Container>
     );
