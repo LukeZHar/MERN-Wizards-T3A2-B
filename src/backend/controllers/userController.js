@@ -62,7 +62,8 @@ async function updateUserProfile(req, res) {
 }
 
 async function updateUserPassword(req, res) {
-    const userId = req.user.id; // Extract user ID from request parameters
+    // const userId = req.params.id; // Extract user ID from request parameters
+    const userId = req.authUserData.userId;
     const { currentPassword, newPassword } = req.body;
 
     try {

@@ -3,6 +3,8 @@ import { TextField, Button, Typography, Container, Box } from "@mui/material";
 import axios from "axios";
 import { jwtDecode } from 'jwt-decode';
 import logo from "../assets/Mern.png";
+import { useSnackbar } from "../contexts/SnackbarContext";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfilePage() {
     const [user, setUser] = useState({
@@ -10,6 +12,12 @@ export default function ProfilePage() {
         email: "",
         registrationDate: "",
     });
+
+    // Redirects to another page
+    const navigate = useNavigate();
+
+    // display msgs back to user
+    const showSnackbar = useSnackbar();
 
     // Fetch user data
     useEffect(() => {
@@ -31,6 +39,7 @@ export default function ProfilePage() {
                     setUser(response.data);
                 } catch (err) {
                     console.error("Error fetching user data:", err);
+                    showSnackbar(err.response?.data?.message || 'Update failed');
                 }
             }
         };
@@ -67,9 +76,11 @@ export default function ProfilePage() {
                         "Content-Type": "application/json"
                     },
                 });
+                showSnackbar("Details updated successfully!");
                 console.log("Profile updated successfully!");
+                navigate("/dashboard");
             } catch (err) {
-                console.error("Error updating profile:", err.response?.data || err.message);
+                showSnackbar(err.response?.data?.message || 'Update failed');
             }
         }
     };
@@ -80,6 +91,7 @@ export default function ProfilePage() {
             email: "",
             registrationDate: prevUser.registrationDate
         }));
+        showSnackbar("Form cleared!");
     };
 
     return (
