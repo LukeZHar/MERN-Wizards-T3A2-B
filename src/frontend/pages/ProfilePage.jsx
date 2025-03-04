@@ -9,7 +9,7 @@ export default function ProfilePage() {
     const [passwordData, setPasswordData] = useState({ currentPassword: "", newPassword: "" });
 
 
-    return(
+    return (
         <Container component="main" maxWidth="sm">
             <Box sx={{
                 bgcolor: '#00cccc', // Background color
@@ -21,6 +21,8 @@ export default function ProfilePage() {
                 justifyContent: 'center',
                 marginTop: '100px', // Centered with margin above
             }}></Box>
+
+            <Typography variant="h5">User Profile</Typography>
         </Container>
     )
 }

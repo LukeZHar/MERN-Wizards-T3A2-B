@@ -7,6 +7,7 @@ import { PostProvider } from "../contexts/PostContext.jsx";
 import DashboardPage from "./DashboardPage.jsx";
 import Layout from "../components/Layout.jsx";
 import "../styles/App.css"
+import ProfilePage from "./ProfilePage.jsx";
 
 function App() {
   return (
@@ -15,10 +16,11 @@ function App() {
         <Layout>
           <Routes>
             <Route path="/" element={<LoginPage />} />
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/login" element={<LoginPage />} /> 
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/add-post" element={<PostCreation />} />
             <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Layout>
