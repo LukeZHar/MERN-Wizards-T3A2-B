@@ -10,6 +10,7 @@ import "../styles/App.css"
 import NotificationsPage from "./NotificationsPage.jsx";
 import Home from "./Home.jsx";
 import ProfilePage from "./ProfilePage.jsx";
+import PostEdit from "./PostEdit.jsx";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/notifications" element={<NotificationsPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="*" element={<NotFoundPage />} />
+            <Route path="/edit-post" element={<PostEdit />} />
           </Routes>
         </Layout>
       </Router>

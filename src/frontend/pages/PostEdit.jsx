@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { usePosts } from '../frontend/contexts/PostContext';
-import '../index.css';
-//import '../frontend/styles/PostEdit.css';
+import { usePosts } from '../contexts/PostContext';
 import { TextField, Divider, Button, Typography, Container, Select, MenuItem, Box } from "@mui/material"; 
+
+import { useSnackbar } from "../contexts/SnackbarContext";
+
 
 export default function PostEdit () {
 
-    const { postID } = useParams();  // gets ID from the URL
+    const { id } = useParams();  // gets ID from the URL
     const navigate = useNavigate();
     const { posts, editPost} = usePosts();
     
