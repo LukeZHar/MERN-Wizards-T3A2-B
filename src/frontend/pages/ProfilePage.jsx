@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { TextField, Button, Typography, Container, Select, MenuItem, Box } from "@mui/material";
 import axios from "axios";
@@ -12,6 +12,27 @@ export default function ProfilePage() {
         registrationDate: "",
     });
 
+    // Fetch user data
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const token = localStorage.getItem('token'); // Retrieve the token
+                const response = await axios.get(
+                    `${import.meta.env.VITE_AUTH_API_URL}/api/users/profile`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`, // Include JWT token
+                        },
+                    }
+                );
+                setUser(response.data);
+            } catch (err) {
+                console.error("Error fetching user data:", err);
+            }
+        };
+
+        fetchUserData();
+    }, []);
 
     // Handle input changes
     const handleChange = (e) => {
@@ -21,7 +42,26 @@ export default function ProfilePage() {
             [name]: value,
         }));
     };
-    
+
+    // Handle form submission
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const token = localStorage.getItem('token'); // Retrieve the token
+            await axios.put(
+                `${import.meta.env.VITE_AUTH_API_URL}/api/users/profile`,
+                user,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`, // Include JWT token
+                    },
+                }
+            );
+        } catch (err) {
+            console.error("Error updating profile:", err);
+        }
+    };
+
     // Handle form reset
     const handleClear = () => {
         setUser({
@@ -49,12 +89,14 @@ export default function ProfilePage() {
                     User Profile
                 </Typography>
 
-                <form style={{ width: "100%" }}>
+                <form onSubmit={handleSubmit} style={{ width: "100%" }}>
                     <TextField
                         fullWidth
                         label="Username"
                         name="username"
                         variant="outlined"
+                        value={user.username}
+                        onChange={handleChange}
                         sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
                     />
 
@@ -63,6 +105,8 @@ export default function ProfilePage() {
                         label="Email"
                         name="email"
                         variant="outlined"
+                        value={user.email}
+                        onChange={handleChange}
                         sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
                     />
 
@@ -71,6 +115,8 @@ export default function ProfilePage() {
                         label="Name"
                         name="name"
                         variant="outlined"
+                        value={user.name}
+                        onChange={handleChange}
                         sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
                     />
 
@@ -79,6 +125,7 @@ export default function ProfilePage() {
                         label="Registration Date"
                         name="registrationDate"
                         variant="outlined"
+                        value={new Date(user.registrationDate).toLocaleDateString()}
                         disabled
                         sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
                     />
