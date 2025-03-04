@@ -66,7 +66,7 @@ export default function PostCreation() {
             priority: "Low",
             category: "Option 1"
         });
-
+        
         console.log("Form has been cleared!");
     };
 

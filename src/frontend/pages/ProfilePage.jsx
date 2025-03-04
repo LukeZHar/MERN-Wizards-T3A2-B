@@ -5,10 +5,32 @@ import axios from "axios";
 import logo from "../assets/Mern.png"
 
 export default function ProfilePage() {
-    const [user, setUser] = useState({ username: "", email: "", name: "", registrationDate: "" });
-    const [updatedUser, setUpdatedUser] = useState({ username: "", email: "", name: "" });
-    const [passwordData, setPasswordData] = useState({ currentPassword: "", newPassword: "" });
+    const [user, setUser] = useState({
+        username: "",
+        email: "",
+        name: "",
+        registrationDate: "",
+    });
 
+
+    // Handle input changes
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setUser((prevUser) => ({
+            ...prevUser,
+            [name]: value,
+        }));
+    };
+    
+    // Handle form reset
+    const handleClear = () => {
+        setUser({
+            username: "",
+            email: "",
+            name: "",
+            registrationDate: "",
+        })
+    }
 
     return (
         <Container component="main" maxWidth="sm">
@@ -71,7 +93,7 @@ export default function ProfilePage() {
                     />
 
                     <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 2 }}>
-                        <Button variant="contained" color="secondary" >
+                        <Button variant="contained" color="secondary" onClick={handleClear} >
                             Clear
                         </Button>
                         <Button variant="contained" color="primary" type="submit">
@@ -83,4 +105,3 @@ export default function ProfilePage() {
         </Container>
     );
 }
-
