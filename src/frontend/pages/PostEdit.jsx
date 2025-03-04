@@ -1,19 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { usePosts } from '../contexts/PostContext';
-import { TextField, Divider, Button, Typography, Container, Select, MenuItem, Box } from "@mui/material"; 
+import { TextField, Button, Typography, Container, Box } from "@mui/material"; 
 
 import { useSnackbar } from "../contexts/SnackbarContext";
 
 
 export default function PostEdit () {
-
+    
     const { id } = useParams();  // gets ID from the URL
     const navigate = useNavigate();
     const { posts, editPost} = usePosts();
     
     //find posts based in the ID
-    const [post, setPost] = useState(null);
+    const [post, setPost] = useState([]);
 
     useEffect(() => {
         //find post
@@ -24,7 +24,7 @@ export default function PostEdit () {
         }
         else {
             console.error(`Post with ID ${id} not found.`);
-            navigate('/post')
+            //navigate('/add-post')
         }
     }
         , [id, posts,navigate]);
@@ -41,31 +41,54 @@ export default function PostEdit () {
         // update task in context
        editPost(post);
 
-       //redirects to posts details page
-       navigate('/post');
     };
 
-    return ( 
-        <div> 
-             <h2>Update Post Details</h2>
+    return (
+            // Page styling
+            <Container component="main" maxWidth="sm">
+                <Box sx={{
+                    bgcolor: '#00cccc', // Background color of the container
+                    borderRadius: 2,
+                    padding: 4,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginTop: '100px', // Centered with margin above
+                }}>
+             <Typography variant="h5">Update Post Details</Typography>
              <form onSubmit={ handleSubmit }>
-                <div>
-                    <label>Title: </label>
-                    <input 
-                    type='text' 
-                    name='title' 
-                    value={post.title} 
-                    onChange={handleChange} required />
-                </div>
-                <div>
-                    <label>Description: </label>
-                    <textarea             
-                    name='description'
-                    value={post.description} 
-                    onChange={handleChange} required />
-                </div>
-                <button type='submit'>Save changes</button>
-             </form>       
-         </div>
-    )
-};
+                <TextField
+                     fullWidth
+                     label="Title"
+                     name="title"
+                     variant="outlined"
+                     value={post.title}
+                     onChange={handleChange}
+                       sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
+                                    />
+                <TextField
+                        fullWidth
+                        label="Content"
+                        name="content"
+                        variant="outlined"
+                        multiline
+                        rows={4}
+                        value={post.content}
+                        onChange={handleChange}
+                        sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
+                                    />
+                {/* Buttons */}
+                <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 2 }}>
+                   <Button variant="contained" color="secondary" onClick={handleChange}>
+                                            Save
+                    </Button>
+                                        <Button variant="contained" color="primary" type="delete">
+                                            Delete
+                                        </Button>
+                                    </Box>
+                                </form>
+                            </Box>
+                        </Container>
+    );
+}

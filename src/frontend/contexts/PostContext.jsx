@@ -12,8 +12,22 @@ export function PostProvider({ children }) {
         setPosts((prevPosts) => [...prevPosts, newPost]);
     }
 
+    // Delete Post function
+    const deletePost = (id) => setPosts((prev) => prev.filter((post) => post.id != id))
+
+    // Edit Post function
+    const editPost = (updatedPost) => {
+        setPosts((prev) => 
+            prev.map(
+                (post) => (
+                    post.id === updatedPost.id ?
+                    {...post, ...updatedPost} :
+                    post
+                )))
+    } 
+
     return (
-        <PostContext.Provider value={{ posts, addPost }}>
+        <PostContext.Provider value={{ posts, addPost, deletePost,editPost }}>
             {children}
         </PostContext.Provider>
     )
