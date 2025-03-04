@@ -46,38 +46,40 @@ export default function ProfilePage() {
         }));
     };
 
-    // Handle form submission
+    // Function to handle update user details form
     const handleSubmit = async (e) => {
         e.preventDefault();
         const token = localStorage.getItem('token');
-        if (token) {
+        
+        if (token) { // Conditional check for Token
             const decodedToken = jwtDecode(token);
             const userId = decodedToken.userId;
-
+            const apiUrl = `${import.meta.env.VITE_AUTH_API_URL}/api/users/${userId}`;
+    
+            console.log("Sending PATCH request to:", apiUrl); // debug code
+            console.log("Payload:", user);
+            
+            // Update user info
             try {
-                await axios.patch(
-                    `${import.meta.env.VITE_AUTH_API_URL}/api/users/${userId}`,
-                    user,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                );
-                // Handle successful update, e.g., show a success message
+                await axios.patch(apiUrl, user, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    },
+                });
+                console.log("Profile updated successfully!");
             } catch (err) {
-                console.error("Error updating profile:", err);
+                console.error("Error updating profile:", err.response?.data || err.message);
             }
         }
     };
 
-    // Handle form reset
     const handleClear = () => {
-        setUser({
+        setUser(prevUser => ({
             username: "",
             email: "",
-            registrationDate: "",
-        });
+            registrationDate: prevUser.registrationDate
+        }));
     };
 
     return (
