@@ -22,73 +22,95 @@ async function getUserProfile(req, res) {
             userClass: user.userClass,
         });
     } catch (error) {
-        console.error("Error fetching user profile:", error); // Log error for debugging
+        console.error(`Error fetching user profile for user ID ${userId}:`, error); // Log error for debugging
         res.status(500).json({ message: "Error fetching user" }); // Send error response
     }
 }
 
-// Update User Profile by ID
 async function updateUserProfile(req, res) {
-    const userId = req.params.id; // Extract user ID from request parameters
-    const { username, email } = req.body; // Get updated data from request body
+    const userId = req.params.id;
+    const { username, email, password } = req.body;
 
     try {
-        // Find the user and update fields
-        const updatedUser = await User.findByIdAndUpdate(
-            userId,
-            { username, email }, // Only updating username and email
-            { new: true, runValidators: true } // Return updated document and run validators
-        );
+        // Find the user first
+        const user = await User.findById(userId);
 
-        // Check if updatedUser exists
-        if (!updatedUser) {
+        if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
 
-        // Send the updated user data (omit sensitive data if necessary)
+        // Update username and email
+        if (username) user.username = username;
+        if (email) user.email = email;
+
+        // If a new password is provided, hash it before saving
+        if (password) {
+            const salt = await bcrypt.genSalt(10);
+            user.password = await bcrypt.hash(password, salt);
+        }
+
+        // Save the updated user
+        await user.save();
+
         res.status(200).json({
             message: "User updated successfully",
             user: {
-                username: updatedUser.username,
-                email: updatedUser.email,
-                userClass: updatedUser.userClass,
-                registrationDate: updatedUser.registrationDate,
-            }
+            username: user.username,
+            email: user.email,
+            registrationDate: user.registrationDate,
+            userClass: user.userClass
+            },
         });
     } catch (error) {
-        console.error("Error updating user profile:", error); // Log error for debugging
-        res.status(500).json({ message: "Error updating user" }); // Send error response
+        console.error(`Error updating user profile for user ID ${userId}:`, error);
+        res.status(500).json({ message: "Error updating user" });
     }
 }
 
-async function updateUserPassword(req, res) {
-    // const userId = req.params.id; // Extract user ID from request parameters
-    const userId = req.authUserData.userId;
-    const { currentPassword, newPassword } = req.body;
+// async function updateUserPassword(req, res) {
+//     // const userId = req.params.id; // Extract user ID from request parameters
+//     if (!req.authUserData) {
+//         console.log("updateUserPassword: req.authUserData is undefined");
+//         return res.status(401).json({ message: "Unauthorized" });
+//     }
+//     const userId = req.authUserData.userId;
+    
+//     const { currentPassword, newPassword } = req.body;
 
-    try {
-        const user = await User.findById(userId);
-        if (!user) return res.status(404).json({ message: "User not found" });
+//     if (!userId) {
+//         console.log("updateUserPassword: userId is undefined");
+//         return res.status(401).json({ message: "Unauthorized" });
+//     }
 
-        // Check if the current password is correct
-        const isMatch = await bcrypt.compare(currentPassword, user.password);
-        if (!isMatch) return res.status(400).json({ message: "Incorrect current password" });
+//     try {
+//         console.log(`updateUserPassword: userId = ${userId}`);
+//         const user = await User.findById(userId);
+//         // Validate and sanitize currentPassword and user.password
+//         if (typeof currentPassword !== 'string' || typeof user.password !== 'string') {
+//             console.log("updateUserPassword: currentPassword or user.password is not a string");
+//             return res.status(400).json({ message: "Invalid password format" });
+//         }
 
-        // Hash the new password
-        const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(newPassword, salt);
-        await user.save();
+//         // Check if the current password is correct
+//         const isMatch = await bcrypt.compare(currentPassword, user.password);
+//         console.log(`updateUserPassword: currentPassword = ${currentPassword}, isMatch = ${isMatch}`);
+//         if (!isMatch) return res.status(400).json({ message: "Incorrect current password" });
 
-        res.status(200).json({ message: "Password updated successfully" });
-    } catch (error) {
-        console.error("Error updating password:", error);
-        res.status(500).json({ message: "Error updating password" });
-    }
-}
+//         // Hash the new password
+//         const salt = await bcrypt.genSalt(10);
+//         user.password = await bcrypt.hash(newPassword, salt);
+//         await user.save();
+
+//         res.status(200).json({ message: "Password updated successfully" });
+//     } catch (error) {
+//         console.error(`Error updating password for user ID ${userId}:`, error);
+//         res.status(500).json({ message: "Error updating password" });
+//     }
+// }
 
 // Export functions
 module.exports = {
     getUserProfile,
-    updateUserProfile,
-    updateUserPassword
+    updateUserProfile
+    // updateUserPassword
 };

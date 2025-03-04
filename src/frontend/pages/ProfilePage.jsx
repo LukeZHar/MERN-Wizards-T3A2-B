@@ -11,6 +11,7 @@ export default function ProfilePage() {
         username: "",
         email: "",
         registrationDate: "",
+        password: ""
     });
 
     // Redirects to another page
@@ -39,7 +40,7 @@ export default function ProfilePage() {
                     setUser(response.data);
                 } catch (err) {
                     console.error("Error fetching user data:", err);
-                    showSnackbar(err.response?.data?.message || 'Update failed');
+                    showSnackbar(err.response?.data?.message || 'Failed to fetch user data');
                 }
             }
         };
@@ -59,18 +60,23 @@ export default function ProfilePage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const token = localStorage.getItem('token');
-        
+
         if (token) { // Conditional check for Token
             const decodedToken = jwtDecode(token);
             const userId = decodedToken.userId;
             const apiUrl = `${import.meta.env.VITE_AUTH_API_URL}/api/users/${userId}`;
-    
-            console.log("Sending PATCH request to:", apiUrl); // debug code
+
+            // Prepare the update payload, excluding empty password fields
+            const updatedData = { ...user };
+            if (!updatedData.password) {
+                delete updatedData.password; // Remove password if not provided
+            }
+            console.log("Sending PATCH request to:", apiUrl, updatedData); // debug code
             console.log("Payload:", user);
-            
+
             // Update user info
             try {
-                await axios.patch(apiUrl, user, {
+                await axios.patch(apiUrl, updatedData, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "application/json"
@@ -139,6 +145,17 @@ export default function ProfilePage() {
                         variant="outlined"
                         value={new Date(user.registrationDate).toLocaleDateString()}
                         disabled
+                        sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
+                    />
+
+                    <TextField
+                        fullWidth
+                        label="New Password"
+                        name="password"
+                        type="password"
+                        variant="outlined"
+                        value={user.password}
+                        onChange={handleChange}
                         sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
                     />
 
