@@ -2,7 +2,6 @@ import { useState } from "react";
 import axios from 'axios';
 import { TextField, Button, Typography, Container, Divider, InputAdornment } from '@mui/material'; // Import MUI components
 import { AccountCircle, Lock } from '@mui/icons-material';
-import GoogleIcon from '@mui/icons-material/Google'
 import { useUserAuthContext } from "../contexts/UserAuthContext"; // Import custom AuthContext
 import { useSnackbar } from "../contexts/SnackbarContext";
 import { useNavigate } from "react-router-dom";
@@ -96,15 +95,6 @@ export default function LoginPage() {
                 <Divider sx={{ my: 2 }}>
                     <Typography variant="body2">OR</Typography>
                 </Divider>
-                <Button
-                    fullWidth
-                    variant="contained"
-                    sx={{ mb: 2, mt: 1 }}
-                    onClick={() => window.location.href = 'http://localhost:5000/api/auth/google'}
-                >
-                    <GoogleIcon sx={{ marginRight: 1 }} /> {/* Google icon */}
-                    Login with Google
-                </Button>
                 <Typography variant="body2" align="center" sx={{ mt: 2 }}>
                     Don't have an account? <a href="/register" style={{ color: '#fffff0' }}>Register</a>
                 </Typography>

@@ -4,7 +4,6 @@ import logo from "../assets/Mern.png"
 import { useNavigate } from "react-router-dom";
 import { TextField, Button, Typography, Container, Alert, Divider, InputAdornment } from '@mui/material'; // Import MUI components
 import { AccountCircle, Lock, MailOutline } from '@mui/icons-material';
-import GoogleIcon from '@mui/icons-material/Google';
 import { useSnackbar } from "../contexts/SnackbarContext";
 
 export default function RegisterPage() {
@@ -106,15 +105,6 @@ export default function RegisterPage() {
                 <Divider sx={{ my: 2 }}>
                     <Typography variant="body2">OR</Typography>
                 </Divider>
-                <Button
-                    fullWidth
-                    variant="contained"
-                    sx={{ mb: 2, mt: 1 }}
-                    onClick={() => window.location.href = 'http://localhost:5000/api/auth/google'}
-                >
-                    <GoogleIcon sx={{ marginRight: 1 }} /> {/* Google icon */}
-                    Register with Google
-                </Button>
                 {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>} 
                 <Typography variant="body2" color="#fffff0" align="center" sx={{ mt: 2 }}>
                     Already have an account? <a href="/login" style={{ color: '#fffff0' }}>Login</a>
