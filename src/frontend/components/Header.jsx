@@ -74,7 +74,7 @@ export default function Header() {
         <HideOnScroll>
             <AppBar position="fixed" sx={{ bgcolor: '#00cccc' }}>
                 <Toolbar>
-                    <Link to="/dashboard" style={{ display: 'flex', alignItems: 'center' }}>
+                    <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
                         <img
                             src={logo}
                             alt="MERN Logo"
