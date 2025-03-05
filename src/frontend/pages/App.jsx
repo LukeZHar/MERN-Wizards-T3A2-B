@@ -10,12 +10,9 @@ import "../styles/App.css"
 import NotificationsPage from "./NotificationsPage.jsx";
 import Home from "./Home.jsx";
 import ProfilePage from "./ProfilePage.jsx";
-import { GoogleOAuthProvider } from '@react-oauth/google';
 
 function App() {
-  const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   return (
-    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <PostProvider>
         <Router>
           <Layout>
@@ -32,7 +29,6 @@ function App() {
           </Layout>
         </Router>
       </PostProvider>
-    </GoogleOAuthProvider>
   );
 }
 
