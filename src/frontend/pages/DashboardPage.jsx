@@ -82,7 +82,7 @@ export default function DashboardPage() {
                                     <Button size="small" onClick={() => navigate(`/edit-post/${post._id}`)}>
                                         Edit
                                     </Button>
-                                    <Button size="small" onClick={() => {() => handleDelete(post._id)}}>
+                                    <Button size="small" onClick={() => handleDelete(post._id)}>
                                         Delete
                                     </Button>
                                 </CardActions>
