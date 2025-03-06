@@ -39,7 +39,7 @@ async function getAllPosts(req, res) {
 async function getPostById(req, res) {  
     const { id } = req.params;
 
-    try { // send author info along post
+    try { // send author info along with post
         const post = await Post.findById(id).populate("author", "username email");
         if (!post) {
             return res.status(404).json({ message: "Post not found" });
@@ -51,36 +51,21 @@ async function getPostById(req, res) {
     }
 }
 
-// Function to edit specific post
+// Function to edit specific post (Middleware ensures authorization)
 async function editPost(req, res) {
-    if (!req.authUserData || !req.authUserData.userId) {
-        return res.status(401).json({ message: "Unauthorized - User ID missing from token" });
-    }
-
-    // fetch fields 
-    const { id } = req.params;
-    const { title, content, priority, category } = req.body;
-
     try {
-        const post = await Post.findById(id);
-        if (!post) {
-            return res.status(404).json({ message: "Post not found" });
-        }
+        // fetch fields 
+        const { title, content, priority, category } = req.body;
 
-        // Ensure only author can edit the post
-        if (post.author.toString() !== req.authUserData.userId) {
-            return res.status(403).json({ message: "Forbidden, you can only edit your own posts." });
-        }
+        // Use post attached from `isPostAuthor` middleware
+        req.post.title = title || req.post.title;
+        req.post.content = content || req.post.content;
+        req.post.priority = priority || req.post.priority;
+        req.post.category = category || req.post.category;
 
-        // Allow partial updates
-        post.title = title || post.title;
-        post.content = content || post.content;
-        post.priority = priority || post.priority;
-        post.category = category || post.category;
-        await post.save();
+        await req.post.save(); // Save updated post
 
-        // return edited post
-        res.json(post);
+        res.json(req.post); // return edited post
     } catch (error) {
         // catch possible errors and display back
         console.error("Error updating post:", error);
@@ -88,21 +73,10 @@ async function editPost(req, res) {
     }
 }
 
-// Function to delete post
+// Function to delete post (Middleware ensures authorization)
 async function deletePost(req, res) {
-    const { id } = req.params;
-    try { // Conditional checks
-        const post = await Post.findById(id);
-        if (!post) {
-            return res.status(404).json({ message: "Post not found" });
-        }
-
-        if (post.author.toString() !== req.authUserData.userId) {
-            return res.status(403).json({ message: "Forbidden, you can only delete your own posts." });
-        }
-
-        // Delete post after conditional checks
-        await Post.findByIdAndDelete(id);
+    try {
+        await req.post.deleteOne(); // Use post attached from middleware
         res.json({ message: "Post deleted successfully" });
     } catch (error) {
         console.error("Error deleting post:", error);
@@ -117,4 +91,4 @@ module.exports = {
     getPostById, 
     editPost, 
     deletePost 
-}
+};
