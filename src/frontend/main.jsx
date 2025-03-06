@@ -5,14 +5,18 @@ import { UserAuthContextProvider } from './contexts/UserAuthContext.jsx'
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './styles/theme';
 import { SnackbarProvider } from './contexts/SnackbarContext.jsx';
+import { ProfileProvider } from './contexts/ProfileContext.jsx';
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <UserAuthContextProvider >
       <SnackbarProvider>
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
+        <ProfileProvider>
+          <ThemeProvider theme={theme}>
+            <App />
+          </ThemeProvider>
+        </ProfileProvider>
       </SnackbarProvider>
     </UserAuthContextProvider>
   </StrictMode>,

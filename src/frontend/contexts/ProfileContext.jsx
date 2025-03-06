@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 
 // Create an instance of Context
-const AvatarContext = createContext();
+const ProfileContext = createContext();
 
 // Create provider
 export const ProfileProvider = ({ children }) => {
@@ -15,15 +15,15 @@ export const ProfileProvider = ({ children }) => {
     };
 
     return (
-        <ProfileProvider value={{profileImage, setProfileImage, updateProfileImage}}>
+        <ProfileContext.Provider value={{profileImage, setProfileImage, updateProfileImage}}>
             {children}
-        </ProfileProvider>
+        </ProfileContext.Provider>
     );
 };
 
 // // Create custom hook
-export function useProfileImg() {
-    let context = useContext(ProfileProvider);
+export function useProfile() {
+    let context = useContext(ProfileContext);
     if(!context) {
         console.log("No Profile avatars found!");
     }

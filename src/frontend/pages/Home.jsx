@@ -7,7 +7,7 @@ const Home = () => {
     const navigate = useNavigate(); // Use the navigate hook from react-router-dom
 
     const handleRegister = () => {
-        navigate('/register'); // Redirect to the registraion page
+        navigate('/register'); // Redirect to the registration page
     };
 
     return (
