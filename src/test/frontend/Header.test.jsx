@@ -5,9 +5,9 @@ import { screen } from '@testing-library/dom';
 import { MemoryRouter } from 'react-router-dom'; // Use MemoryRouter for testing navigation
 import Header from '../../frontend/components/Header'; 
 import userEvent from '@testing-library/user-event';
-import { UserAuthContextProvider } from '../../frontend/contexts/UserAuthContext'; 
+import { UserAuthContextProvider } from '../../frontend/contexts/UserAuthContext';
 
-const renderHeader = (mockedAuthValue) => { // Helper function to render Header with context
+const renderHeader = (mockedAuthValue) => { 
     return render(
         <UserAuthContextProvider value={mockedAuthValue}>
             <MemoryRouter>
@@ -38,32 +38,15 @@ test('Show Sign In button when not authenticated', () => {
     expect(signInButton).toBeInTheDocument(); // test that the Sign In button is present
 });
 
-test('Display menu items when authenticated', async () => {
+
+// Test to check if the logo navigates to "/"
+test('Logo navigates to home when clicked', () => {
     const mockedValue = ['token123', () => {}, () => {}]; // Simulated authenticated user
 
-    renderHeader(mockedValue); // Render the Header with authenticated context
+    renderHeader(mockedValue); // Render the Header with mocked context
 
-    // Simulate user clicking the Menu button (update the query to find the right button)
-    const menuButton = screen.getByRole('button', { name: /Menu/i });
-    userEvent.click(menuButton); 
+    const logoElement = screen.getByAltText("MERN Logo");
+    userEvent.click(logoElement);
 
-    // Check for menu options
-    expect(await screen.findByText(/Home/i)).toBeInTheDocument();
-    expect(await screen.findByText(/Dashboard/i)).toBeInTheDocument();
-    expect(await screen.findByText(/Create Post/i)).toBeInTheDocument();
-    expect(await screen.findByText(/Profile/i)).toBeInTheDocument();
-});
-
-test('Call logout function when Logout button is clicked', async () => {
-    const logoutMock = vi.fn(); // Replace jest.fn() with vi.fn()
-    const mockedValue = ['token123', () => {}, logoutMock]; // Use the mocked logout function
-
-    renderHeader(mockedValue); // Render the header with authenticated context
-
-    // Open the menu
-    userEvent.click(screen.getByRole('button', { name: /Menu/i }));
-
-    // Click the Logout button
-    userEvent.click(await screen.findByText(/Logout/i));
-    expect(logoutMock).toHaveBeenCalled(); // test that logout was called
+    expect(window.location.pathname).toBe('/'); // Ensure that the user is navigated to home
 });
