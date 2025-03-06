@@ -10,14 +10,14 @@ router.get("/", getAllPosts);
 // GET /api/posts/:id - Get a specific post by ID
 router.get("/:id", getPostById);
 
-// POST /api/posts/create-post - Creates a post
-router.post('/create-post', validateToken, createPost);
+// POST /api/posts/ - Creates a post
+router.post("/", validateToken, createPost);
 
-// PATCH /api/posts/edit-post - Update a post 
-router.patch("/edit-post", validateToken, editPost);
+// PATCH /api/posts/:id - Update a post 
+router.patch("/:id", validateToken, editPost);
 
-// DELETE /api/posts/delete-post - Delete a post 
-router.delete("/delete-post", validateToken, deletePost);
+// DELETE /api/posts/:id - Delete a post 
+router.delete("/:id", validateToken, deletePost);
 
 // Export the router
 module.exports = router;
