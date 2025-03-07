@@ -1,51 +1,74 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { usePosts } from '../contexts/PostContext';
+import { usePosts, PostProvider as Post } from '../contexts/PostContext';
 import { TextField, Button, Typography, Container, Box, MenuItem, Select } from "@mui/material"; 
 import brandLogo from "../assets/ProductIcon.png"
 import { useSnackbar } from "../contexts/SnackbarContext";
+import axios from "axios";
+import { useUserAuthContext } from '../contexts/UserAuthContext';
 
 
 export default function PostEdit () {
     
     const { id } = useParams();  // gets ID from the URL
     const navigate = useNavigate();
-    const { posts, editPost} = usePosts();
+    const [token] = useUserAuthContext;
     
     //find posts based in the ID
     const [post, setPost] = useState([]);
 
+    // Fetch posts on component mount
     useEffect(() => {
-        //find post
-        const foundPost = posts.find((post) => post.id === id);
-        // if found
-        if (foundPost) {
-            setPost(foundPost);
+        const fetchPosts = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_AUTH_API_URL}/api/posts`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`, // Set authorization header
+                    },
+                });
+                setPosts(response.data); // Set posts received from the server
+            } catch (error) {
+                console.error("Error fetching posts:", error);
+                setError("Failed to fetch posts. Please try again later."); // Capture error message
+            }
+        };
+
+        fetchPosts(); // Call the fetch function
+    }, [token]); // The dependency array ensures this effect runs when the token changes
+
+    const handleDelete = async (postId) => {
+        try {
+            // Send DELETE request to the API
+            await axios.delete(`${import.meta.env.VITE_AUTH_API_URL}/api/posts/${postId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            // Update the local state to remove the deleted post
+            setPosts(prev => prev.filter(post => post._id !== postId));
+            showSnackbar("Post deleted successfully!"); // Show success Snackbar
+        } catch (error) {
+            showSnackbar("Failed to delete post."); // Show error Snackbar
         }
-        else {
-            console.error(`Post with ID ${id} not found.`);
-            //navigate('/add-post')
-        }
-    }
-        , [id, posts,navigate]);
-
-    const handleChange = (e) => {
-        const {name, value} = e.target;
-        setPost((prev) => ({...prev, [name]: value}));
-    }
-    
-    
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        // update task in context
-       editPost(post);
-
     };
 
     return (
-            // Page styling
-            <Container component="main" maxWidth="sm">
+        <Container component="main" maxWidth="md">
+        <Typography variant="h4" gutterBottom>
+            Dashboard
+        </Typography>
+        {error && <Alert severity="error">{error}</Alert>} {/* Show error if it exists */}
+
+        <Button
+            variant="contained"
+            color="primary"
+            onClick={() => navigate("/add-post")} // Navigates to create post page
+            sx={{ mt: 2 }}
+        >
+            Create New Post
+        </Button>
+
+        
                 <Box sx={{
                     bgcolor: '#00cccc', // Background color of the container
                     borderRadius: 2,
@@ -58,6 +81,7 @@ export default function PostEdit () {
                 }}>
                     <img src={brandLogo} alt="Logo" style={{ display: 'block', margin: '0 auto', width: '20%', maxWidth: '200px', borderRadius: '50%' }} /> 
              <Typography variant="h5">Update Post Details</Typography>
+             
              <form onSubmit={ handleSubmit }>
                 <TextField
                      fullWidth

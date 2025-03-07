@@ -12,9 +12,7 @@ import ProfilePage from "./ProfilePage.jsx";
 import PostEdit from "./PostEdit.jsx";
 
 function App() {
-  return (
-
-    <PostProvider>
+  return (  
       <Router>
         <Layout>
           <Routes>
@@ -30,7 +28,6 @@ function App() {
           </Routes>
         </Layout>
       </Router>
-    </PostProvider>
   );
 }
 
