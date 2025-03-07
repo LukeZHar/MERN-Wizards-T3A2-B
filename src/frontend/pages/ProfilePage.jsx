@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { TextField, Button, Typography, Container, Box, Avatar, IconButton, Divider } from "@mui/material";
 import { PhotoCamera } from "@mui/icons-material";
 import axios from "axios";
-import logo from "../assets/Mern.png";
 import { useSnackbar } from "../contexts/SnackbarContext";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
@@ -15,6 +14,7 @@ export default function ProfilePage() {
         username: "",
         email: "",
         registrationDate: "",
+        userClass: ""
     });
 
     // Manages state for user password
@@ -211,7 +211,7 @@ export default function ProfilePage() {
                 <Divider sx={{ width: "100%", my: 3, bgcolor: "#fffff0" }} />
 
                 <Typography variant="h5" sx={{ marginBottom: 2 }}>
-                    User Profile
+                    Your Profile
                 </Typography>
 
                 {/* Profile Update Form */}
@@ -246,6 +246,16 @@ export default function ProfilePage() {
                         sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
                     />
 
+                    <TextField
+                        fullWidth
+                        label="User class"
+                        name="userClass"
+                        variant="outlined"
+                        value={user.userClass}
+                        disabled
+                        sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
+                    />
+
                     <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 2 }}>
                         <Button variant="contained" color="primary" onClick={handleClear}>
                             Clear
@@ -262,7 +272,7 @@ export default function ProfilePage() {
                 <Typography variant="h5" sx={{ marginBottom: 2 }}>
                     Change Password
                 </Typography>
-                
+
                 <form onSubmit={handlePasswordUpdate} style={{ width: "100%" }}>
                     <TextField
                         fullWidth
