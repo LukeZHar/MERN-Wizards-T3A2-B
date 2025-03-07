@@ -3,7 +3,6 @@ import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
 import PostCreation from "./PostCreation.jsx";
 import NotFoundPage from "./NotFoundPage.jsx";
-import { PostProvider } from "../contexts/PostContext.jsx";
 import DashboardPage from "./DashboardPage.jsx";
 import Layout from "../components/Layout.jsx";
 import "../styles/App.css"

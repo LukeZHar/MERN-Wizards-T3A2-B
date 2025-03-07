@@ -94,7 +94,6 @@ export default function PostCreation() {
 
                 {/* Post creation form */}
                 <form onSubmit={handleSubmit} style={{ width: "100%" }}>
-                    <label>Title:</label>
                     <TextField
                         fullWidth
                         label="Title"

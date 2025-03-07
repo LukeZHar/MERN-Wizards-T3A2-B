@@ -40,8 +40,6 @@ const NotificationsPage = () => {
             <Notification 
                 notifications={notifications} 
                 onMarkAsRead={(id) => {
-                    // Logic to mark the notification as read (this may involve calling an API)
-                    // Example: call markAsRead API using the provided id
                     showSnackbar('Notification marked as read!'); 
                 }} 
             />

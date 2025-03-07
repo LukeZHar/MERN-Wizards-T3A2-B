@@ -1,28 +1,33 @@
 import React, { useState, useEffect } from "react";
-import { TextField, Button, Typography, Container, Box } from "@mui/material";
+import { TextField, Button, Typography, Container, Box, Avatar, IconButton, Divider } from "@mui/material";
+import { PhotoCamera } from "@mui/icons-material";
 import axios from "axios";
-import logo from "../assets/Mern.png";
 import { useSnackbar } from "../contexts/SnackbarContext";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import LoginPrompt from "../components/LoginPrompt";
+import { useProfile } from "../contexts/ProfileContext";
 
 export default function ProfilePage() {
+    // Manages state for user details
     const [user, setUser] = useState({
         username: "",
         email: "",
         registrationDate: "",
+        userClass: ""
     });
 
+    // Manages state for user password
     const [passwordData, setPasswordData] = useState({
         currentPassword: "",
         newPassword: "",
         confirmNewPassword: ""
     });
 
-    const { isLoggedIn } = useAuth();
-    const navigate = useNavigate();
-    const showSnackbar = useSnackbar();
+    const { profileImage, setProfileImage } = useProfile(); // Profile Avatar
+    const { isLoggedIn } = useAuth(); // Auth Middleware
+    const navigate = useNavigate(); // Navigate Hook
+    const showSnackbar = useSnackbar(); // Snackbar for displaying msgs
 
     // Redirects user to login page if not logged in
     if (!isLoggedIn()) {
@@ -131,6 +136,27 @@ export default function ProfilePage() {
         }
     };
 
+    // Handle profile avatar change
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader()
+        reader.onloadend = () => {
+            // Save photo
+            setProfileImage(reader.result);
+            localStorage.setItem("profileImage", reader.result);
+        };
+        reader.readAsDataURL(file);
+    };
+
+    // Removes profile avatar
+    const handleRemoveImage = () => {
+        setProfileImage(null);
+        localStorage.removeItem("profileImage");
+        showSnackbar("Profile photo removed!");
+    };
+
     const handleClear = () => {
         setUser(prevUser => ({
             username: "",
@@ -152,9 +178,40 @@ export default function ProfilePage() {
                 justifyContent: 'center',
                 marginTop: '100px',
             }}>
-                <img src={logo} alt="Logo" style={{ display: 'block', margin: '0 auto', width: '20%', maxWidth: '200px', borderRadius: '50%' }} />
-                <Typography variant="h5">
-                    User Profile
+
+                {/* Profile Photo */}
+                <Avatar
+                    src={profileImage || "/default-avatar.png"}
+                    alt="Profile"
+                    sx={{
+                        width: 140,
+                        height: 140,
+                        marginBottom: 2,
+                        border: "4px solid #00cccc",
+                        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.4)",
+                        cursor: "pointer "
+                    }}
+                />
+
+                {/* Upload Profile Photo */}
+                <input type="file" accept="image/*" id="upload-photo" style={{ display: "none" }} onChange={handleImageChange} />
+                <label htmlFor="upload-photo">
+                    <IconButton color="ivory" component="span">
+                        <PhotoCamera />
+                    </IconButton>
+                </label>
+
+                {/* Remove Profile Photo */}
+                {profileImage && (
+                    <Button variant="contained" color="fffff0" onClick={handleRemoveImage}>
+                        Remove Photo
+                    </Button>
+                )}
+
+                <Divider sx={{ width: "100%", my: 3, bgcolor: "#fffff0" }} />
+
+                <Typography variant="h5" sx={{ marginBottom: 2 }}>
+                    Your Profile
                 </Typography>
 
                 {/* Profile Update Form */}
@@ -189,8 +246,18 @@ export default function ProfilePage() {
                         sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
                     />
 
+                    <TextField
+                        fullWidth
+                        label="User class"
+                        name="userClass"
+                        variant="outlined"
+                        value={user.userClass}
+                        disabled
+                        sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
+                    />
+
                     <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 2 }}>
-                        <Button variant="contained" color="secondary" onClick={handleClear}>
+                        <Button variant="contained" color="primary" onClick={handleClear}>
                             Clear
                         </Button>
                         <Button variant="contained" color="primary" type="submit">
@@ -199,10 +266,13 @@ export default function ProfilePage() {
                     </Box>
                 </form>
 
+                <Divider sx={{ width: "100%", my: 3, bgcolor: "#fffff0" }} />
+
                 {/* Password Update Form */}
-                <Typography variant="h5" sx={{ marginTop: 4 }}>
+                <Typography variant="h5" sx={{ marginBottom: 2 }}>
                     Change Password
                 </Typography>
+
                 <form onSubmit={handlePasswordUpdate} style={{ width: "100%" }}>
                     <TextField
                         fullWidth

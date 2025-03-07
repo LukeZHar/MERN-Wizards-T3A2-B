@@ -1,4 +1,3 @@
-
 const mongoose = require("mongoose");
 
 // Make Schema
@@ -6,30 +5,32 @@ const PostSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
-        minLength: 4
+        minLength: 4,
+        trim: true
     },
     content: {
         type: String,
         required: true,
-        minLength: 6
+        minLength: 6,
+        trim: true
     },
-    creationDate: {
-        type: Date,
-        default: Date.now
-    },
+
     priority: {
         type: String,
         enum: ["Low", "Medium", "High"],
-        required: true
+        required: true,
+        index: true // for search purposes
     },
     category: {
         type: String,
         enum: ["Option 1", "Option 2", "Option 3", "Option 4"],
-        required: true
+        required: true,
+        index: true
     },
-    authorId: { // reference to User model
+    author: { // reference to User model
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
+        index: true
     },
     replies: [{ // reference to Reply model
         type: mongoose.Schema.Types.ObjectId,
@@ -39,8 +40,11 @@ const PostSchema = new mongoose.Schema({
     isArchived: {
         type: Boolean,
         default: false
+    }},
+    {
+        timestamps: true
     }
-});
+);
 
 // Make Model based on Schema
 const Post = mongoose.model("Post", PostSchema);
