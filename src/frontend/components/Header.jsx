@@ -22,12 +22,6 @@ export default function Header() {
 
     const handleNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
-        setAnchorElSignIn(null);
-    };
-
-    const handleSignInMenu = (event) => {
-        setAnchorElSignIn(event.currentTarget);
-        setAnchorElNav(null);
     };
 
     const handleNotificationMenu = (event) => {
@@ -37,7 +31,6 @@ export default function Header() {
 
     const handleClose = () => {
         setAnchorElNav(null);
-        setAnchorElSignIn(null);
         setAnchorElNotifications(null);
     };
 
@@ -122,15 +115,7 @@ export default function Header() {
                                 )}
                             </Menu>
                         </>
-                    ) : (
-                        <>
-                            <Button color="inherit" onClick={handleSignInMenu}>Sign In</Button>
-                            <Menu anchorEl={anchorElSignIn} open={Boolean(anchorElSignIn)} onClose={handleClose}>
-                                <MenuItem component={Link} to="/login" onClick={handleClose}>Login</MenuItem>
-                                <MenuItem component={Link} to="/register" onClick={handleClose}>Register</MenuItem>
-                            </Menu>
-                        </>
-                    )}
+                    ) : null}
                 </Toolbar>
             </AppBar>
         </HideOnScroll>
