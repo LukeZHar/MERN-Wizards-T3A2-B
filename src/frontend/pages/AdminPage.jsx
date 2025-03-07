@@ -30,7 +30,7 @@ export default function () {
             alignItems: 'center',
             justifyContent: 'center',
             marginTop: '100px',
-            boxShadow: 3, 
+            boxShadow: 3, // Subtle shadow for a modern look
         }}>
             <Typography variant="h6" sx={{ marginBottom: 2, fontWeight: 'bold', color: 'white' }}>
                 Search Posts
