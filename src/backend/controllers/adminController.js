@@ -27,7 +27,7 @@ async function searchPosts(req, res) {
             }
         }
 
-        // Fetch post plus author details 
+        // Fetch post plus author details password not included for security
         const posts = await Post.find(filter).populate("author", "username email");
 
         // If no posts match the filter, send a message
@@ -64,7 +64,7 @@ async function searchUsers(req, res) {
         }
 
         // Fetch users based on filter
-        const users = await User.find(filter).select("-passwordHash"); // Exclude password for security
+        const users = await User.find(filter).select("-passwordHash");
 
         // If no users match the filter, return a message
         if (users.length === 0) {
