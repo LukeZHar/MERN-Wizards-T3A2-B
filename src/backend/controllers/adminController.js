@@ -2,7 +2,7 @@
 const { Post } = require("../models/PostModel");
 const { User } = require("../models/UserModel");
 
-// Function for Admins to fetch posts
+// Function for Admins to fetch posts 
 async function searchPosts(req, res) {
     try {
         const { priority, category, author } = req.query;
@@ -58,7 +58,7 @@ async function searchUsers(req, res) {
             filter.email = { $regex: email, $options: "i" };
         }
 
-        // 🔹 Filter by user class
+        // Filter by user class
         if (userClass) {
             filter.userClass = userClass;
         }
@@ -77,7 +77,53 @@ async function searchUsers(req, res) {
     }
 }
 
+// Function to allow Admins to update user's role
+async function updateUserRole(req, res) {
+    try {
+        const { id } = req.params; // fetch user id 
+        const { userClass } = req.body; // fetch new role
+
+        // Update User's role
+        const updatedUser = await User.findByIdAndUpdate(id, { userClass }, { new: true }).select("-passwordHash");
+
+        if (!updatedUser) { // display error msg if user not found
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.json({ message: "User role updated successfully", updatedUser });
+    } catch (error) {
+        res.status(500).json({ message: "Server error updating user role", error: error.message });
+    }
+}
+
+// Function to allow Admins to update post's priority 
+async function updatePostPriority(req, res) {
+    try {
+        const { id } = req.params; // fetch post id
+        const { priority } = req.body; // fetch new priority
+
+        // Enforce valid options
+        const validPriorities = ["High", "Medium", "Low"];
+        if (!validPriorities.includes(priority)) {
+            return res.status(400).json({ message: "Invalid priority level" });
+        }
+
+        // Update User's role
+        const updatedPost = await Post.findByIdAndUpdate(id, { priority }, { new: true });
+
+        if (!updatedPost) { // display error msg if user not found
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        res.json({ message: "Post priority updated successfully", updatedPost });
+    } catch (error) {
+        res.status(500).json({ message: "Server error updating post priority", error: error.message });
+    }
+}
+
 module.exports = {
     searchPosts,
-    searchUsers
+    searchUsers,
+    updateUserRole,
+    updatePostPriority
 }
