@@ -2,7 +2,6 @@ const express = require('express');
 const { validateToken } = require('../middlewares/authMiddleware'); // JWT validation middleware
 const { isAdmin } = require('../middlewares/adminMiddleware'); // Ensure user is Admin
 const { searchUsers, updateUserRole, deleteUser, searchPosts, updatePostPriority, deletePost } = require('../controllers/adminController');
-const { User } = require('../models/UserModel');
 
 const router = express.Router();
 
@@ -12,8 +11,8 @@ router.get("/users", searchUsers);
 // PATCH /api/admin/users/:id - Update user role 
 router.patch("/users/:id", updateUserRole);
 
-// // DELETE api/admin/users/:id - Delete a user
-// router.delete("/users/:id", validateToken, isAdmin, deleteUser);
+// DELETE api/admin/users/:id - Delete a user
+router.delete("/users/:id", deleteUser);
 
 // GET /api/admin/search-posts - Retrieve posts
 router.get("/posts", searchPosts);
@@ -22,7 +21,7 @@ router.get("/posts", searchPosts);
 router.patch("/posts/:id", updatePostPriority);
 
 // // DELETE api/admin/post/:id - Delete a post
-// router.delete("/posts/:id", validateToken, isAdmin, deletePost);
+router.delete("/posts/:id", deletePost);
 
 // Export the router
 module.exports = router; 

@@ -121,9 +121,52 @@ async function updatePostPriority(req, res) {
     }
 }
 
+
+// Function to allow Admins to delete a user
+async function deleteUser(req, res) {
+    try {
+        const { id } = req.params; // Get user ID 
+
+        // Check if the user exists before deleting
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Delete the user
+        await User.findByIdAndDelete(id);
+
+        res.json({ message: "User deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Server error deleting user", error: error.message });
+    }
+}
+
+// Function to allows admins to delete post
+async function deletePost(req, res) {
+    try {
+        const { id } = req.params; // Get user ID 
+
+        // Check if the user exists before deleting
+        const post = await Post.findById(id);
+        if (!post) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        // Delete the post
+        await Post.findByIdAndDelete(id);
+
+        res.json({ message: "Post deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Server error deleting post", error: error.message });
+    }
+}
+
 module.exports = {
     searchPosts,
     searchUsers,
     updateUserRole,
-    updatePostPriority
+    updatePostPriority,
+    deleteUser,
+    deletePost
 }
