@@ -43,7 +43,7 @@ app.use("/api/auth", authRoutes); // Use auth routes
 app.use("/api/posts", postRoutes); // Use post-related routes
 app.use("/api/notifications", notificationRoutes); // Use notification-related routes
 app.use("/api/users", userRoutes); // Use users-related routes
-app.use("/api/admin", userRoutes); // Use admin-related routes
+app.use("/api/admin", adminRoutes); // Use admin-related routes
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
