@@ -24,10 +24,6 @@ const userSchema = new mongoose.Schema({
         enum: ['Admin', 'Regular User'], // Role-based user classification
         default: 'Regular User', // Default to Regular User
     },
-    userAdmin: {
-        type: Boolean,
-        default: false, // Indicates if the user has admin privileges
-    },
     registrationDate: {
         type: Date,
         default: Date.now, // Default registration date
