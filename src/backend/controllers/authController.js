@@ -3,17 +3,52 @@ const { User } = require("../models/UserModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+function validateUserInput(username, email, password) {
+    const errors = [];
+
+    if (!username) {
+        errors.push("Username is required.");
+    } else if (username.length < 3) {
+        errors.push("Username must be at least 3 characters.");
+    }
+
+    if (!email) {
+        errors.push("Email is required.");
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+        errors.push("Email is invalid.");
+    }
+
+    if (!password) {
+        errors.push("Password is required.");
+    } else if (password.length < 6) {
+        errors.push("Password must be at least 6 characters long.");
+    } else {
+        const passwordCondition = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/; // At least one lowercase, one uppercase, one digit
+        if (!passwordCondition.test(password)) {
+            errors.push("Password must include at least one uppercase letter, one lowercase letter, and one number.");
+        }
+    }
+
+    return errors;
+}
+
 async function registerUser(req, res) {
-    // Importing the username and password from the request body
     const { username, email, password } = req.body;
 
+    // Validate user input
+    const validationErrors = validateUserInput(username, email, password);
+    if (validationErrors.length) {
+        return res.status(400).json({ message: "Validation Error", errors: validationErrors });
+    }
+
     try {
-        // Check if user already exists
+        // Check if username already exists
         const existingUser = await User.findOne({ username });
         if (existingUser) {
             return res.status(400).json({ message: "Username already in use" });
         }
 
+        // Check if email already exists
         const existingEmail = await User.findOne({ email });
         if (existingEmail) {
             return res.status(400).json({ message: "Email already in use" });
@@ -21,49 +56,41 @@ async function registerUser(req, res) {
 
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
-
-        // Create and save the new user
+        
+        // Create new user
         const user = new User({ username, email, passwordHash: hashedPassword });
         await user.save();
 
         res.status(201).json({ message: "User registered successfully" });
     } catch (error) {
-        console.error("Error during registration:", error); // Log error for debugging
-        res.status(500).json({ message: "Error registering user", error });
+        console.error("Error during registration:", error);
+        res.status(500).json({ errorCode: 'REGISTRATION_FAILED', message: "Error registering user", error });
     }
-    console.log("Registering user:", username);
 }
 
-// Log in an existing user
 async function loginUser(req, res) {
-    console.log("Received login data:", req.body)
     const { username, password } = req.body;
 
     try {
-        // Find the user by username
         const user = await User.findOne({ username });
         if (!user) {
             return res.status(400).json({ message: "User does not exist" });
         }
 
-        // Compare the provided password with the stored hash
         const isPasswordCorrect = await bcrypt.compare(password, user.passwordHash);
         if (!isPasswordCorrect) {
             return res.status(400).json({ message: "Incorrect password" });
         }
         
-        // Generate a JWT token
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-
         res.status(200).json({ token });
     } catch (error) {
-        console.error("Error during login:", error); // Log error for debugging
-        res.status(500).json({ message: "Error logging in", error });
+        console.error("Error during login:", error);
+        res.status(500).json({ errorCode: 'LOGIN_FAILED', message: "Error logging in", error });
     }
-    console.log("Logging in user:", username);
 }
 
 module.exports = {
     registerUser,
     loginUser
-}
+};

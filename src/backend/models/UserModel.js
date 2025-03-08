@@ -6,13 +6,17 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        minLength: 3, // Minimum length for username
-        trim: true, // Trim whitespace
+        minLength: 3,
+        trim: true,
     },
     email: {
         type: String,
         required: true,
         unique: true,
+        validate: {
+            validator: v => /\S+@\S+\.\S+/.test(v), // Email validation regex
+            message: props => `${props.value} is not a valid email!`
+        }
     },
     passwordHash: {
         type: String,
@@ -21,16 +25,16 @@ const userSchema = new mongoose.Schema({
     },
     userClass: {
         type: String,
-        enum: ['Admin', 'Regular User'], // Role-based user classification
-        default: 'Regular User', // Default to Regular User
+        enum: ['Admin', 'Regular User'],
+        default: 'Regular User',
     },
     userAdmin: {
         type: Boolean,
-        default: false, // Indicates if the user has admin privileges
+        default: false,
     },
     registrationDate: {
         type: Date,
-        default: Date.now, // Default registration date
+        default: Date.now,
     },
 });
 
