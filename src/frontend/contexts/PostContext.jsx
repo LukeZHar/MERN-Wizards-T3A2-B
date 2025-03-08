@@ -30,7 +30,7 @@ export function PostProvider({ children }) {
 export function usePosts() {
     let context = useContext(PostContext);
     if(!context) {
-        console.log("No Posts found!");
+        console.log("PostContext must be used within a PostContextProvider");
     }
     return context;
 }
