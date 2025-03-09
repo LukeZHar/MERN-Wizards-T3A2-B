@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios"; // Apis Calls
+import axios from "axios"; // API Calls
 import { useUserAuthContext } from "../contexts/UserAuthContext"; // Import Token from context
 
 export function useAdmin() {
@@ -7,37 +7,40 @@ export function useAdmin() {
     const [users, setUsers] = useState([]); // Set state for users
     const [posts, setPosts] = useState([]); // Set state for posts
     const [loading, setLoading] = useState(false); // Set state for loading
-    const [userFilters, setUserFilters] = useState({ username: "", email: "", userClass: "" }); // Filters state
-    const [postFilters, setPostFilters] = useState({ author: "", priority: "", category: "" });
 
     // Fetch users
-    const fetchUsers = async (filters = {}) => {
-        setLoading(true); // prevents multiple requests
-        try {
-            const queryParams = new URLSearchParams(filters).toString();  // fetch filter
-            const response = await axios.get(`/api/admin/users?${queryParams}`, {
+    const fetchUsers = async (email = "") => {
+        setLoading(true);
+        try { // Fetch email
+            const queryParams = email ? `email=${encodeURIComponent(email)}` : "";
+            const response = await axios.get(`http://localhost:8008/api/admin/users${queryParams ? `?${queryParams}` : ""}`, {
                 headers: { Authorization: `Bearer ${token}` }
-            })
-            console.log(response.data); // debug purposes
-            setUsers(response.data); // display users
-        } catch (error) {
+            });
+
+            setUsers(response.data); // Update Users state
+            return response.data; 
+        } catch (error) { // Display error msg
             console.error("Error fetching users:", error);
+            return [];
         } finally {
             setLoading(false);
         }
     };
 
     // Fetch posts
-    const fetchPosts = async (filters = {}) => {
+    const fetchPosts = async (priority = "") => {
         setLoading(true);
-        try {
-            const queryParams = new URLSearchParams(filters).toString(); 
-            const response = await axios.get(`/api/admin/posts?${queryParams}`, {
+        try { // Fetch priority
+            const queryParams = priority ? `priority=${encodeURIComponent(priority)}` : ""; 
+            const response = await axios.get(`http://localhost:8008/api/admin/posts${queryParams ? `?${queryParams}` : ""}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            setPosts(response.data); // display posts
+
+            setPosts(response.data); // Update Posts state
+            return response.data; // Return data
         } catch (error) {
             console.error("Error fetching posts:", error);
+            return [];
         } finally {
             setLoading(false);
         }
@@ -46,10 +49,10 @@ export function useAdmin() {
     // Update user role - Regular User or Admin User
     const updateUserRole = async (userId, newRole) => {
         try {
-            await axios.patch(`/api/admin/users/${userId}`, { userClass: newRole }, {
+            await axios.patch(`http://localhost:8008/api/admin/users/${userId}`, { userClass: newRole }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            fetchUsers(); // Refresh user list
+            await fetchUsers(); // Refresh user list
         } catch (error) {
             console.error("Error updating user role:", error);
         }
@@ -58,10 +61,10 @@ export function useAdmin() {
     // Update post priority - High, Medium, Low
     const updatePostPriority = async (postId, newPriority) => {
         try {
-            await axios.patch(`/api/admin/posts/${postId}`, { priority: newPriority }, {
+            await axios.patch(`http://localhost:8008/api/admin/posts/${postId}`, { priority: newPriority }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            fetchPosts(); // Refresh post list
+            await fetchPosts(); // Refresh post list
         } catch (error) {
             console.error("Error updating post priority:", error);
         }
@@ -71,10 +74,10 @@ export function useAdmin() {
     const deleteUser = async (userId) => {
         if (!window.confirm("Are you sure you want to delete this user?")) return;
         try {
-            await axios.delete(`/api/admin/users/${userId}`, {
+            await axios.delete(`http://localhost:8008/api/admin/users/${userId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            fetchUsers(); // Refresh user list
+            await fetchUsers();
         } catch (error) {
             console.error("Error deleting user:", error);
         }
@@ -84,27 +87,26 @@ export function useAdmin() {
     const deletePost = async (postId) => {
         if (!window.confirm("Are you sure you want to delete this post?")) return;
         try {
-            await axios.delete(`/api/admin/posts/${postId}`, {
+            await axios.delete(`http://localhost:8008/api/admin/posts/${postId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            fetchPosts(); // Refresh post list
+            await fetchPosts(); // Refresh post list
         } catch (error) {
             console.error("Error deleting post:", error);
         }
     };
 
     useEffect(() => {
-        fetchUsers(userFilters);
-        fetchPosts(postFilters);
-    }, [token, userFilters, postFilters]); // Runs when token/ filters updates
+        fetchUsers();
+        fetchPosts();
+    }, [token]); // Runs when token changes
 
-    // Returns function
+    // Return functions
     return {
         users, posts, loading,
         fetchUsers, fetchPosts,
         updateUserRole, updatePostPriority,
-        deleteUser, deletePost,
-        setUserFilters, setPostFilters
+        deleteUser, deletePost
     };
 }
 

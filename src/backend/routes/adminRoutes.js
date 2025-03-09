@@ -5,7 +5,7 @@ const { searchUsers, updateUserRole, deleteUser, searchPosts, updatePostPriority
 
 const router = express.Router();
 
-// GET /api/admin/search-users - Retrieve users
+// GET /api/admin/users - Retrieve users
 router.get("/users", searchUsers);
 
 // PATCH /api/admin/users/:id - Update user role 
@@ -14,7 +14,7 @@ router.patch("/users/:id", updateUserRole);
 // DELETE api/admin/users/:id - Delete a user
 router.delete("/users/:id", deleteUser);
 
-// GET /api/admin/search-posts - Retrieve posts
+// GET /api/admin/posts - Retrieve posts
 router.get("/posts", searchPosts);
 
 // PATCH /api/admin/post/:id - Update post

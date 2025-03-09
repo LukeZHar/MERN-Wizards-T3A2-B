@@ -5,7 +5,7 @@ const { User } = require("../models/UserModel");
 // Function for Admins to fetch posts 
 async function searchPosts(req, res) {
     try {
-        const { priority, category, author } = req.query;
+        const { priority } = req.query;
 
         let filter = {};
 
@@ -14,21 +14,8 @@ async function searchPosts(req, res) {
             filter.priority = priority;
         }
 
-        // Filter by category
-        if (category) {
-            filter.category = category;
-        }
-
-        // Filter by user
-        if (author) {
-            const user = await User.findOne({ username: author });
-            if (user) {
-                filter.author = user._id;
-            }
-        }
-
-        // Fetch post plus author details password not included for security
-        const posts = await Post.find(filter).populate("author", "username email");
+        // Fetch post plus author details password not included
+        const posts = await Post.find(filter).populate("author", "username email").select("-passwordHash");
 
         // If no posts match the filter, send a message
         if (posts.length === 0) {
@@ -45,26 +32,16 @@ async function searchPosts(req, res) {
 // Function for Admins to fetch users with filters
 async function searchUsers(req, res) {
     try {
-        const { username, email, userClass } = req.query;
+        const { email } = req.query;
         let filter = {};
-
-        // Filter by username
-        if (username) {
-            filter.username = { $regex: username, $options: "i" }; // Case-insensitive search
-        }
 
         // Filter by email
         if (email) {
             filter.email = { $regex: email, $options: "i" };
         }
 
-        // Filter by user class
-        if (userClass) {
-            filter.userClass = userClass;
-        }
-
         // Fetch users based on filter
-        const users = await User.find(filter).select("-passwordHash");
+        const users = await User.find(filter).select("-passwordHash"); // Exclude password for security
 
         // If no users match the filter, return a message
         if (users.length === 0) {
@@ -120,7 +97,6 @@ async function updatePostPriority(req, res) {
         res.status(500).json({ message: "Server error updating post priority", error: error.message });
     }
 }
-
 
 // Function to allow Admins to delete a user
 async function deleteUser(req, res) {
