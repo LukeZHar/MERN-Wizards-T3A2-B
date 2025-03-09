@@ -5,11 +5,11 @@ import { useSnackbar } from "../contexts/SnackbarContext";
 import useAdmin from "../hooks/useAdmin";
 
 export default function AdminPage() {
-    const { 
-        users, posts, 
-        fetchUsers, fetchPosts, 
-        updateUserRole, updatePostPriority, 
-        deleteUser, deletePost 
+    const {
+        users, posts,
+        fetchUsers, fetchPosts,
+        updateUserRole, updatePostPriority,
+        deleteUser, deletePost
     } = useAdmin();
 
     const showSnackbar = useSnackbar();
@@ -103,7 +103,7 @@ export default function AdminPage() {
                     Manage Posts
                 </Typography>
 
-                <TextField 
+                <TextField
                     fullWidth
                     select
                     label="Filter by Priority"
@@ -149,11 +149,11 @@ export default function AdminPage() {
                             </Select>
 
                             <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
-                                <Button 
-                                    variant="contained" 
-                                    color="secondary" 
+                                <Button
+                                    variant="contained"
+                                    color="secondary"
                                     onClick={() => handlePrioritySet(post._id)}
-                                    disabled={!priorityUpdates[post._id]} 
+                                    disabled={!priorityUpdates[post._id]}
                                 >
                                     Set Priority
                                 </Button>
@@ -172,9 +172,9 @@ export default function AdminPage() {
                     Manage Users
                 </Typography>
 
-                <TextField 
-                    fullWidth 
-                    placeholder="Enter user email..." 
+                <TextField
+                    fullWidth
+                    placeholder="Enter user email..."
                     variant="outlined"
                     value={userSearch}
                     onChange={(e) => setUserSearch(e.target.value)}
@@ -196,6 +196,10 @@ export default function AdminPage() {
 
                             <Typography variant="body2" sx={{ color: '#555', marginBottom: 1 }}>
                                 {user.email}
+                            </Typography>
+
+                            <Typography variant="body2" sx={{ color: '#777', fontStyle: 'italic', marginBottom: 1 }}>
+                                {user.userClass}
                             </Typography>
 
                             <Select
