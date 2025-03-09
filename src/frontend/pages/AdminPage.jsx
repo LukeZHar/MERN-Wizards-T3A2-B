@@ -204,7 +204,7 @@ export default function AdminPage() {
                                 onChange={(e) => handleUserClassSelection(user._id, e.target.value)}
                                 sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
                             >
-                                <MenuItem value="User">Regular User</MenuItem>
+                                <MenuItem value="Regular User">Regular User</MenuItem>
                                 <MenuItem value="Admin">Admin</MenuItem>
                             </Select>
 
