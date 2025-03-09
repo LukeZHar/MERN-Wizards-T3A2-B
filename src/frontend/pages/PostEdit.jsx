@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { usePosts, PostProvider as Post } from '../contexts/PostContext';
 import { TextField, Button, Typography, Container, Box, MenuItem, Select } from "@mui/material"; 
-import brandLogo from "../assets/ProductIcon.png"
-import { useSnackbar } from "../contexts/SnackbarContext';
+import brandLogo from "../assets/ProductIcon.png";
+import { useSnackbar } from "../contexts/SnackbarContext";
 import axios from "axios";
 import { useUserAuthContext } from '../contexts/UserAuthContext';
 
