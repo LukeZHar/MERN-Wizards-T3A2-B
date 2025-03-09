@@ -1,20 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios"; // Apis Calls
 import { useUserAuthContext } from "../contexts/UserAuthContext"; // Import Token from context
 
 export function useAdmin() {
-    const { token } = useUserAuthContext(); // Get token from context
+    const [token] = useUserAuthContext(); // Get token from context
     const [users, setUsers] = useState([]); // Set state for users
     const [posts, setPosts] = useState([]); // Set state for posts
     const [loading, setLoading] = useState(false); // Set state for loading
+    const [userFilters, setUserFilters] = useState({ username: "", email: "", userClass: "" }); // Filters state
+    const [postFilters, setPostFilters] = useState({ author: "", priority: "", category: "" });
 
     // Fetch users
-    const fetchUsers = async () => {
+    const fetchUsers = async (filters = {}) => {
         setLoading(true); // prevents multiple requests
         try {
-            const response = await axios.get("/api/admin/users", {
+            const queryParams = new URLSearchParams(filters).toString();  // fetch filter
+            const response = await axios.get(`/api/admin/users?${queryParams}`, {
                 headers: { Authorization: `Bearer ${token}` }
-            });
+            })
+            console.log(response.data); // debug purposes
             setUsers(response.data); // display users
         } catch (error) {
             console.error("Error fetching users:", error);
@@ -24,10 +28,11 @@ export function useAdmin() {
     };
 
     // Fetch posts
-    const fetchPosts = async () => {
+    const fetchPosts = async (filters = {}) => {
         setLoading(true);
         try {
-            const response = await axios.get("/api/admin/posts", {
+            const queryParams = new URLSearchParams(filters).toString(); 
+            const response = await axios.get(`/api/admin/posts?${queryParams}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setPosts(response.data); // display posts
@@ -88,11 +93,19 @@ export function useAdmin() {
         }
     };
 
+    useEffect(() => {
+        fetchUsers(userFilters);
+        fetchPosts(postFilters);
+    }, [token, userFilters, postFilters]); // Runs when token/ filters updates
+
     // Returns function
     return {
         users, posts, loading,
         fetchUsers, fetchPosts,
         updateUserRole, updatePostPriority,
-        deleteUser, deletePost
+        deleteUser, deletePost,
+        setUserFilters, setPostFilters
     };
 }
+
+export default useAdmin;

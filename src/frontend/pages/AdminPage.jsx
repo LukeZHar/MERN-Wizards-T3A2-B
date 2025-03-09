@@ -1,13 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { TextField, Button, InputAdornment, Typography, Container, Box, Avatar, IconButton, Divider } from "@mui/material";
 import { Search, Edit, Delete, Visibility } from "@mui/icons-material";
-import axios from "axios";
 import { useSnackbar } from "../contexts/SnackbarContext";
-import { useNavigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
 import LoginPrompt from "../components/LoginPrompt";
+import useAdmin from "../hooks/useAdmin";
 
-export default function () {
+export default function AdminPage() {
+    // Import functions from useAdmin hook
+    const { users, posts, fetchUsers, fetchPosts, updateUserRole, updatePostPriority, deleteUser, deletePost } = useAdmin();
+
+    // State for search inputs
+    const [userSearch, setUserSearch] = useState("");
+    const [postSearch, setPostSearch] = useState("");
+
+    // State for filtering users and posts - array
+    const [filteredUsers, setFilteredUsers] = useState([]);
+    const [filteredPosts, setFilteredPosts] = useState([]);
+
+    const showSnackbar = useSnackbar(); // Access Snackbar
+
+
 
     return(
         <Container component="main" maxWidth="sm">
