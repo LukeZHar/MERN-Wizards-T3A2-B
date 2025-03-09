@@ -1,57 +1,48 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
-import { MemoryRouter } from "react-router-dom";
-import LoginPrompt from '../../frontend/components/LoginPrompt'; 
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { expect, test } from 'vitest';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import LoginPrompt from '../../frontend/components/LoginPrompt'; // Adjust the path as necessary
 
-vi.mock("react-router-dom", async () => {
-  const actual = await vi.importActual("react-router-dom"); // Get real react-router-dom
-  return {
-    ...actual,
-    useNavigate: vi.fn(), // Mock useNavigate
-  };
+// Mock component to test navigation
+const LoginPage = () => <div>Login Page</div>;
+
+test('renders default message', () => {
+    render(
+        <MemoryRouter>
+            <LoginPrompt />
+        </MemoryRouter>
+    );
+
+    // Check if the default message is displayed
+    expect(screen.getByText("You must be logged in to view this page.")).toBeInTheDocument();
 });
 
-describe("LoginPrompt Component", () => {
-  beforeEach(() => {
-    vi.restoreAllMocks(); // Reset mocks before each test
-  });
-
-  it("renders the default message", () => {
+test('renders custom message', () => {
     render(
-      <MemoryRouter>
-        <LoginPrompt />
-      </MemoryRouter>
+        <MemoryRouter>
+            <LoginPrompt message="Custom message" />
+        </MemoryRouter>
     );
 
-    expect(
-      screen.getByText("You must be logged in to view this page.")
-    ).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Go to Login/i })).toBeInTheDocument();
-  });
+    // Check if the custom message is displayed
+    expect(screen.getByText("Custom message")).toBeInTheDocument();
+});
 
-  it("renders a custom message", () => {
+test('navigates to login page when button is clicked', async () => {
     render(
-      <MemoryRouter>
-        <LoginPrompt message="Custom message: log in!" />
-      </MemoryRouter>
+        <MemoryRouter initialEntries={['/not-logged-in']}>
+            <Routes>
+                <Route path="/not-logged-in" element={<LoginPrompt />} />
+                <Route path="/login" element={<LoginPage />} /> {/* Mock Login Page for Navigation */}
+            </Routes>
+        </MemoryRouter>
     );
 
-    expect(screen.getByText("Custom message: log in!")).toBeInTheDocument();
-  });
+    // Simulate click on "Go to Login" button
+    await userEvent.click(screen.getByRole('button', { name: /Go to Login/i }));
 
-  it("navigates to login page when button is clicked", () => {
-    const mockNavigate = vi.fn();
-    useNavigate.mockReturnValue(mockNavigate); // Use mocked navigate function
-
-    render(
-      <MemoryRouter>
-        <LoginPrompt />
-      </MemoryRouter>
-    );
-
-    const button = screen.getByRole("button", { name: /Go to Login/i });
-    fireEvent.click(button);
-
-    expect(mockNavigate).toHaveBeenCalledWith("/login");
-  });
+    // Assert that the login page content is displayed
+    expect(screen.getByText("Login Page")).toBeInTheDocument();
 });

@@ -25,7 +25,7 @@ export const ProfileProvider = ({ children }) => {
 export function useProfile() {
     let context = useContext(ProfileContext);
     if(!context) {
-        console.log("ProfileContext must be used within a ProfileContextProvider");
+        throw new Error('useProfile must be used within a ProfileProvider');
     }
     return context;
 }
