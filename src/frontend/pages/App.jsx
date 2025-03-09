@@ -24,7 +24,7 @@ function App() {
             <Route path="/notifications" element={<NotificationsPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="*" element={<NotFoundPage />} />
-            <Route path="/edit-post" element={<PostEdit />} />
+            <Route path="/edit-post/:id" element={<PostEdit />} />
           </Routes>
         </Layout>
       </Router>

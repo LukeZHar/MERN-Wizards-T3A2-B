@@ -102,7 +102,11 @@ export default function PostEdit() {
 
                     {/* Buttons */}
                     <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 2 }}>
-                        <Button variant="contained" color="secondary" onClick={() => handleContentSet(post.id)}>
+                        <Button 
+                            variant="contained" 
+                            color="secondary" 
+                            onClick={() => post && handleContentSet(post.id)} // Ensure post is not null
+                        >
                             Save
                         </Button>                                          
                     </Box>
@@ -120,7 +124,7 @@ export default function PostEdit() {
                 marginTop: '50px', // Centered with margin above
             }}>
                 <Typography variant="h5">Post discussion</Typography>
-                <form onSubmit={() => handleReply(post.id)}>
+                <form onSubmit={() => post && handleReply(post.id)}> {/* Ensure post is not null */}
                     <TextField
                         fullWidth
                         label="Username"

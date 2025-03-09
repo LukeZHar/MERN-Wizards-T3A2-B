@@ -33,10 +33,10 @@ export default function DashboardPage() {
         fetchPosts(); // Call the fetch function
     }, [token]); // The dependency array ensures this effect runs when the token changes
 
-    const handleDelete = async (postId) => {
+    const handleDelete = async (id) => {
         try {
             // Send DELETE request to the API
-            await axios.delete(`${import.meta.env.VITE_AUTH_API_URL}/api/posts/${postId}`, {
+            await axios.delete(`${import.meta.env.VITE_AUTH_API_URL}/api/posts/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
