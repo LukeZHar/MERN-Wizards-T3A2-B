@@ -126,16 +126,22 @@ export default function AdminPage() {
                 {posts.length > 0 ? (
                     posts.map((post) => (
                         <Box key={post._id} sx={{ bgcolor: 'white', padding: 2, borderRadius: 2, boxShadow: 2, marginBottom: 2 }}>
+                            
                             <Typography variant="h6" sx={{ fontWeight: 'bold' }}>{post.title}</Typography>
-                            <Typography variant="body2" sx={{ color: '#555', marginBottom: 1 }}>
-                                {post.content.length > 100 ? post.content.substring(0, 100) + "..." : post.content}
-                            </Typography>
-
+                            
                             {post.author && (
                                 <Typography variant="subtitle2" sx={{ color: '#777', marginBottom: 1 }}>
                                     Author: <strong>{post.author.username}</strong> ({post.author.email})
                                 </Typography>
                             )}
+
+                            <Typography variant="body2" sx={{ color: '#777', fontStyle: 'italic', marginBottom: 1 }}>
+                                Priority: {post.priority}
+                            </Typography>
+
+                            <Typography variant="body2" sx={{ color: '#555', marginBottom: 1 }}>
+                                {post.content.length > 100 ? post.content.substring(0, 100) + "..." : post.content}
+                            </Typography>
 
                             <Select
                                 fullWidth
