@@ -25,21 +25,11 @@ export default function AdminPage() {
     // Handle for searching users by email
     const handleUserSearch = async () => {
         await fetchUsers(userSearch);
-
-        // Show snackbar if no users match the email
-        if (users.length === 0) {
-            showSnackbar("No users found for the entered email");
-        }
     };
 
     // Handle for searching posts by priority
     const handlePostSearch = async () => {
         await fetchPosts(postPriority);
-
-        // Show snackbar if no posts match the selected priority
-        if (posts.length === 0) {
-            showSnackbar("No posts found for the selected priority");
-        }
     };
 
     // Handle for temporary priority selection

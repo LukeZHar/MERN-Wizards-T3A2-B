@@ -16,12 +16,17 @@ export function useAdmin() {
             const response = await axios.get(`${import.meta.env.VITE_AUTH_API_URL}/api/admin/users${queryParams ? `?${queryParams}` : ""}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
+            
+            if (response.data.length === 0) {
+                setUsers([]); // Clear posts if no results are found
+                return [];
+            }
 
             setUsers(response.data); // Update Users state
             return response.data; 
         } catch (error) { // Display error msg
             console.error("Error fetching users:", error);
-            return [];
+            setUsers([]);
         } finally {
             setLoading(false);
         }
@@ -36,10 +41,15 @@ export function useAdmin() {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
+            if (response.data.length === 0) {
+                setPosts([]); // Clear posts if no results are found
+            }
+            
             setPosts(response.data); // Update Posts state
             return response.data; // Return data
         } catch (error) {
             console.error("Error fetching posts:", error);
+            setPosts([]);
             return [];
         } finally {
             setLoading(false);
