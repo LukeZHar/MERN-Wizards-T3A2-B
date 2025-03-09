@@ -13,7 +13,7 @@ export function useAdmin() {
         setLoading(true);
         try { // Fetch email
             const queryParams = email ? `email=${encodeURIComponent(email)}` : "";
-            const response = await axios.get(`http://localhost:8008/api/admin/users${queryParams ? `?${queryParams}` : ""}`, {
+            const response = await axios.get(`${import.meta.env.VITE_AUTH_API_URL}/api/admin/users${queryParams ? `?${queryParams}` : ""}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -32,7 +32,7 @@ export function useAdmin() {
         setLoading(true);
         try { // Fetch priority
             const queryParams = priority ? `priority=${encodeURIComponent(priority)}` : ""; 
-            const response = await axios.get(`http://localhost:8008/api/admin/posts${queryParams ? `?${queryParams}` : ""}`, {
+            const response = await axios.get(`${import.meta.env.VITE_AUTH_API_URL}/api/admin/posts${queryParams ? `?${queryParams}` : ""}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -49,7 +49,7 @@ export function useAdmin() {
     // Update user role - Regular User or Admin User
     const updateUserRole = async (userId, newRole) => {
         try {
-            await axios.patch(`http://localhost:8008/api/admin/users/${userId}`, { userClass: newRole }, {
+            await axios.patch(`${import.meta.env.VITE_AUTH_API_URL}/api/admin/users/${userId}`, { userClass: newRole }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             await fetchUsers(); // Refresh user list
@@ -61,7 +61,7 @@ export function useAdmin() {
     // Update post priority - High, Medium, Low
     const updatePostPriority = async (postId, newPriority) => {
         try {
-            await axios.patch(`http://localhost:8008/api/admin/posts/${postId}`, { priority: newPriority }, {
+            await axios.patch(`${import.meta.env.VITE_AUTH_API_URL}/api/admin/posts/${postId}`, { priority: newPriority }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             await fetchPosts(); // Refresh post list
@@ -74,7 +74,7 @@ export function useAdmin() {
     const deleteUser = async (userId) => {
         if (!window.confirm("Are you sure you want to delete this user?")) return;
         try {
-            await axios.delete(`http://localhost:8008/api/admin/users/${userId}`, {
+            await axios.delete(`${import.meta.env.VITE_AUTH_API_URL}/api/admin/users/${userId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             await fetchUsers();
@@ -87,7 +87,7 @@ export function useAdmin() {
     const deletePost = async (postId) => {
         if (!window.confirm("Are you sure you want to delete this post?")) return;
         try {
-            await axios.delete(`http://localhost:8008/api/admin/posts/${postId}`, {
+            await axios.delete(`${import.meta.env.VITE_AUTH_API_URL}/api/admin/posts/${postId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             await fetchPosts(); // Refresh post list
