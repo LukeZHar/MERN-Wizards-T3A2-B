@@ -29,7 +29,7 @@ export function SnackbarProvider({ children }) {
             <Snackbar
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                 open={snackbar.open}
-                autoHideDuration={6000}
+                autoHideDuration={3000}
                 onClose={handleClose}
                 message={snackbar.message}
                 action={

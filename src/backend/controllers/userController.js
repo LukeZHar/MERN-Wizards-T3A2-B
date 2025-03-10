@@ -1,20 +1,36 @@
-const { User } = require('../models/UserModel'); // Import the User model
+const { User } = require('../models/UserModel');
 const bcrypt = require("bcrypt");
 
-// Get User Profile by ID
+// Utility function to validate profile updates
+function validateProfileUpdate(username, email, password) {
+    const errors = [];
+    if (username && username.length < 3) errors.push("Username must be at least 3 characters.");
+    if (email && !/\S+@\S+\.\S+/.test(email)) errors.push("Email is invalid.");
+
+    // Check for password complexity (if a password is being updated)
+    if (password) {
+        const passwordCondition = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/; // At least one lowercase, one uppercase, one digit
+        if (password.length < 6 || !passwordCondition.test(password)) {
+            errors.push("Password must be at least 6 characters long and include at least one uppercase letter, one lowercase letter, and one number.");
+        }
+    }
+
+    return errors;
+}
+
 async function getUserProfile(req, res) {
-    const userId = req.params.id; // Extract user ID from request parameters
+    const userId = req.authUserData?.userId;
+
+    if (!userId) {
+        return res.status(401).json({ message: "Unauthorized - User ID missing from token" });
+    }
 
     try {
-        // Retrieve the user by ID
         const user = await User.findById(userId);
-        
-        // Check if user exists
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
 
-        // Send the user data, but omit sensitive fields (e.g., password)
         res.status(200).json({
             username: user.username,
             email: user.email,
@@ -22,26 +38,27 @@ async function getUserProfile(req, res) {
             userClass: user.userClass,
         });
     } catch (error) {
-        console.error("Error fetching user profile:", error); // Log error for debugging
-        res.status(500).json({ message: "Error fetching user" }); // Send error response
+        console.error("Error fetching user profile", error);
+        res.status(500).json({ errorCode: "FETCH_PROFILE_FAILED", message: "Error fetching user profile" });
     }
 }
 
-// Update User Profile by ID
 async function updateUserProfile(req, res) {
-    const userId = req.params.id; // Extract user ID from request parameters
-    const { username, email } = req.body; // Get updated data from request body
+    const userId = req.authUserData?.userId;
+
+    if (!userId) {
+        return res.status(401).json({ message: "Unauthorized - User ID missing from token" });
+    }
+
+    const { username, email } = req.body;
+    const validationErrors = validateProfileUpdate(username, email);
+    if (validationErrors.length) {
+        return res.status(400).json({ message: "Validation Error", errors: validationErrors });
+    }
 
     try {
-        // Find the user and update fields
-        const updatedUser = await User.findByIdAndUpdate(
-            userId,
-            { username, email }, // Only updating username and email
-            { new: true, runValidators: true } // Return updated document and run validators
-        );
-
-        // Check if updatedUser exists
-        if (!updatedUser) {
+        const user = await User.findById(userId);
+        if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
 
@@ -56,24 +73,35 @@ async function updateUserProfile(req, res) {
             }
         });
     } catch (error) {
-        console.error("Error updating user profile:", error); // Log error for debugging
-        res.status(500).json({ message: "Error updating user" }); // Send error response
+        console.error("Error updating user profile:", error);
+        res.status(500).json({ errorCode: "UPDATE_PROFILE_FAILED", message: "Error updating profile" });
     }
 }
 
 async function updateUserPassword(req, res) {
-    const userId = req.user.id; // Extract user ID from request parameters
+    const userId = req.authUserData?.userId;
+
+    if (!userId) {
+        return res.status(401).json({ message: "Unauthorized - User ID missing from token" });
+    }
+
     const { currentPassword, newPassword } = req.body;
+    if (!currentPassword || !newPassword) {
+        return res.status(400).json({ message: "Both current and new password are required." });
+    }
 
     try {
         const user = await User.findById(userId);
-        if (!user) return res.status(404).json({ message: "User not found" });
 
-        // Check if the current password is correct
-        const isMatch = await bcrypt.compare(currentPassword, user.password);
-        if (!isMatch) return res.status(400).json({ message: "Incorrect current password" });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
 
-        // Hash the new password
+        const isMatch = await bcrypt.compare(currentPassword, user.passwordHash);
+        if (!isMatch) {
+            return res.status(400).json({ message: "Incorrect current password" });
+        }
+
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(newPassword, salt);
         await user.save();
@@ -81,7 +109,7 @@ async function updateUserPassword(req, res) {
         res.status(200).json({ message: "Password updated successfully" });
     } catch (error) {
         console.error("Error updating password:", error);
-        res.status(500).json({ message: "Error updating password" });
+        res.status(500).json({ errorCode: "UPDATE_PASSWORD_FAILED", message: "Error updating password" });
     }
 }
 

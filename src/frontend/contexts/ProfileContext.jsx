@@ -21,11 +21,11 @@ export const ProfileProvider = ({ children }) => {
     );
 };
 
-// // Create custom hook
+// Create custom hook
 export function useProfile() {
     let context = useContext(ProfileContext);
     if(!context) {
-        console.log("No Profile avatars found!");
+        throw new Error('useProfile must be used within a ProfileProvider');
     }
     return context;
 }

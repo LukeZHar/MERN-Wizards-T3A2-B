@@ -313,6 +313,19 @@ export default function ProfilePage() {
                     <Button variant="contained" color="primary" type="submit" sx={{ marginTop: 2 }}>
                         Update Password
                     </Button>
+
+                    <Divider sx={{ width: "100%", my: 3, bgcolor: "#fffff0" }} />
+                    
+                    {user.userClass === "Admin" && (
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            sx={{ marginTop: 2 }}
+                            onClick={() => navigate("/admin")}
+                        >
+                            Go to Admin Panel
+                        </Button>
+                    )}
                 </form>
             </Box>
         </Container>

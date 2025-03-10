@@ -9,25 +9,27 @@ import "../styles/App.css"
 import NotificationsPage from "./NotificationsPage.jsx";
 import Home from "./Home.jsx";
 import ProfilePage from "./ProfilePage.jsx";
+import AdminPage from "./AdminPage.jsx";
 import PostEdit from "./PostEdit.jsx";
 
 function App() {
-  return (  
-      <Router>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/add-post" element={<PostCreation />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/notifications" element={<NotificationsPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="*" element={<NotFoundPage />} />
-            <Route path="/edit-post/:id" element={<PostEdit />} />
-          </Routes>
-        </Layout>
-      </Router>
+  return (
+        <Router>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/add-post" element={<PostCreation />} />
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/notifications" element={<NotificationsPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/admin" element={<AdminPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+              <Route path="/edit-post/:id" element={<PostEdit />} />
+            </Routes>
+          </Layout>
+        </Router>
   );
 }
 
