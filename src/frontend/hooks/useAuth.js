@@ -5,6 +5,7 @@ const useAuth = () => {
 
     const login = (newToken) => {
         setToken(newToken); // Set the user token in the context
+        localStorage.setItem("token", newToken); // Persist token in localStorage
     };
 
     const logout = () => {
