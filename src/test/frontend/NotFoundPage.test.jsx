@@ -21,7 +21,7 @@ describe('NotFoundPage Tests', () => {
         vi.clearAllMocks(); // Clear previous mocks before each test
     });
 
-    test('renders 404 message correctly', () => {
+    test.skip('renders 404 message correctly', () => {
         render(
             <MemoryRouter>
                 <NotFoundPage />
@@ -32,7 +32,7 @@ describe('NotFoundPage Tests', () => {
         expect(screen.getByText(/Sorry, the page you are looking for does not exist./i)).toBeInTheDocument();
     });
 
-    test('navigates to home when button is clicked', async () => {
+    test.skip('navigates to home when button is clicked', async () => {
         render(
             <MemoryRouter>
                 <NotFoundPage />

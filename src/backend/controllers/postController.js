@@ -36,7 +36,7 @@ async function getAllPosts(req, res) {
 }
 
 // Function to get specific post
-async function getPostById(req, res) {  
+async function getPostById(req, res) {
     const { id } = req.params;
 
     try { // send author info along with post
@@ -54,22 +54,28 @@ async function getPostById(req, res) {
 // Function to edit specific post (Middleware ensures authorization)
 async function editPost(req, res) {
     try {
-        // fetch fields 
+        // Validate input fields or ensure fields exist
         const { title, content, priority, category } = req.body;
 
-        // Use post attached from `isPostAuthor` middleware
-        req.post.title = title || req.post.title;
-        req.post.content = content || req.post.content;
-        req.post.priority = priority || req.post.priority;
-        req.post.category = category || req.post.category;
+        if (!title && !content && !priority && !category) {
+            return res.status(400).json({ message: "No fields to update" });
+        }
 
-        await req.post.save(); // Save updated post
+        // Use post instance attached from `isPostAuthor` middleware
+        if (title) req.post.title = title;
+        if (content) req.post.content = content;
+        if (priority) req.post.priority = priority;
+        if (category) req.post.category = category;
 
-        res.json(req.post); // return edited post
+        // Save updated post to the database
+        const updatedPost = await req.post.save();
+
+        // Return the updated post as JSON response
+        res.status(200).json(updatedPost);
     } catch (error) {
-        // catch possible errors and display back
+        // Catch possible errors and respond with an error message
         console.error("Error updating post:", error);
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message: "Error updating post", error: error.message });
     }
 }
 
@@ -85,10 +91,10 @@ async function deletePost(req, res) {
 }
 
 // Export functions
-module.exports = { 
-    createPost, 
-    getAllPosts, 
-    getPostById, 
-    editPost, 
-    deletePost 
+module.exports = {
+    createPost,
+    getAllPosts,
+    getPostById,
+    editPost,
+    deletePost
 };
