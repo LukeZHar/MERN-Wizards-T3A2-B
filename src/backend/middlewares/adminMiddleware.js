@@ -4,12 +4,12 @@ const User = require("../models/UserModel");
 async function isAdmin(req, res, next) {
     try {
         // Ensure authUserData exists 
-        if (!req.authUserData || !req.authUserData.id) {
+        if (!req.authUserData || !req.authUserData.userId) {
             return res.status(401).json({ message: "Unauthorized. No user data found." });
         }
 
         // Fetch user from database
-        const user = await User.findById(req.authUserData.id);
+        const user = await User.findById(req.authUserData.userId);
         if (!user) {
             return res.status(404).json({ message: "User not found." });
         }
@@ -20,6 +20,7 @@ async function isAdmin(req, res, next) {
         }
 
         // User is admin, proceed to next middleware
+        req.adminUser = user;
         next();
     } catch (error) {
         res.status(500).json({ message: "Server error", error: error.message });
