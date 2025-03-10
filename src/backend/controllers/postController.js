@@ -40,7 +40,7 @@ async function getPostById(req, res) {
     const { id } = req.params;
 
     try { // send author info along with post
-        const post = await Post.findById(id).populate("author", "username email");
+        const post = await Post.findById(id).populate("author", "username email").populate("replies");
         if (!post) {
             return res.status(404).json({ message: "Post not found" });
         }
