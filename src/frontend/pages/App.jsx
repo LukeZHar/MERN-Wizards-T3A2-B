@@ -11,6 +11,7 @@ import Home from "./Home.jsx";
 import ProfilePage from "./ProfilePage.jsx";
 import AdminPage from "./AdminPage.jsx";
 import PostEdit from "./PostEdit.jsx";
+import Reply from "./Reply.jsx";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
               <Route path="/admin" element={<AdminPage />} />
               <Route path="*" element={<NotFoundPage />} />
               <Route path="/edit-post/:id" element={<PostEdit />} />
+              <Route path="/reply/:id" element={<Reply />} />
             </Routes>
           </Layout>
         </Router>

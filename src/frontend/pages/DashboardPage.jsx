@@ -76,8 +76,8 @@ export default function DashboardPage() {
                                     <Typography variant="body2">{post.content.substring(0, 100)}...</Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <Button size="small" onClick={() => navigate(`/post/${post._id}`)}>
-                                        View
+                                    <Button size="small" onClick={() => navigate(`/reply/${post._id}`)}>
+                                        Reply
                                     </Button>
                                     <Button size="small" onClick={() => navigate(`/edit-post/${post._id}`)}>
                                         Edit
