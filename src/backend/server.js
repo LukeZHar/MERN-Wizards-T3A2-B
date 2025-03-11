@@ -19,7 +19,7 @@ const { connectDB } = require("./utils/database");
 const app = express();
 
 let corsOptions = {
-    origin: ["http://localhost:3000", "http://localhost:5173","http://localhost:8008", "https://reactapp.com","https://mern-wizards-t3a2-b.onrender.com", "https://mernwizards-b.xhoo8.mongodb.net/"],
+    origin: ["http://localhost:3000", "http://localhost:5173","http://localhost:8008", "https://reactapp.com","https://mern-wizards-t3a2-b.onrender.com", "http://127.0.0.1:5173", "http://127.0.0.1:5174",  "https://mernwizards-b.xhoo8.mongodb.net/, "],
     methods:["GET", "POST","PUT", "PATCH", "DELETE"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -28,7 +28,7 @@ let corsOptions = {
 
 // Middlewares
 app.use(express.json()); // Enable JSON parsing for incoming requests
-app.use(cors(corsOptions)); // Enable CORS for all routes
+app.use(cors()); // Enable CORS for all routes
 app.use(helmet()); // Secure HTTP headers
 
 // Connect to MongoDB
