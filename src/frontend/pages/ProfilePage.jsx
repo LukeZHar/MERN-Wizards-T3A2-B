@@ -157,15 +157,6 @@ export default function ProfilePage() {
         showSnackbar("Profile photo removed!");
     };
 
-    const handleClear = () => {
-        setUser(prevUser => ({
-            username: "",
-            email: "",
-            registrationDate: prevUser.registrationDate
-        }));
-        showSnackbar("Form cleared!");
-    };
-
     return (
         <Container component="main" maxWidth="sm">
             <Box sx={{
@@ -257,9 +248,6 @@ export default function ProfilePage() {
                     />
 
                     <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 2 }}>
-                        <Button variant="contained" color="primary" onClick={handleClear}>
-                            Clear
-                        </Button>
                         <Button variant="contained" color="primary" type="submit">
                             Update Profile
                         </Button>

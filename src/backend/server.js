@@ -20,12 +20,15 @@ const app = express();
 
 let corsOptions = {
     origin: ["http://localhost:3000", "http://localhost:5173","http://localhost:8008", "https://reactapp.com","https://mern-wizards-t3a2-b.onrender.com", "https://mernwizards-b.xhoo8.mongodb.net/"],
-    methods:["GET", "POST","PUT", "PATCH", "DELETE"]
+    methods:["GET", "POST","PUT", "PATCH", "DELETE"],
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+    optionsSuccessStatus: 200 
 }
 
 // Middlewares
 app.use(express.json()); // Enable JSON parsing for incoming requests
-app.use(cors()); // Enable CORS for all routes
+app.use(cors(corsOptions)); // Enable CORS for all routes
 app.use(helmet()); // Secure HTTP headers
 
 // Connect to MongoDB

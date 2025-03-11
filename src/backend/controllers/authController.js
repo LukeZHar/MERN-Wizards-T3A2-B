@@ -82,7 +82,7 @@ async function loginUser(req, res) {
             return res.status(400).json({ message: "Incorrect password" });
         }
         
-        const token = jwt.sign({ userId: user._id, userClass: user.userClass }, process.env.JWT_SECRET, { expiresIn: "1h" });
+        const token = jwt.sign({ userId: user._id, userClass: user.userClass }, process.env.JWT_SECRET, { expiresIn: "5h" });
         res.status(200).json({ token, user: { id: user._id, userClass: user.userClass } });
     } catch (error) {
         console.error("Error during login:", error);
