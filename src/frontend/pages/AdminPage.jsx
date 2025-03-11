@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TextField, Button, Typography, Container, Box, IconButton, Divider, MenuItem, Select } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import { useSnackbar } from "../contexts/SnackbarContext";
 import useAdmin from "../hooks/useAdmin";
+import { useUserAuthContext } from "../contexts/UserAuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminPage() {
     const {
@@ -12,7 +14,10 @@ export default function AdminPage() {
         deleteUser, deletePost
     } = useAdmin();
 
+    const [token, , , userId, userClass] = useUserAuthContext();
+
     const showSnackbar = useSnackbar();
+    const navigate = useNavigate();
 
     // Search states
     const [userSearch, setUserSearch] = useState("");
@@ -21,6 +26,14 @@ export default function AdminPage() {
     // State for storing temporary changes 
     const [priorityUpdates, setPriorityUpdates] = useState({});
     const [userClassUpdates, setUserClassUpdates] = useState({});
+
+    // Redirect non-admin users
+    useEffect(() => {
+        if (userClass !== "Admin") {
+            showSnackbar("Access Denied. Admins Only.", "error"); 
+            navigate("/"); // Redirect to home page
+        }
+    }, [userClass, navigate, showSnackbar]);
 
     // Handle for searching users by email
     const handleUserSearch = async () => {
