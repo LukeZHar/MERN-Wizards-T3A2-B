@@ -11,6 +11,7 @@ const postRoutes = require("./routes/postRoutes");
 const notificationRoutes = require('./routes/notificationRoutes'); // Import notification routes
 const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const replyRoutes = require("./routes/replyRoutes"); // Import reply routes
 
 require('dotenv').config(); // Load environment variables
 const { connectDB } = require("./utils/database");
@@ -44,6 +45,7 @@ app.use("/api/posts", postRoutes); // Use post-related routes
 app.use("/api/notifications", notificationRoutes); // Use notification-related routes
 app.use("/api/users", userRoutes); // Use users-related routes
 app.use("/api/admin", adminRoutes); // Use admin-related routes
+app.use("/api/reply", replyRoutes); // Use reply routes
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {

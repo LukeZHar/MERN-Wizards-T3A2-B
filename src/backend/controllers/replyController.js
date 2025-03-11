@@ -4,7 +4,7 @@ const Post = require('../models/PostModel'); // Import Post model to verify post
 // Function to handle adding a reply to a post
 async function addReply(req, res) {
     const { id } = req.params; // Get post ID from the route parameters
-    const { content } = req.body; // Get the reply content from the request body
+    const { username, content } = req.body; // Get the reply content from the request body
 
     try {
         // Check if the post exists
