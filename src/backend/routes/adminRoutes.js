@@ -1,6 +1,5 @@
 const express = require('express');
 const { validateToken } = require('../middlewares/authMiddleware'); // JWT validation middleware
-const { isAdmin } = require('../middlewares/adminMiddleware'); // Ensure user is Admin
 const { searchUsers, updateUserRole, deleteUser, searchPosts, updatePostPriority, deletePost } = require('../controllers/adminController');
 
 const router = express.Router();
