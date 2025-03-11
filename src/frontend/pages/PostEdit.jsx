@@ -17,7 +17,7 @@ export default function PostEdit() {
     const [post, setPost] = useState(null); // Initialize post state
     const [error, setError] = useState(''); // Initialize error state
     const [postContent, setPostContent] = useState(""); // State for post content
-    const [postReply, setPostReply] = useState(""); // State for reply content
+    
 
     // Fetch specific post based on id
     useEffect(() => {
