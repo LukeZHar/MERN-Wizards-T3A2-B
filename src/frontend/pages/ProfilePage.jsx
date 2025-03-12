@@ -194,7 +194,11 @@ export default function ProfilePage() {
 
                 {/* Remove Profile Photo */}
                 {profileImage && (
-                    <Button variant="contained" color="fffff0" onClick={handleRemoveImage}>
+                    <Button variant="contained" color="fffff0" onClick={handleRemoveImage} sx={{
+                        marginTop: 2,
+                        transition: "transform 0.2s ease-in-out",
+                        "&:hover": { transform: "scale(1.05)" }
+                    }}>
                         Remove Photo
                     </Button>
                 )}
@@ -247,8 +251,11 @@ export default function ProfilePage() {
                         sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
                     />
 
-                    <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 2 }}>
-                        <Button variant="contained" color="primary" type="submit">
+                    <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 2, }}>
+                        <Button sx={{
+                            transition: "transform 0.2s ease-in-out",
+                            "&:hover": { transform: "scale(1.05)" },
+                        }} variant="contained" color="primary" type="submit">
                             Update Profile
                         </Button>
                     </Box>
@@ -298,17 +305,25 @@ export default function ProfilePage() {
                         required
                     />
 
-                    <Button variant="contained" color="primary" type="submit" sx={{ marginTop: 2 }}>
+                    <Button variant="contained" color="primary" type="submit" sx={{
+                        marginTop: 2,
+                        transition: "transform 0.2s ease-in-out",
+                        "&:hover": { transform: "scale(1.05)" },
+                    }}>
                         Update Password
                     </Button>
 
                     <Divider sx={{ width: "100%", my: 3, bgcolor: "#fffff0" }} />
-                    
+
                     {user.userClass === "Admin" && (
                         <Button
                             variant="contained"
                             color="secondary"
-                            sx={{ marginTop: 2 }}
+                            sx={{
+                                marginTop: 2,
+                                transition: "transform 0.2s ease-in-out",
+                                "&:hover": { transform: "scale(1.05)" },
+                            }}
                             onClick={() => navigate("/admin")}
                         >
                             Go to Admin Panel

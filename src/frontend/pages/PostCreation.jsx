@@ -6,6 +6,7 @@ import { useSnackbar } from "../contexts/SnackbarContext";
 import { Navigate, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth"
 import LoginPrompt from "../components/LoginPrompt";
+import { motion } from "framer-motion";
 
 export default function PostCreation() {
     // State for form inputs
@@ -88,7 +89,17 @@ export default function PostCreation() {
                 marginTop: '100px', // Centered with margin above
             }}>
                 <img src={logo} alt="Logo" style={{ display: 'block', margin: '0 auto', width: '20%', maxWidth: '200px', borderRadius: '50%' }} />
-                <Typography variant="h5">
+
+                <Typography
+                    variant="h5"
+                    sx={{
+                        textTransform: "uppercase",
+                        letterSpacing: "1px",
+                        padding: "12px", // Adds inner space
+                        margin: "16px 0", // Adds space above and below
+                        textAlign: "center", // Ensures the text is centered
+                    }}
+                >
                     Post Creation
                 </Typography>
 
@@ -147,13 +158,26 @@ export default function PostCreation() {
                     </Select>
 
                     {/* Buttons */}
-                    <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 2 }}>
-                        <Button variant="contained" color="secondary" onClick={handleClear}>
-                            Clear
-                        </Button>
-                        <Button variant="contained" color="primary" type="submit">
-                            Submit
-                        </Button>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 2, gap: 2 }}>
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={{ duration: 0.2 }}
+                        >
+                            <Button variant="contained" color="primary" onClick={handleClear}>
+                                Clear
+                            </Button>
+                        </motion.div>
+
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={{ duration: 0.2 }}
+                        >
+                            <Button variant="contained" color="primary" type="submit">
+                                Submit
+                            </Button>
+                        </motion.div>
                     </Box>
                 </form>
             </Box>
