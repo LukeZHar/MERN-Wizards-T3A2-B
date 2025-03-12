@@ -1,10 +1,20 @@
 const Reply = require('../models/ReplyModel');
-const Post = require('../models/PostModel'); // Import Post model to verify post existence
+const { Post } = require('../models/PostModel'); // Import Post model to verify post existence
 
 // Function to handle adding a reply to a post
 async function addReply(req, res) {
     const { id } = req.params; // Get post ID from the route parameters
-    const { username, content } = req.body; // Get the reply content from the request body
+    const { content } = req.body; // Get the reply content from the request body
+
+    // Ensure user is authenticated
+    if (!req.authUserData || !req.authUserData.userId) {
+        return res.status(401).json({ message: "Unauthorized - User ID missing from token" });
+    }
+
+    // Validation for reply
+    if (!content || content.trim().length < 4) {
+        return res.status(400).json({ message: "Reply content must be at least 4 characters long." });
+    }
 
     try {
         // Check if the post exists
@@ -13,11 +23,13 @@ async function addReply(req, res) {
             return res.status(404).json({ message: "Post not found" });
         }
 
+        const userId = req.authUserData.userId; // Fetch User
+        
         // Create a new reply
         const newReply = new Reply({
             content: content,
             postId: id, // Link to the post
-            userId: req.authUserData.id // Use the authenticated user's ID
+            userId: userId // Use the authenticated user's ID
         });
 
         // Save the reply to the database
