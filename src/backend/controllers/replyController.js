@@ -46,7 +46,28 @@ async function addReply(req, res) {
     }
 }
 
-// Export the reply controller function
+async function getRepliesByPostId(req, res) {
+    const { id } = req.params; // Extract post ID from the route
+
+    try {
+        // Check if the post exists
+        const post = await Post.findById(id);
+        if (!post) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        // Fetch replies linked to the post, populate with username
+        const replies = await Reply.find({ postId: id }).populate("userId", "username"); 
+
+        res.status(200).json(replies);
+    } catch (error) { // error msgs
+        console.error("Error fetching replies:", error);
+        res.status(500).json({ message: "Error fetching replies" });
+    }
+}
+
+// Export the reply controller functions
 module.exports = {
-    addReply
+    addReply,
+    getRepliesByPostId
 };
