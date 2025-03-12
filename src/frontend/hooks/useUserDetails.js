@@ -4,8 +4,6 @@ import { useUserAuthContext } from "../contexts/UserAuthContext";
 export function useUserDetails() {
     const [token] = useUserAuthContext(); // Get token from context
 
-    console.log("Token from context:", token); // Debug purpose
-
     const decodeToken = (token) => {
         if (!token) { 
             console.warn("No token found.");
@@ -22,8 +20,6 @@ export function useUserDetails() {
 
             // Decode the Payload (Base64 to JSON)
             const payload = JSON.parse(atob(parts[1]));
-
-            console.log("Decoded token:", payload); // Debugging log
 
             return {
                 userId: payload.userId || null,
