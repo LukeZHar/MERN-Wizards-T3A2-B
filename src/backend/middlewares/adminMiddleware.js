@@ -1,28 +1,27 @@
-const User = require("../models/UserModel");
+const { User } = require("../models/UserModel");
 
-// Middleware to check if user is an Admin
 async function isAdmin(req, res, next) {
     try {
-        // Ensure authUserData exists 
-        if (!req.authUserData || !req.authUserData.id) {
+        if (!req.authUserData || !req.authUserData.userId) {
             return res.status(401).json({ message: "Unauthorized. No user data found." });
         }
 
-        // Fetch user from database
-        const user = await User.findById(req.authUserData.id);
-        if (!user) {
-            return res.status(404).json({ message: "User not found." });
+        // Fetch the user from the database
+        const adminUser = await User.findById(req.authUserData.userId);
+        if (!adminUser) {
+            return res.status(404).json({ message: "User not found" });
         }
 
-        // Check if userClass is "Admin"
-        if (user.userClass !== "Admin") {
+        // Ensure the user is an admin
+        if (adminUser.userClass !== "Admin") {
             return res.status(403).json({ message: "Access denied. Admins only." });
         }
 
-        // User is admin, proceed to next middleware
-        next();
+        req.adminUser = adminUser; 
+        next(); 
     } catch (error) {
-        res.status(500).json({ message: "Server error", error: error.message });
+        console.error("Error in isAdmin middleware:", error);
+        res.status(error.status || 500).json({ message: error.message || "Server error" });
     }
 }
 

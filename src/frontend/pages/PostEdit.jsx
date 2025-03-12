@@ -17,7 +17,7 @@ export default function PostEdit() {
     const [post, setPost] = useState(null); // Initialize post state
     const [error, setError] = useState(''); // Initialize error state
     const [postContent, setPostContent] = useState(""); // State for post content
-    const [postReply, setPostReply] = useState(""); // State for reply content
+    
 
     // Fetch specific post based on id
     useEffect(() => {
@@ -89,7 +89,6 @@ export default function PostEdit() {
                         onChange={(e) => setPostContent(e.target.value)} // Update content state
                         sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
                     />
-                    {/* Additional fields as necessary */}
                     <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 2 }}>
                         <Button
                             variant="contained"

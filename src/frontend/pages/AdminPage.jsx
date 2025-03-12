@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TextField, Button, Typography, Container, Box, IconButton, Divider, MenuItem, Select } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import { useSnackbar } from "../contexts/SnackbarContext";
 import useAdmin from "../hooks/useAdmin";
+import useUserDetails from "../hooks/useUserDetails";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminPage() {
     const {
@@ -13,6 +15,8 @@ export default function AdminPage() {
     } = useAdmin();
 
     const showSnackbar = useSnackbar();
+    const { userClass } = useUserDetails(); // Fetch userClass from token
+    const navigate = useNavigate(); 
 
     // Search states
     const [userSearch, setUserSearch] = useState("");
@@ -21,6 +25,14 @@ export default function AdminPage() {
     // State for storing temporary changes 
     const [priorityUpdates, setPriorityUpdates] = useState({});
     const [userClassUpdates, setUserClassUpdates] = useState({});
+
+    // Redirect if user is not an admin
+    useEffect(() => {
+        if (userClass !== "Admin") {
+            showSnackbar("You are not allowed to access this page.", "error");
+            navigate("/"); 
+        }
+    }, [userClass, navigate, showSnackbar]);
 
     // Handle for searching users by email
     const handleUserSearch = async () => {
