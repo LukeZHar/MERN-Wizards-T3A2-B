@@ -10,6 +10,7 @@ export default function DashboardPage() {
     const [posts, setPosts] = useState([]); // State for storing posts
     const [error, setError] = useState(''); // State for capturing errors
     const [token] = useUserAuthContext(); // Get JWT token from context
+    const [replies, setReplies] = useState([]); // State for replies
     const showSnackbar = useSnackbar(); // Access Snackbar
 
     const navigate = useNavigate();

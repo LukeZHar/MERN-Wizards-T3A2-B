@@ -40,11 +40,30 @@ const PostSchema = new mongoose.Schema({
     isArchived: {
         type: Boolean,
         default: false
-    }},
+    }
+},
     {
-        timestamps: true
+        timestamps: true,
+        toJSON: { getters: true },
+        toObject: { getters: true }
     }
 );
+
+// Function to format date/time
+function formatDate(timestamp) {
+    return new Date(timestamp).toLocaleString("en-GB", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false
+    });
+}
+
+// Apply the formatting to createdAt & updatedAt
+PostSchema.path("createdAt").get(formatDate);
+PostSchema.path("updatedAt").get(formatDate);
 
 // Make Model based on Schema
 const Post = mongoose.model("Post", PostSchema);

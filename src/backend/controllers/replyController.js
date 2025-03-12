@@ -57,7 +57,12 @@ async function getRepliesByPostId(req, res) {
         }
 
         // Fetch replies linked to the post, populate with username
-        const replies = await Reply.find({ postId: id }).populate("userId", "username"); 
+        const replies = await Reply.find({ postId: id }).populate("userId", "username").select("content createdAt userId");
+
+        // Error msg
+        if (!replies.length) {
+            return res.status(404).json({ message: "This post has no replies yet." });
+        }
 
         res.status(200).json(replies);
     } catch (error) { // error msgs
