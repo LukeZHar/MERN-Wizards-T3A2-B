@@ -93,14 +93,13 @@ export default function PostCreation() {
                 <Typography
                     variant="h5"
                     sx={{
-                        textTransform: "uppercase",
                         letterSpacing: "1px",
                         padding: "12px", // Adds inner space
                         margin: "16px 0", // Adds space above and below
                         textAlign: "center", // Ensures the text is centered
                     }}
                 >
-                    Post Creation
+                    Create a New Post
                 </Typography>
 
                 {/* Post creation form */}

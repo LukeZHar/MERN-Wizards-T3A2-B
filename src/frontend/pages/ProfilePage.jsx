@@ -205,7 +205,7 @@ export default function ProfilePage() {
 
                 <Divider sx={{ width: "100%", my: 3, bgcolor: "#fffff0" }} />
 
-                <Typography variant="h5" sx={{ marginBottom: 2 }}>
+                <Typography variant="h5" sx={{ marginBottom: 2, letterSpacing: "1px" }}>
                     Your Profile
                 </Typography>
 
@@ -264,7 +264,7 @@ export default function ProfilePage() {
                 <Divider sx={{ width: "100%", my: 3, bgcolor: "#fffff0" }} />
 
                 {/* Password Update Form */}
-                <Typography variant="h5" sx={{ marginBottom: 2 }}>
+                <Typography variant="h5" sx={{ marginBottom: 2, letterSpacing: "1px" }}>
                     Change Password
                 </Typography>
 
