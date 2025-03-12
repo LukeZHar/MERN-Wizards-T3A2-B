@@ -45,7 +45,7 @@ function ReplyPost() {
         }
 
         try {
-            const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/api/reply/posts/${id}/replies`,
+            const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/api/posts/${id}/reply`,
                 { content: replyContent },
                 {
                     headers: {

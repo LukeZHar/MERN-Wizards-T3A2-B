@@ -106,7 +106,7 @@ export default function PostEdit() {
                             variant="contained"
                             color="secondary"
                             type="submit" // Ensure this button redirects to reply page
-                            onClick={() => navigate(`/reply/${id}`)} // Ensure post is not null
+                            onClick={() => navigate(`/post/${id}/reply`)} // Ensure post is not null
                         >
                             Reply to this post
                         </Button>
