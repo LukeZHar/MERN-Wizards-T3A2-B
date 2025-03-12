@@ -12,8 +12,8 @@ async function addReply(req, res) {
     }
 
     // Validation for reply
-    if (!content || content.trim().length < 4) {
-        return res.status(400).json({ message: "Reply content must be at least 4 characters long." });
+    if (!content || content.trim() === "") {
+        return res.status(400).json({ message: "Reply content cannot be empty." });
     }
 
     try {
