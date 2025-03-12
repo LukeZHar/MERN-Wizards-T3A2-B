@@ -42,7 +42,7 @@ export default function DashboardPage() {
                 },
             });
             // Update the local state to remove the deleted post
-            setPosts(prev => prev.filter(post => post._id !== postId));
+            setPosts(prev => prev.filter(post => post._id !== id));
             showSnackbar("Post deleted successfully!"); // Show success Snackbar
         } catch (error) {
             showSnackbar("Failed to delete post."); // Show error Snackbar
