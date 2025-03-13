@@ -99,7 +99,7 @@ const Home = () => {
                         </Typography>
 
                         <Typography sx={{ fontWeight: "bold", color: "text.secondary", fontSize: "1rem", marginBottom: 3 }}>
-                            Don't have an account?
+                            Ready to get started? Register or Login
                         </Typography>
 
                         {/* Buttons with hover effects */}

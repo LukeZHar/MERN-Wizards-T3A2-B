@@ -75,7 +75,7 @@ export default function PostCreation() {
         console.log("Form has been cleared!");
     };
 
-    return (
+   return (
         // Page styling
         <Container component="main" maxWidth="sm">
             <Box sx={{
@@ -111,7 +111,7 @@ export default function PostCreation() {
                         variant="outlined"
                         value={post.title}
                         onChange={handleChange}
-                        sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
+                        sx={{ marginBottom: 2 }}
                     />
 
                     {/* Content */}
@@ -124,7 +124,7 @@ export default function PostCreation() {
                         rows={4}
                         value={post.content}
                         onChange={handleChange}
-                        sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
+                        sx={{ marginBottom: 2 }}
                     />
 
                     {/* Priority label */}
@@ -180,6 +180,6 @@ export default function PostCreation() {
                     </Box>
                 </form>
             </Box>
-        </Container>
+        </Container> 
     );
 }

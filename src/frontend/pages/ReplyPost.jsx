@@ -55,6 +55,7 @@ function ReplyPost() {
             );
             showSnackbar("Reply added!");
             setReplyContent(''); // Clear reply input
+            navigate('/dashboard');
         } catch (error) {
             console.error("Error submitting reply:", error);
             showSnackbar("Failed to submit reply.");

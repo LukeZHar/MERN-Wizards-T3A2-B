@@ -13,12 +13,12 @@ import {
 
 export default function Notification({ notifications, onMarkAsRead }) {
     if (notifications.length === 0) {
-        return <Alert severity="info">No notifications available.</Alert>; // Message when no notifications exist
+        return <Alert severity="info">No notifications available. This feature will be implemented in the future.</Alert>; // Message when no notifications exist
     }
 
     return (
         <Box sx={{ width: '100%', bgcolor: '#00cccc', padding: 2 }}> {/* Main container for notifications */}
-            <Typography variant="h5" gutterBottom>
+            <Typography variant="h5" gutterBottom sx={{ letterSpacing: "1px"}}>
                 Notifications
             </Typography>
             <List>

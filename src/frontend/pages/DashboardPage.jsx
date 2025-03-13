@@ -82,6 +82,7 @@ export default function DashboardPage() {
     return (
         <Container maxWidth="lg" component={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
             <Typography variant="h4" sx={{ letterSpacing: "2px", fontWeight: "bold", textAlign: "center", mb: 4 }}>Dashboard</Typography>
+            
             {error && <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>}
 
             <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 3 }}>

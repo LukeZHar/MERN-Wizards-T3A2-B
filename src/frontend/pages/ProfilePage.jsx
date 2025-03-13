@@ -218,7 +218,7 @@ export default function ProfilePage() {
                         variant="outlined"
                         value={user.username}
                         onChange={handleChange}
-                        sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
+                        sx={{ marginBottom: 2 }}
                     />
 
                     <TextField
@@ -228,7 +228,7 @@ export default function ProfilePage() {
                         variant="outlined"
                         value={user.email}
                         onChange={handleChange}
-                        sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
+                        sx={{ marginBottom: 2 }}
                     />
 
                     <TextField
@@ -238,7 +238,7 @@ export default function ProfilePage() {
                         variant="outlined"
                         value={new Date(user.registrationDate).toLocaleDateString()}
                         disabled
-                        sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
+                        sx={{ marginBottom: 2 }}
                     />
 
                     <TextField
@@ -248,7 +248,7 @@ export default function ProfilePage() {
                         variant="outlined"
                         value={user.userClass}
                         disabled
-                        sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
+                        sx={{ marginBottom: 2 }}
                     />
 
                     <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 2, }}>
@@ -277,7 +277,7 @@ export default function ProfilePage() {
                         variant="outlined"
                         value={passwordData.currentPassword}
                         onChange={handlePasswordChange}
-                        sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
+                        sx={{ marginBottom: 2 }}
                         required
                     />
 
@@ -289,7 +289,7 @@ export default function ProfilePage() {
                         variant="outlined"
                         value={passwordData.newPassword}
                         onChange={handlePasswordChange}
-                        sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
+                        sx={{ marginBottom: 2 }}
                         required
                     />
 
@@ -301,7 +301,7 @@ export default function ProfilePage() {
                         variant="outlined"
                         value={passwordData.confirmNewPassword}
                         onChange={handlePasswordChange}
-                        sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
+                        sx={{ marginBottom: 2 }}
                         required
                     />
 
