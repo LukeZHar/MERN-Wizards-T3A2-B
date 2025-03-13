@@ -48,6 +48,8 @@ async function addReply(req, res) {
 
 async function getRepliesByPostId(req, res) {
     const { id } = req.params; // Extract post ID from the route
+    
+    console.log("Fetching replies for post ID:", id); // debug purpose
 
     try {
         // Check if the post exists
@@ -59,9 +61,9 @@ async function getRepliesByPostId(req, res) {
         // Fetch replies linked to the post, populate with username
         const replies = await Reply.find({ postId: id }).populate("userId", "username").select("content createdAt userId");
 
-        // Error msg
+        // If post has no replies
         if (!replies.length) {
-            return res.status(404).json({ message: "This post has no replies yet." });
+            return res.status(200).json([]);
         }
 
         res.status(200).json(replies);
