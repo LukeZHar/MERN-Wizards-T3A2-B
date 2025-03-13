@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Container, Box, Typography, Button, Alert, Card, CardContent, CardActions, Grid } from "@mui/material";
+import { Avatar, Container, Box, Typography, Button, Alert, Card, CardContent, CardActions, Grid, Stack } from "@mui/material";
 import { useUserAuthContext } from "../contexts/UserAuthContext"; // Import the authentication 
 import axios from "axios";
 import { useSnackbar } from "../contexts/SnackbarContext";
@@ -182,8 +182,13 @@ export default function DashboardPage() {
                                                                 </Avatar>
 
                                                                 <Box>
+                                                                <Stack spacing={0.5}>
                                                                     <Typography variant="body2" sx={{ fontWeight: "bold", color: "primary.main" }}>{reply.userId?.username}</Typography>
                                                                     <Typography variant="body2" sx={{ color: "#333" }}>{reply.content}</Typography>
+                                                                    <Typography variant="body2" sx={{ fontStyle: "italic", textAlign: "right", mt: 1 }}>
+                                                                        {reply.createdAt || "Date not available"}
+                                                                    </Typography>
+                                                                    </Stack>
                                                                 </Box>
                                                             </Box>
                                                         </motion.div>
