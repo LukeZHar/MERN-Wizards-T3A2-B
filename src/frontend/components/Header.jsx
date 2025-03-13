@@ -57,11 +57,9 @@ export default function Header() {
         }
     };
 
-    useEffect(() => {
-        fetchNotifications(); // Fetch notifications on component mount and whenever the token changes
-    }, [token]); // Depend on token to refetch when it changes
-
-
+    // useEffect(() => {
+    //     fetchNotifications(); // Fetch notifications on component mount and whenever the token changes
+    // }, [token]); // Depend on token to refetch when it changes
 
     return (
         <HideOnScroll>

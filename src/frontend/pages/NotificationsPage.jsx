@@ -27,16 +27,16 @@ const NotificationsPage = () => {
         }
     };
 
-    useEffect(() => {
-        fetchNotifications(); // Fetch notifications on component mount and whenever the token changes
-    }, [token]); // Depend on token to refetch when it changes
+    // useEffect(() => {
+    //     fetchNotifications(); // Fetch notifications on component mount and whenever the token changes
+    // }, [token]); // Depend on token to refetch when it changes
 
     return (
         <Container component="main" maxWidth="md" sx={{ padding: '20px' }}>
             <Typography variant="h4" gutterBottom>Your Notifications</Typography>
             {error && <Alert severity="error">{error}</Alert>} {/* Display any errors */}
 
-            
+
             <Notification 
                 notifications={notifications} 
                 onMarkAsRead={(id) => {
