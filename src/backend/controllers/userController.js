@@ -86,7 +86,7 @@ async function updateUserPassword(req, res) {
     }
 
     const { currentPassword, newPassword } = req.body;
-    
+
     // Validation errors array
     const errors = [];
 
@@ -111,7 +111,7 @@ async function updateUserPassword(req, res) {
     if (!currentPassword || !newPassword) {
         return res.status(400).json({ message: "Both current and new password are required." });
     }
-
+    
     try {
         // Find the user in the database
         const user = await User.findById(userId);
@@ -126,12 +126,18 @@ async function updateUserPassword(req, res) {
             return res.status(400).json({ message: "Incorrect current password" });
         }
 
+        // Check if the new password is the same as the current password
+        const isSamePassword = await bcrypt.compare(newPassword, user.passwordHash);
+        if (isSamePassword) {
+            return res.status(400).json({ message: "New password cannot be the same as the current password." });
+        }
+        
         // Hash and update the new password
         const salt = await bcrypt.genSalt(10);
         user.passwordHash = await bcrypt.hash(newPassword, salt);
         await user.save();
 
-        console.log("Password updated successfully for user:", userId);
+        console.log("Password updated successfully");
 
         res.status(200).json({ message: "Password updated successfully" });
     } catch (error) {
