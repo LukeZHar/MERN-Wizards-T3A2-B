@@ -85,8 +85,11 @@ const theme = createTheme({
             styleOverrides: {
                 root: {
                     marginBottom: '16px', // Bottom margin for all text fields
+                    '& label': {
+                        fontWeight: 'bold', // Makes the label text bold
+                    },
                     '& label.Mui-focused': {
-                        color: '#fffff0', // Label color when focused
+                        color: 'black', // Label color when focused
                     },
                     '& .MuiOutlinedInput-root': {
                         '& fieldset': {
