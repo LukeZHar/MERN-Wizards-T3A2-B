@@ -71,6 +71,11 @@ async function registerUser(req, res) {
 async function loginUser(req, res) {
     const { username, password } = req.body;
 
+     // Input validation
+     if (!username || !password) {
+        return res.status(400).json({ message: "Username and password are required." });
+    }
+
     try {
         const user = await User.findOne({ username });
         if (!user) {
