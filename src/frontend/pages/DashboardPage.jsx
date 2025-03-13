@@ -45,27 +45,27 @@ export default function DashboardPage() {
                     Authorization: `Bearer ${token}`,
                 },
             });
-    
+
             // Update the local state to remove the deleted post
             setPosts(prev => prev.filter(post => post._id !== id));
-    
+
             showSnackbar("Post deleted successfully!"); // ✅ Show success Snackbar
         } catch (error) {
             console.error("Error deleting post:", error);
-    
+
             // Check if error response exists
             if (error.response) {
                 if (error.response.status === 403) {
                     showSnackbar("You are not authorized to delete this post.");
                 } else {
-                    showSnackbar("Failed to delete post."); 
+                    showSnackbar("Failed to delete post.");
                 }
             } else {
-                showSnackbar("An unexpected error occurred."); 
+                showSnackbar("An unexpected error occurred.");
             }
         }
     };
-    
+
     // Function to fetch replies from a specific post
     const fetchReplies = async (postId) => {
         try {
@@ -132,11 +132,7 @@ export default function DashboardPage() {
                                         {expandedPostContent[post._id] ? "Show Less" : "Read More"}
                                     </Button>
                                     <Typography variant="caption" sx={{ mt: 1, color: "#888" }}>
-                                        {post.createdAt ?
-                                            new Date(post.createdAt).toString() !== "Invalid Date" ?
-                                                new Date(post.createdAt).toLocaleString() :
-                                                "Unknown Date"
-                                            : "Date not available"}
+                                        {post.createdAt || "Date not available"}
                                     </Typography>
                                 </CardContent>
                                 <CardActions sx={{ justifyContent: "space-between", px: 2, pb: 2 }}>

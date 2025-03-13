@@ -1,4 +1,5 @@
 const { Post } = require("../models/PostModel");
+const Reply = require('../models/ReplyModel');
 
 // Function to create a post 
 async function createPost(req, res) {
@@ -15,7 +16,7 @@ async function createPost(req, res) {
 
         // Create post
         const post = await Post.create({ title, content, priority, category, author });
-
+        
         res.status(201).json(post);
     } catch (error) {
         // returns error msgs
@@ -61,17 +62,11 @@ async function editPost(req, res) {
             return res.status(400).json({ message: "No fields to update" });
         }
 
-        // Ensure the existing createdAt date is preserved
-        const existingCreatedAt = req.post.createdAt;
-
         // Use post instance attached from isPostAuthor middleware
         if (title) req.post.title = title;
         if (content) req.post.content = content;
         if (priority) req.post.priority = priority;
         if (category) req.post.category = category;
-
-        // Preserve the createdAt date manually
-        req.post.createdAt = existingCreatedAt;
 
         // Save updated post to the database
         const updatedPost = await req.post.save();
@@ -88,6 +83,9 @@ async function editPost(req, res) {
 // Function to delete post (Middleware ensures authorization)
 async function deletePost(req, res) {
     try {
+        // Delete all replies linked to the post
+        await Reply.deleteMany({ postId: req.post._id });
+
         await req.post.deleteOne(); // Use post attached from middleware
         res.json({ message: "Post deleted successfully" });
     } catch (error) {
