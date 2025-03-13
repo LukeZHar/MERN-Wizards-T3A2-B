@@ -73,42 +73,8 @@ async function getRepliesByPostId(req, res) {
     }
 }
 
-// Function to delete replies
-async function deleteReply(req, res) {
-    const { replyId } = req.params;
-
-    // Ensure the user is authenticated
-    if (!req.authUserData || !req.authUserData.userId) {
-        return res.status(401).json({ message: "Unauthorized - User ID missing from token" });
-    }
-
-    try {
-        const reply = await Reply.findById(replyId);
-        if (!reply) {
-            return res.status(404).json({ message: "Reply not found" });
-        }
-
-        // Ensure only the author can delete
-        if (reply.userId.toString() !== req.authUserData.userId) {
-            return res.status(403).json({ message: "Forbidden - You can only delete your own replies." });
-        }
-
-        // Delete the reply
-        await Reply.findByIdAndDelete(replyId);
-
-        // Remove the reply from the associated post
-        await Post.findByIdAndUpdate(reply.postId, { $pull: { replies: replyId } });
-
-        res.status(200).json({ message: "Reply deleted successfully" });
-    } catch (error) {
-        console.error("Error deleting reply:", error);
-        res.status(500).json({ message: "Error deleting reply" });
-    }
-}
-
 // Export the reply controller functions
 module.exports = {
     addReply,
-    getRepliesByPostId,
-    deleteReply
+    getRepliesByPostId
 };

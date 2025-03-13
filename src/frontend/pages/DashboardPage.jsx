@@ -124,19 +124,19 @@ export default function DashboardPage() {
                         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} whileHover={{ scale: 1.02 }}>
                             <Card sx={{ borderRadius: "12px", backgroundColor: "#fffff0", overflow: "hidden", boxShadow: "0px 2px 10px rgba(0,0,0,0.1)", transition: "0.3s" }}>
                                 <CardContent sx={{ borderTop: "1px solid #eee" }}>
+                                <Typography variant="caption" sx={{ mt: 1, color: "#888" }}>
+                                        {post.createdAt || "Date not available"}
+                                    </Typography>
                                 <Typography variant="body2" sx={{ mt: 1,mb: "8px", fontStyle: "italic", color: "#708090"}}>
                                     Priority: {post.priority} | Category: {post.category}
                                     </Typography>
                                     <Typography variant="h6" sx={{ fontWeight: 600, color: "#000" }}>{post.title}</Typography>
-                                    <Typography variant="body2" sx={{ mt: 1, color: "#000" }}>
+                                    <Typography variant="body2" sx={{ mt: 1, mb:1 , color: "#000" }}>
                                         {expandedPostContent[post._id] ? post.content : post.content.substring(0, 100) + "..."}
                                     </Typography>
                                     <Button onClick={() => togglePostContent(post._id)} size="small">
                                         {expandedPostContent[post._id] ? "Show Less" : "Read More"}
                                     </Button>
-                                    <Typography variant="caption" sx={{ mt: 1, color: "#888" }}>
-                                        {post.createdAt || "Date not available"}
-                                    </Typography>
                                 </CardContent>
                                 <CardActions sx={{ justifyContent: "space-between", px: 2, pb: 2 }}>
                                     <Button size="small" onClick={() => toggleReplies(post._id)}>
