@@ -49,7 +49,7 @@ export default function DashboardPage() {
             // Update the local state to remove the deleted post
             setPosts(prev => prev.filter(post => post._id !== id));
 
-            showSnackbar("Post deleted successfully!"); // ✅ Show success Snackbar
+            showSnackbar("Post deleted successfully!"); // Show success Snackbar
         } catch (error) {
             console.error("Error deleting post:", error);
 
