@@ -14,6 +14,7 @@ export default function DashboardPage() {
     const [replies, setReplies] = useState({}); // State for replies
     const showSnackbar = useSnackbar(); // Access Snackbar
     const [expandedPosts, setExpandedPosts] = useState({});
+    const [expandedPostContent, setExpandedPostContent] = useState({});
     const navigate = useNavigate();
 
     // Fetch posts on component mount
@@ -25,7 +26,8 @@ export default function DashboardPage() {
                         Authorization: `Bearer ${token}`, // Set authorization header
                     },
                 });
-                setPosts(response.data); // Set posts received from the server
+                const sortedPosts = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                setPosts(sortedPosts); // Set posts received from the server
             } catch (error) {
                 console.error("Error fetching posts:", error);
                 setError("Failed to fetch posts. Please try again later."); // Capture error message
@@ -79,10 +81,17 @@ export default function DashboardPage() {
         }));
     };
 
+    const togglePostContent = (postId) => {
+        setExpandedPostContent(prev => ({
+            ...prev,
+            [postId]: !prev[postId],
+        }));
+    };
+
     return (
         <Container maxWidth="lg" component={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
             <Typography variant="h4" sx={{ letterSpacing: "2px", fontWeight: "bold", textAlign: "center", mb: 4 }}>Dashboard</Typography>
-            
+
             {error && <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>}
 
             <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 3 }}>
@@ -103,7 +112,19 @@ export default function DashboardPage() {
                             <Card sx={{ borderRadius: "12px", backgroundColor: "#fffff0", overflow: "hidden", boxShadow: "0px 2px 10px rgba(0,0,0,0.1)", transition: "0.3s" }}>
                                 <CardContent sx={{ borderTop: "1px solid #eee" }}>
                                     <Typography variant="h6" sx={{ fontWeight: 600, color: "#000" }}>{post.title}</Typography>
-                                    <Typography variant="body2" sx={{ mt: 1, color: "#000" }}>{post.content.substring(0, 100)}...</Typography>
+                                    <Typography variant="body2" sx={{ mt: 1, color: "#000" }}>
+                                        {expandedPostContent[post._id] ? post.content : post.content.substring(0, 100) + "..."}
+                                    </Typography>
+                                    <Button onClick={() => togglePostContent(post._id)} size="small">
+                                        {expandedPostContent[post._id] ? "Show Less" : "Read More"}
+                                    </Button>
+                                    <Typography variant="caption" sx={{ mt: 1, color: "#888" }}>
+                                        {post.createdAt ?
+                                            new Date(post.createdAt).toString() !== "Invalid Date" ?
+                                                new Date(post.createdAt).toLocaleString() :
+                                                "Unknown Date"
+                                            : "Date not available"}
+                                    </Typography>
                                 </CardContent>
                                 <CardActions sx={{ justifyContent: "space-between", px: 2, pb: 2 }}>
                                     <Button size="small" onClick={() => toggleReplies(post._id)}>

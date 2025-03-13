@@ -61,11 +61,17 @@ async function editPost(req, res) {
             return res.status(400).json({ message: "No fields to update" });
         }
 
-        // Use post instance attached from `isPostAuthor` middleware
+        // Ensure the existing createdAt date is preserved
+        const existingCreatedAt = req.post.createdAt;
+
+        // Use post instance attached from isPostAuthor middleware
         if (title) req.post.title = title;
         if (content) req.post.content = content;
         if (priority) req.post.priority = priority;
         if (category) req.post.category = category;
+
+        // Preserve the createdAt date manually
+        req.post.createdAt = existingCreatedAt;
 
         // Save updated post to the database
         const updatedPost = await req.post.save();
