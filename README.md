@@ -96,6 +96,8 @@ To run the application, use the following command to start both the backend and 
 - **Unit and Integration Testing:** 
   - The project utilises **Vitest** as the formal testing framework, along with **Testing Library** for React components. A comprehensive test suite has been established, covering both unit tests for individual components and integration tests for overall functionality.
 
+[Link to all the tests and screenshots](./src/test/)
+
 ## Task Management
 The project utilised **Trello** for task management, allowing our team to efficiently organise, prioritise, and track tasks. Tasks were assigned based on team strengths and availability, ensuring a smooth workflow and effective collaboration throughout the project lifecycle.
 
