@@ -45,14 +45,27 @@ export default function DashboardPage() {
                     Authorization: `Bearer ${token}`,
                 },
             });
+    
             // Update the local state to remove the deleted post
             setPosts(prev => prev.filter(post => post._id !== id));
-            showSnackbar("Post deleted successfully!"); // Show success Snackbar
+    
+            showSnackbar("Post deleted successfully!"); // ✅ Show success Snackbar
         } catch (error) {
-            showSnackbar("Failed to delete post."); // Show error Snackbar
+            console.error("Error deleting post:", error);
+    
+            // Check if error response exists
+            if (error.response) {
+                if (error.response.status === 403) {
+                    showSnackbar("You are not authorized to delete this post.");
+                } else {
+                    showSnackbar("Failed to delete post."); 
+                }
+            } else {
+                showSnackbar("An unexpected error occurred."); 
+            }
         }
     };
-
+    
     // Function to fetch replies from a specific post
     const fetchReplies = async (postId) => {
         try {

@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import axios from 'axios';
+import { useSnackbar } from "../contexts/SnackbarContext";
 
 // Create an instance of Context
 const PostContext = createContext();
@@ -9,6 +10,7 @@ const PostContext = createContext();
 export function PostProvider({ children }) {
     const [posts, setPosts] = useState([]);
     const { isLoggedIn } = useAuth(); // Auth hook
+    const showSnackbar = useSnackbar();
     const API_URL = `${import.meta.env.VITE_AUTH_API_URL}/api/posts`; // Adjust as necessary
 
     // Add Post function using spread operator 
@@ -22,9 +24,10 @@ export function PostProvider({ children }) {
     }
 
     // Update Post function
-    const updatePost = async (id, data, showSnackbar) => {
+    const updatePost = async (id, data) => {
         if (!isLoggedIn()) {
             console.log("Unauthorized: User must be logged in to update post.");
+            showSnackbar("Unauthorized: You must be logged in to update a post.");
             return;
         }
 
