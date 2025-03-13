@@ -1,10 +1,11 @@
 import { useState } from "react";
 import axios from 'axios';
-import logo from "../assets/Mern.png"
+import logo from "../assets/Mern.png";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button, Typography, Container, Alert, Divider, InputAdornment } from '@mui/material'; // Import MUI components
 import { AccountCircle, Lock, MailOutline } from '@mui/icons-material';
 import { useSnackbar } from "../contexts/SnackbarContext";
+import { motion } from "framer-motion";
 
 export default function RegisterPage() {
     const [username, setUsername] = useState('');
@@ -16,6 +17,13 @@ export default function RegisterPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Check for missing fields
+        if (!username || !email || !password) {
+            showSnackbar('All fields are required', 'warning');
+            return;
+        }
+
         try {
             const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/api/auth/register`, { username, email, password });
             showSnackbar(response.data.message);
@@ -26,23 +34,53 @@ export default function RegisterPage() {
     };
 
     return (
-        <Container component="main" maxWidth="xs" sx={{
-            bgcolor: '#00cccc', // Background color
-            borderRadius: 2,
-            padding: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: '100px', // Centered with margin above
-        }}>
-            <img src={logo} alt="Logo" style={{ display: 'block', margin: '0 auto', width: '20%', maxWidth: '200px', borderRadius: '50%' }} />
-            <Typography variant="h5" component="h2" align="center">
+        <Container
+            component="main"
+            maxWidth="xs"
+            sx={{
+                bgcolor: '#00cccc', // Background color
+                borderRadius: 2,
+                padding: { xs: 3, sm: 4 }, // Adjust padding dynamically
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minHeight: "100vh", // Center content on the page
+            }}
+        >
+            {/* Logo with Responsive Sizing */}
+            <img
+                src={logo}
+                alt="Logo"
+                style={{
+                    display: 'block',
+                    margin: '0 auto',
+                    width: "30%", // Adjusted for better responsiveness
+                    maxWidth: '180px',
+                    borderRadius: '50%'
+                }}
+            />
+
+            {/* Welcome Message */}
+            <Typography
+                variant="h5"
+                component="h2"
+                align="center"
+                sx={{ fontSize: { xs: "1.4rem", sm: "1.6rem" }, fontWeight: "bold", mt: 2 }}
+            >
                 Welcome
             </Typography>
-            <Typography variant="body1" align="center" gutterBottom>
+
+            <Typography
+                variant="body1"
+                align="center"
+                gutterBottom
+                sx={{ fontSize: { xs: "0.9rem", sm: "1rem" }, mb: 3 }}
+            >
                 Please enter your details to continue
             </Typography>
+
+            {/* Registration Form */}
             <form onSubmit={handleSubmit} noValidate style={{ width: '100%' }}>
                 <TextField
                     variant="outlined"
@@ -60,6 +98,7 @@ export default function RegisterPage() {
                         ),
                     }}
                 />
+
                 <TextField
                     variant="outlined"
                     margin="normal"
@@ -77,6 +116,7 @@ export default function RegisterPage() {
                         ),
                     }}
                 />
+
                 <TextField
                     variant="outlined"
                     margin="normal"
@@ -94,22 +134,49 @@ export default function RegisterPage() {
                         ),
                     }}
                 />
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 2 }}
+
+                {/* Register Button with Hover Effect */}
+                <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
                 >
-                    Register
-                </Button>
-                <Divider sx={{ my: 2 }}>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{
+                            mt: 3,
+                            py: 1.2,
+                            fontSize: "1rem",
+                            bgcolor: "#fffff0"
+                        }}
+                    >
+                        Register
+                    </Button>
+                </motion.div>
+
+                {/* Divider with OR */}
+                <Divider sx={{ my: 3 }}>
                     <Typography variant="body2">OR</Typography>
                 </Divider>
-                {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>} 
-                <Typography variant="body2" color="#fffff0" align="center" sx={{ mt: 2 }}>
-                    Already have an account? <a href="/login" style={{ color: '#fffff0' }}>Login</a>
+
+                {/* Error Alert */}
+                {error && (
+                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
+                        <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>
+                    </motion.div>
+                )}
+
+                {/* Login Link */}
+                <Typography
+                    variant="body2"
+                    align="center"
+                    sx={{ mt: 2, fontSize: "0.9rem", color: "#fffff0" }}
+                >
+                    Already have an account? <a href="/login" style={{ color: '#fffff0', fontWeight: "bold" }}>Login</a>
                 </Typography>
             </form>
         </Container>
     );
-}
+}    

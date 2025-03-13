@@ -5,7 +5,8 @@ import { AccountCircle, Lock } from '@mui/icons-material';
 import { useUserAuthContext } from "../contexts/UserAuthContext"; // Import custom AuthContext
 import { useSnackbar } from "../contexts/SnackbarContext";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/Mern.png"
+import logo from "../assets/Mern.png";
+import { motion } from "framer-motion";
 
 export default function LoginPage() {
     // State variables for storing login input and error messages
@@ -32,23 +33,53 @@ export default function LoginPage() {
     };
 
     return (
-        <Container component="main" maxWidth="xs" sx={{
-            bgcolor: '#00cccc', // Background color of the container
-            borderRadius: 2,
-            padding: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: '100px', // Centered with margin above
-        }}>
-            <img src={logo} alt="Logo" style={{ display: 'block', margin: '0 auto', width: '20%', maxWidth: '200px', borderRadius: '50%' }} />
-            <Typography variant="h5" component="h2" align="center">
+        <Container
+            component="main"
+            maxWidth="xs"
+            sx={{
+                bgcolor: '#00cccc', // Background color of the container
+                borderRadius: 2,
+                padding: { xs: 3, sm: 4 }, // Adjust padding based on screen size
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minHeight: "100vh", // Center content on the page
+            }}
+        >
+            {/* Logo with Responsive Sizing */}
+            <img
+                src={logo}
+                alt="Logo"
+                style={{
+                    display: 'block',
+                    margin: '0 auto',
+                    width: "30%", // Slightly larger on small screens
+                    maxWidth: '180px',
+                    borderRadius: '50%'
+                }}
+            />
+
+            {/* Welcome Message */}
+            <Typography
+                variant="h5"
+                component="h2"
+                align="center"
+                sx={{ fontSize: { xs: "1.4rem", sm: "1.6rem" }, fontWeight: "bold", mt: 2 }}
+            >
                 Welcome
             </Typography>
-            <Typography variant="body1" align="center" gutterBottom>
+
+            <Typography
+                variant="body1"
+                align="center"
+                gutterBottom
+                sx={{ fontSize: { xs: "0.9rem", sm: "1rem" }, mb: 3 }}
+            >
                 Please enter your details to continue
             </Typography>
+
+            {/* Login Form */}
             <form onSubmit={handleSubmit} noValidate style={{ width: '100%' }}>
                 <TextField
                     variant="outlined"
@@ -67,6 +98,7 @@ export default function LoginPage() {
                         ),
                     }}
                 />
+
                 <TextField
                     variant="outlined"
                     margin="normal"
@@ -84,22 +116,49 @@ export default function LoginPage() {
                         ),
                     }}
                 />
-                <Button 
-                    type="submit" 
-                    fullWidth 
-                    variant="contained" 
-                    sx={{ mt: 2 }}
+
+                {/* Login Button with Hover Effect */}
+                <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
                 >
-                    Login
-                </Button>
-                <Divider sx={{ my: 2 }}>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{
+                            mt: 3,
+                            py: 1.2,
+                            fontSize: "1rem",
+                            bgcolor: "#fffff0"
+                        }}
+                    >
+                        Login
+                    </Button>
+                </motion.div>
+
+                {/* Divider with OR */}
+                <Divider sx={{ my: 3 }}>
                     <Typography variant="body2">OR</Typography>
                 </Divider>
-                <Typography variant="body2" align="center" sx={{ mt: 2 }}>
-                    Don't have an account? <a href="/register" style={{ color: '#fffff0' }}>Register</a>
+
+                {/* Register Link */}
+                <Typography
+                    variant="body2"
+                    align="center"
+                    sx={{ mt: 2, fontSize: "0.9rem" }}
+                >
+                    Don't have an account? <a href="/register" style={{ color: '#fffff0', fontWeight: "bold" }}>Register</a>
                 </Typography>
-                {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
+
+                {/* Error Alert */}
+                {error && (
+                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
+                        <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>
+                    </motion.div>
+                )}
             </form>
         </Container>
     );
-}
+}    

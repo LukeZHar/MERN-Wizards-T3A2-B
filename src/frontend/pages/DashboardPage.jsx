@@ -124,14 +124,14 @@ export default function DashboardPage() {
                         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} whileHover={{ scale: 1.02 }}>
                             <Card sx={{ borderRadius: "12px", backgroundColor: "#fffff0", overflow: "hidden", boxShadow: "0px 2px 10px rgba(0,0,0,0.1)", transition: "0.3s" }}>
                                 <CardContent sx={{ borderTop: "1px solid #eee" }}>
-                                <Typography variant="caption" sx={{ mt: 1, color: "#888" }}>
-                                        {post.createdAt || "Date not available"}
+                                    <Typography variant="caption" sx={{ mt: 1, color: "#888" }}>
+                                        <strong>Published on:</strong> {post.createdAt || "Date not available"}
                                     </Typography>
-                                <Typography variant="body2" sx={{ mt: 1,mb: "8px", fontStyle: "italic", color: "#708090"}}>
-                                    Priority: {post.priority} | Category: {post.category}
+                                    <Typography variant="body2" sx={{ mt: 1, mb: "8px", fontStyle: "italic", color: "#708090" }}>
+                                        Priority: {post.priority} | Category: {post.category}
                                     </Typography>
                                     <Typography variant="h6" sx={{ fontWeight: 600, color: "#000" }}>{post.title}</Typography>
-                                    <Typography variant="body2" sx={{ mt: 1, mb:1 , color: "#000" }}>
+                                    <Typography variant="body2" sx={{ mt: 1, mb: 1, color: "#000" }}>
                                         {expandedPostContent[post._id] ? post.content : post.content.substring(0, 100) + "..."}
                                     </Typography>
                                     <Button onClick={() => togglePostContent(post._id)} size="small">
@@ -185,12 +185,12 @@ export default function DashboardPage() {
                                                                 </Avatar>
 
                                                                 <Box>
-                                                                <Stack spacing={0.5}>
-                                                                    <Typography variant="body2" sx={{ fontWeight: "bold", color: "primary.main" }}>{reply.userId?.username}</Typography>
-                                                                    <Typography variant="body2" sx={{ color: "#333" }}>{reply.content}</Typography>
-                                                                    <Typography variant="body2" sx={{ fontStyle: "italic", textAlign: "right", mt: 1 }}>
-                                                                        {reply.createdAt || "Date not available"}
-                                                                    </Typography>
+                                                                    <Stack spacing={0.5}>
+                                                                        <Typography variant="body2" sx={{ fontWeight: "bold", color: "primary.main" }}>{reply.userId?.username}</Typography>
+                                                                        <Typography variant="body2" sx={{ color: "#333" }}>{reply.content}</Typography>
+                                                                        <Typography variant="body2" sx={{ fontStyle: "italic", textAlign: "right", mt: 1 }}>
+                                                                            {reply.createdAt || "Date not available"}
+                                                                        </Typography>
                                                                     </Stack>
                                                                 </Box>
                                                             </Box>

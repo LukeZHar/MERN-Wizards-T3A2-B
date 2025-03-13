@@ -4,6 +4,7 @@ import { TextField, Button, Typography, Container, Alert, Box } from '@mui/mater
 import axios from 'axios';
 import { useUserAuthContext } from '../contexts/UserAuthContext';
 import { useSnackbar } from "../contexts/SnackbarContext";
+import { motion } from "framer-motion";
 
 function ReplyPost() {
     const { id } = useParams(); // Extract the post ID from URL
@@ -63,20 +64,78 @@ function ReplyPost() {
     };
 
     return (
-        <Container component="main" maxWidth="md">
-            <Typography variant="h4" gutterBottom>
+        <Container
+            component="main"
+            maxWidth="md"
+            sx={{
+                minHeight: "100vh",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                padding: { xs: 2, sm: 4 }
+            }}
+        >
+            {/* Page Title */}
+            <Typography
+                variant="h3"
+                gutterBottom
+                sx={{
+                    fontWeight: "bold",
+                    textAlign: "center",
+                    letterSpacing: "1px",
+                    fontSize: { xs: "1.8rem", sm: "2.2rem" }
+                }}
+            >
                 Post Details
             </Typography>
+
+            {/* Error Handling */}
             {error ? (
-                <Alert severity="error">{error}</Alert>
+                <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>
             ) : post ? (
                 <>
-                    <Box>
-                        <Typography variant="h5">{post.title}</Typography>
-                        <Typography variant="body1">{post.content}</Typography>
+                    {/* Post Content */}
+                    <Box
+                        sx={{
+                            bgcolor: "#f9f9f9",
+                            padding: { xs: 2, sm: 3 },
+                            borderRadius: 2,
+                            boxShadow: "0px 2px 8px rgba(0,0,0,0.1)",
+                            mb: 3
+                        }}
+                    >
+                        {/* Post Title */}
+                        <Typography variant="h5" sx={{ fontWeight: 600 }}>{post.title}</Typography>
+
+                        {/* Post Metadata */}
+                        <Typography
+                            variant="body2"
+                            sx={{
+                                color: "#777",
+                                mt: 1,
+                                fontSize: { xs: "0.9rem", sm: "1rem" }
+                            }}
+                        >
+                            <strong>Published:</strong> {post.createdAt} |
+                            <strong> Priority:</strong> {post.priority} |
+                            <strong> Category:</strong> {post.category}
+                        </Typography>
+
+                        {/* Post Content */}
+                        <Typography
+                            variant="body1"
+                            sx={{
+                                mt: 2,
+                                color: "#333",
+                                fontSize: { xs: "1rem", sm: "1.1rem" }
+                            }}
+                        >
+                            {post.content}
+                        </Typography>
                     </Box>
 
-                    <form onSubmit={handleReplySubmit}>
+                    {/* Reply Form */}
+                    <form onSubmit={handleReplySubmit} style={{ width: "100%" }}>
                         <TextField
                             fullWidth
                             label="Add a reply"
@@ -87,13 +146,30 @@ function ReplyPost() {
                             onChange={(e) => setReplyContent(e.target.value)}
                             sx={{ marginBottom: 2, marginTop: 4 }}
                         />
-                        <Button variant="contained" color="primary" type="submit">
-                            Submit Reply
-                        </Button>
+
+                        {/* Submit Button with Hover Effect */}
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={{ duration: 0.2 }}
+                        >
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                type="submit"
+                                sx={{
+                                    width: { xs: "100%", sm: "auto" },
+                                    py: 1.2,
+                                    fontSize: "1rem"
+                                }}
+                            >
+                                Submit Reply
+                            </Button>
+                        </motion.div>
                     </form>
                 </>
             ) : (
-                <Typography>Loading post...</Typography>
+                <Typography sx={{ textAlign: "center", fontSize: "1.2rem" }}>Loading post...</Typography>
             )}
         </Container>
     );

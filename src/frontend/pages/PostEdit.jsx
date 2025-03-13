@@ -53,14 +53,14 @@ export default function PostEdit() {
         // Page styling
         <Container component="main" maxWidth="sm">
             <Box sx={{
-                bgcolor: '#00cccc', // Background color of the container
+                bgcolor: '#00cccc',
                 borderRadius: 2,
-                padding: 4,
+                padding: { xs: 3, sm: 4 },
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginTop: '100px', // Centered with margin above
+                marginTop: { xs: '60px', sm: '100px' },
             }}>
                 <img
                     src={brandLogo}
@@ -68,24 +68,25 @@ export default function PostEdit() {
                     style={{
                         display: 'block',
                         margin: '0 auto',
-                        width: '20%',
+                        width: "30%", // Slightly larger for small screens
                         maxWidth: '200px',
                         borderRadius: '50%',
                     }}
                 />
-    
+
                 <Typography
                     variant="h5"
                     sx={{
                         letterSpacing: "1px",
-                        padding: "12px", // Adds inner space
-                        margin: "16px 0", // Adds space above and below
-                        textAlign: "center", // Ensures the text is centered
+                        padding: "12px",
+                        margin: "16px 0",
+                        textAlign: "center",
+                        fontSize: { xs: "1.2rem", sm: "1.5rem" } // Adjust font size for responsiveness
                     }}
                 >
-                    Update Post Details
+                    Update Post Content
                 </Typography>
-    
+
                 {/* Post update form */}
                 <form onSubmit={(e) => { e.preventDefault(); handleContentSet(); }} style={{ width: "100%" }}>
                     {/* Title Field (Read-Only) */}
@@ -98,7 +99,7 @@ export default function PostEdit() {
                         sx={{ marginBottom: 2 }}
                         InputProps={{ readOnly: true, style: { backgroundColor: "#fffff0" } }} // Read-only styling
                     />
-    
+
                     {/* Content Field */}
                     <TextField
                         fullWidth
@@ -112,9 +113,17 @@ export default function PostEdit() {
                         sx={{ marginBottom: 2 }}
                         InputProps={{ style: { backgroundColor: "#fffff0" } }}
                     />
-    
+
                     {/* Buttons */}
-                    <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 2, gap: 2 }}>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            flexDirection: { xs: "column", sm: "row" }, // Stack buttons on small screens
+                            gap: { xs: 2, sm: 0 },
+                            marginTop: 2
+                        }}
+                    >
                         {/* Save Button */}
                         <motion.div
                             whileHover={{ scale: 1.05 }}
@@ -125,11 +134,12 @@ export default function PostEdit() {
                                 variant="contained"
                                 color="primary"
                                 type="submit"
+                                sx={{ width: { xs: "100%", sm: "auto" } }} // Full width on mobile
                             >
                                 Save
                             </Button>
                         </motion.div>
-    
+
                         {/* Reply Button */}
                         <motion.div
                             whileHover={{ scale: 1.05 }}
@@ -140,6 +150,7 @@ export default function PostEdit() {
                                 variant="contained"
                                 color="primary"
                                 onClick={() => navigate("/dashboard")}
+                                sx={{ width: { xs: "100%", sm: "auto" } }}
                             >
                                 Go back
                             </Button>
@@ -148,5 +159,5 @@ export default function PostEdit() {
                 </form>
             </Box>
         </Container>
-    );    
-}
+    );
+}    

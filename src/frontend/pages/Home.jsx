@@ -25,7 +25,7 @@ const Home = () => {
                 justifyContent: "center",
                 textAlign: "center",
                 backgroundColor: "background.default",
-                padding: 4,
+                padding: { xs: 3, sm: 4 },
             }}
         >
             <Container component="main" maxWidth="sm">
@@ -39,7 +39,7 @@ const Home = () => {
                             bgcolor: "primary.main",
                             backdropFilter: "blur(12px)",
                             borderRadius: 3,
-                            padding: 5,
+                            padding: { xs: 3, sm: 5 }, // Responsive padding
                             boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.15)",
                         }}
                     >
@@ -68,6 +68,7 @@ const Home = () => {
                                 fontWeight: 700,
                                 letterSpacing: "0.5px",
                                 textTransform: "capitalize",
+                                fontSize: { xs: "1.6rem", sm: "2rem" }, // Responsive font size
                             }}
                         >
                             Welcome to{" "}
@@ -90,20 +91,36 @@ const Home = () => {
                             sx={{
                                 color: "text.secondary",
                                 opacity: 0.9,
-                                fontSize: "1.1rem",
+                                fontSize: { xs: "1rem", sm: "1.1rem" },
                                 fontWeight: 400,
                                 marginBottom: 2,
+                                wordBreak: "break-word", // Prevents text overflow
                             }}
                         >
                             Simplify your collaboration and workflow planning.
                         </Typography>
 
-                        <Typography sx={{ fontWeight: "bold", color: "text.secondary", fontSize: "1rem", marginBottom: 3 }}>
+                        <Typography
+                            sx={{
+                                fontWeight: "bold",
+                                color: "text.secondary",
+                                fontSize: "1rem",
+                                marginBottom: 3
+                            }}
+                        >
                             Ready to get started? Register or Login
                         </Typography>
 
                         {/* Buttons with hover effects */}
-                        <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 2 }}>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                flexDirection: { xs: "column", sm: "row" },
+                                gap: { xs: 2, sm: 0 },
+                                marginTop: 2
+                            }}
+                        >
                             <motion.div
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
@@ -118,6 +135,7 @@ const Home = () => {
                                         display: "flex",
                                         alignItems: "center",
                                         gap: 1,
+                                        width: { xs: "100%", sm: "auto" }, // Full width on mobile
                                     }}
                                 >
                                     <HowToReg sx={{ fontSize: "1.3rem" }} />
@@ -139,6 +157,7 @@ const Home = () => {
                                         display: "flex",
                                         alignItems: "center",
                                         gap: 1,
+                                        width: { xs: "100%", sm: "auto" },
                                     }}
                                 >
                                     <Login sx={{ fontSize: "1.3rem" }} />

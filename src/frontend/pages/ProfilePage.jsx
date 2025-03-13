@@ -162,12 +162,12 @@ export default function ProfilePage() {
             <Box sx={{
                 bgcolor: '#00cccc',
                 borderRadius: 2,
-                padding: 4,
+                padding: { xs: 3, sm: 4 },
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginTop: '100px',
+                marginTop: { xs: '60px', sm: '100px' },
             }}>
 
                 {/* Profile Photo */}
@@ -175,8 +175,8 @@ export default function ProfilePage() {
                     src={profileImage || "/default-avatar.png"}
                     alt="Profile"
                     sx={{
-                        width: 140,
-                        height: 140,
+                        width: { xs: 100, sm: 140 }, // Adjust size on small screens
+                        height: { xs: 100, sm: 140 },
                         marginBottom: 2,
                         border: "4px solid #00cccc",
                         boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.4)",
@@ -187,18 +187,24 @@ export default function ProfilePage() {
                 {/* Upload Profile Photo */}
                 <input type="file" accept="image/*" id="upload-photo" style={{ display: "none" }} onChange={handleImageChange} />
                 <label htmlFor="upload-photo">
-                    <IconButton color="ivory" component="span">
+                    <IconButton color="default" component="span" aria-label="Upload Profile Picture">
                         <PhotoCamera />
                     </IconButton>
                 </label>
 
                 {/* Remove Profile Photo */}
                 {profileImage && (
-                    <Button variant="contained" color="fffff0" onClick={handleRemoveImage} sx={{
-                        marginTop: 2,
-                        transition: "transform 0.2s ease-in-out",
-                        "&:hover": { transform: "scale(1.05)" }
-                    }}>
+                    <Button
+                        variant="contained"
+                        color="inherit"
+                        onClick={handleRemoveImage}
+                        sx={{
+                            marginTop: 2,
+                            transition: "transform 0.2s ease-in-out",
+                            "&:hover": { transform: "scale(1.05)" },
+                            width: { xs: "100%", sm: "auto" } // Full width on mobile
+                        }}
+                    >
                         Remove Photo
                     </Button>
                 )}
@@ -251,14 +257,18 @@ export default function ProfilePage() {
                         sx={{ marginBottom: 2 }}
                     />
 
-                    <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 2, }}>
-                        <Button sx={{
+                    <Button
+                        sx={{
                             transition: "transform 0.2s ease-in-out",
                             "&:hover": { transform: "scale(1.05)" },
-                        }} variant="contained" color="primary" type="submit">
-                            Update Profile
-                        </Button>
-                    </Box>
+                            width: { xs: "100%", sm: "auto" } // Full width on mobile
+                        }}
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                    >
+                        Update Profile
+                    </Button>
                 </form>
 
                 <Divider sx={{ width: "100%", my: 3, bgcolor: "#fffff0" }} />
@@ -305,11 +315,17 @@ export default function ProfilePage() {
                         required
                     />
 
-                    <Button variant="contained" color="primary" type="submit" sx={{
-                        marginTop: 2,
-                        transition: "transform 0.2s ease-in-out",
-                        "&:hover": { transform: "scale(1.05)" },
-                    }}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        sx={{
+                            marginTop: 2,
+                            transition: "transform 0.2s ease-in-out",
+                            "&:hover": { transform: "scale(1.05)" },
+                            width: { xs: "100%", sm: "auto" } // Full width on mobile
+                        }}
+                    >
                         Update Password
                     </Button>
 
@@ -323,6 +339,7 @@ export default function ProfilePage() {
                                 marginTop: 2,
                                 transition: "transform 0.2s ease-in-out",
                                 "&:hover": { transform: "scale(1.05)" },
+                                width: { xs: "100%", sm: "auto" }
                             }}
                             onClick={() => navigate("/admin")}
                         >
@@ -333,4 +350,4 @@ export default function ProfilePage() {
             </Box>
         </Container>
     );
-}
+}    
