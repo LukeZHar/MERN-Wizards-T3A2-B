@@ -110,7 +110,12 @@ export default function ProfilePage() {
 
         // Ensure new password matches confirmation
         if (passwordData.newPassword !== passwordData.confirmNewPassword) {
-            showSnackbar("New passwords do not match!");
+            showSnackbar("New passwords do not match!", "warning");
+            return;
+        }
+
+        if (passwordData.newPassword === passwordData.currentPassword) {
+            showSnackbar("New password cannot be the same as the current password.", "warning");
             return;
         }
 
@@ -140,7 +145,7 @@ export default function ProfilePage() {
                 }
             );
 
-            showSnackbar(response.data.message);
+            showSnackbar(response.data.message, "success");
             setPasswordData({ currentPassword: "", newPassword: "", confirmNewPassword: "" });
             navigate("/login");
         } catch (err) {
