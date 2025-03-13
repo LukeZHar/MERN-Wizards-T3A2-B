@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Container, Typography, Button, Alert, Card, CardContent, CardActions, Grid2 } from "@mui/material";
-import { useUserAuthContext } from "../contexts/UserAuthContext"; // Import the authentication context
-import axios from "axios"; // Import axios for making API requests
-import { useSnackbar } from '../contexts/SnackbarContext';
+import { Avatar, Container, Box, Typography, Button, Alert, Card, CardContent, CardActions, Grid } from "@mui/material";
+import { useUserAuthContext } from "../contexts/UserAuthContext"; // Import the authentication 
+import axios from "axios";
+import { useSnackbar } from "../contexts/SnackbarContext";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { PostAdd } from "@mui/icons-material";
 
 export default function DashboardPage() {
     const [posts, setPosts] = useState([]); // State for storing posts
@@ -11,7 +13,7 @@ export default function DashboardPage() {
     const [token] = useUserAuthContext(); // Get JWT token from context
     const [replies, setReplies] = useState({}); // State for replies
     const showSnackbar = useSnackbar(); // Access Snackbar
-
+    const [expandedPosts, setExpandedPosts] = useState({});
     const navigate = useNavigate();
 
     // Fetch posts on component mount
@@ -66,67 +68,105 @@ export default function DashboardPage() {
         }
     };
 
+    // Function toggle replies
+    const toggleReplies = async (postId) => {
+        if (!expandedPosts[postId]) { // Conditional check
+            if (!replies[postId]) await fetchReplies(postId);
+        }
+        setExpandedPosts(prev => ({
+            ...prev,
+            [postId]: !prev[postId]
+        }));
+    };
+
     return (
-        <Container component="main" maxWidth="md">
-            <Typography variant="h4" gutterBottom>
-                Dashboard
-            </Typography>
-            {error && <Alert severity="error">{error}</Alert>} {/* Show error if it exists */}
-    
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={() => navigate("/add-post")} // Navigates to create post page
-                sx={{ mt: 2 }}
-            >
-                Create New Post
-            </Button>
-    
-            <Typography variant="h6">Posts</Typography>
-            <Grid2 container spacing={2}>
-                {posts.length > 0 ? (
-                    posts.map((post) => (
-                        <Grid2 xs={12} sm={6} md={4} key={post._id}>
-                            <Card sx={{ marginBottom: 2 }}>
-                                <CardContent>
-                                    <Typography variant="h5">{post.title}</Typography>
-                                    <Typography variant="body2">
-                                        {post.content.substring(0, 100)}...
-                                    </Typography>
+        <Container maxWidth="lg" component={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+            <Typography variant="h4" sx={{ letterSpacing: "2px", fontWeight: "bold", textAlign: "center", mb: 4 }}>Dashboard</Typography>
+            {error && <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>}
+
+            <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 3 }}>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Button variant="contained" onClick={() => navigate("/add-post")} sx={{ px: 3, py: 1.2, display: "flex", alignItems: "center", gap: 1 }}>
+                        <PostAdd sx={{ fontSize: "1.3rem" }} />
+                        Create New Post
+                    </Button>
+                </motion.div>
+            </Box>
+
+            <Typography variant="h5" sx={{ letterSpacing: "1px", fontWeight: 600, borderBottom: "2px solid #ddd", pb: 1, mb: 3 }}>Recent Posts</Typography>
+
+            <Grid container spacing={3}>
+                {posts.length > 0 ? posts.map(post => (
+                    <Grid item xs={12} sm={6} md={4} key={post._id}>
+                        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} whileHover={{ scale: 1.02 }}>
+                            <Card sx={{ borderRadius: "12px", backgroundColor: "#fffff0", overflow: "hidden", boxShadow: "0px 2px 10px rgba(0,0,0,0.1)", transition: "0.3s" }}>
+                                <CardContent sx={{ borderTop: "1px solid #eee" }}>
+                                    <Typography variant="h6" sx={{ fontWeight: 600, color: "#000" }}>{post.title}</Typography>
+                                    <Typography variant="body2" sx={{ mt: 1, color: "#000" }}>{post.content.substring(0, 100)}...</Typography>
                                 </CardContent>
-                                <CardActions>
-                                    <Button size="small" onClick={() => fetchReplies(post._id)}>
-                                        View Replies
+                                <CardActions sx={{ justifyContent: "space-between", px: 2, pb: 2 }}>
+                                    <Button size="small" onClick={() => toggleReplies(post._id)}>
+                                        {expandedPosts[post._id] ? "Hide Replies" : "View Replies"}
                                     </Button>
-                                    <Button size="small" onClick={() => navigate(`/reply/${post._id}`)}>
-                                        Reply
-                                    </Button>
-                                    <Button size="small" onClick={() => navigate(`/edit-post/${post._id}`)}>
-                                        Edit
-                                    </Button>
-                                    <Button size="small" onClick={() => handleDelete(post._id)}>
-                                        Delete
-                                    </Button>
+                                    <Box>
+                                        <Button size="small" onClick={() => navigate(`/reply/${post._id}`)}>Reply</Button>
+                                        <Button size="small" onClick={() => navigate(`/edit-post/${post._id}`)}>Edit</Button>
+                                        <Button size="small" onClick={() => handleDelete(post._id)}>Delete</Button>
+                                    </Box>
                                 </CardActions>
-    
-                                {/* Display Replies Below Each Post */}
-                                {replies[post._id] && replies[post._id].length > 0 && (
-                                    <CardContent>
-                                        <Typography variant="subtitle1">Replies:</Typography>
-                                        {replies[post._id].map((reply) => (
-                                            <Typography key={reply._id} variant="body2" sx={{ ml: 2 }}>
-                                                <strong>{reply.userId?.username}:</strong> {reply.content}
-                                            </Typography>
-                                        ))}
-                                    </CardContent>
-                                )}
+                                <AnimatePresence>
+                                    {expandedPosts[post._id] && replies[post._id] && replies[post._id].length > 0 && (
+                                        <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.4 }}>
+                                            <CardContent sx={{ borderTop: "2px solid #ddd", backgroundColor: "#f9f9f9", p: 2 }}>
+                                                <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2, color: "primary.main" }}>
+                                                    Replies ({replies[post._id].length})
+                                                </Typography>
+                                                {replies[post._id].map((reply, index) => {
+                                                    // Extract user initials
+                                                    const initials = reply.userId?.username
+                                                        ? reply.userId.username.split(" ").map(name => name[0]).join("").toUpperCase()
+                                                        : "?";
+
+                                                    return (
+                                                        <motion.div key={reply._id} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -10 }} transition={{ delay: index * 0.1, duration: 0.3 }}>
+                                                            <Box sx={{ display: "flex", alignItems: "center", gap: 2, p: 2, mb: 2, borderRadius: "12px", background: "#fff", boxShadow: "0px 4px 10px rgba(0,0,0,0.1)", transition: "0.3s", "&:hover": { transform: "scale(1.03)", boxShadow: "0px 6px 15px rgba(0,0,0,0.2)" } }}>
+                                                                <Avatar
+                                                                    sx={{
+                                                                        bgcolor: "#00cccc", // Primary theme color
+                                                                        color: "#fff", // White text for contrast
+                                                                        fontWeight: "bold",
+                                                                        width: 44,
+                                                                        height: 44,
+                                                                        fontSize: "1rem",
+                                                                        borderRadius: "12px", // Slight rounding for a sleek look
+                                                                        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Soft shadow
+                                                                        transition: "0.3s",
+                                                                        "&:hover": {
+                                                                            transform: "scale(1.05)", // Slight hover effect
+                                                                            boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.15)", // Enhanced depth
+                                                                        }
+                                                                    }}
+                                                                >
+                                                                    {initials}
+                                                                </Avatar>
+
+                                                                <Box>
+                                                                    <Typography variant="body2" sx={{ fontWeight: "bold", color: "primary.main" }}>{reply.userId?.username}</Typography>
+                                                                    <Typography variant="body2" sx={{ color: "#333" }}>{reply.content}</Typography>
+                                                                </Box>
+                                                            </Box>
+                                                        </motion.div>
+                                                    );
+                                                })}
+                                            </CardContent>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
                             </Card>
-                        </Grid2>
-                    ))
-                ) : (
-                    <Typography variant="body1">No posts to display.</Typography>
-                )}
-            </Grid2>
+                        </motion.div>
+                    </Grid>
+                )) : <Typography variant="body1" sx={{ mt: 2 }}>No posts to display.</Typography>}
+            </Grid>
         </Container>
-    );    
+    );
 }
