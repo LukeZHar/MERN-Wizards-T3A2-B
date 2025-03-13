@@ -114,6 +114,17 @@ export default function ProfilePage() {
             return;
         }
 
+        if (passwordData.newPassword.length < 6) {
+            showSnackbar("Password must be at least 6 characters long.", "warning");
+            return;
+        }
+        
+        const passwordCondition = /^(?=.*[A-Z])(?=.*\d)/;
+        if (!passwordCondition.test(passwordData.newPassword)) {
+            showSnackbar("Password must include at least one uppercase letter and one number.", "warning");
+            return;
+        }
+
         try {
             const response = await axios.patch(
                 `${import.meta.env.VITE_AUTH_API_URL}/api/users/update-password`,
@@ -131,6 +142,7 @@ export default function ProfilePage() {
 
             showSnackbar(response.data.message);
             setPasswordData({ currentPassword: "", newPassword: "", confirmNewPassword: "" });
+            navigate("/login");
         } catch (err) {
             showSnackbar(err.response?.data?.message || 'Failed to update password');
         }

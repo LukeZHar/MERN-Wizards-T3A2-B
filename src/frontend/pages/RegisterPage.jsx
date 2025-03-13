@@ -24,6 +24,18 @@ export default function RegisterPage() {
             return;
         }
 
+        // Password validation
+        if (password.length < 6) {
+            showSnackbar("Password must be at least 6 characters long.", "warning");
+            return;
+        }
+
+        const passwordCondition = /^(?=.*[A-Z])(?=.*\d)/; // At least one uppercase letter and one number
+        if (!passwordCondition.test(password)) {
+            showSnackbar("Password must include at least one uppercase letter and one number.", "warning");
+            return;
+        }
+
         try {
             const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/api/auth/register`, { username, email, password });
             showSnackbar(response.data.message);

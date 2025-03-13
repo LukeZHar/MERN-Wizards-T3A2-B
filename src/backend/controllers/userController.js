@@ -86,25 +86,52 @@ async function updateUserPassword(req, res) {
     }
 
     const { currentPassword, newPassword } = req.body;
+    
+    // Validation errors array
+    const errors = [];
+
+    // Validate newPassword
+    if (!newPassword) {
+        errors.push("Password is required.");
+    } else if (newPassword.length < 6) {
+        errors.push("Password must be at least 6 characters long.");
+    } else {
+        const passwordCondition = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/; // At least one lowercase, one uppercase, one digit
+        if (!passwordCondition.test(newPassword)) {
+            errors.push("Password must include at least one uppercase letter, one lowercase letter, and one number.");
+        }
+    }
+
+    // If there are validation errors, return them
+    if (errors.length > 0) {
+        return res.status(400).json({ message: "Validation Error", errors });
+    }
+
+    // Check if both passwords are provided
     if (!currentPassword || !newPassword) {
         return res.status(400).json({ message: "Both current and new password are required." });
     }
 
     try {
+        // Find the user in the database
         const user = await User.findById(userId);
 
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
 
+        // Compare current password with stored passwordHash
         const isMatch = await bcrypt.compare(currentPassword, user.passwordHash);
         if (!isMatch) {
             return res.status(400).json({ message: "Incorrect current password" });
         }
 
+        // Hash and update the new password
         const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(newPassword, salt);
+        user.passwordHash = await bcrypt.hash(newPassword, salt);
         await user.save();
+
+        console.log("Password updated successfully for user:", userId);
 
         res.status(200).json({ message: "Password updated successfully" });
     } catch (error) {
