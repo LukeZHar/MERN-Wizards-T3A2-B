@@ -159,7 +159,7 @@ export default function DashboardPage() {
                                 <AnimatePresence>
                                     {expandedPosts[post._id] && replies[post._id] && replies[post._id].length > 0 && (
                                         <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.4 }}>
-                                            <CardContent sx={{ borderTop: "2px solid #ddd", backgroundColor: "#f9f9f9", p: 2 }}>
+                                            <CardContent sx={{ borderTop: "2px solid #ddd", backgroundColor: "#f9f9f9", p: 2, wordBreak: "break-word" }}>
                                                 <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2, color: "primary.main" }}>
                                                     Replies ({replies[post._id].length})
                                                 </Typography>

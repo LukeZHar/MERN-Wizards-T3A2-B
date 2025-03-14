@@ -146,7 +146,7 @@ export default function AdminPage() {
                                         <Typography variant="h6" sx={{ fontWeight: 'bold' }}>{post.title}</Typography>
 
                                         {post.author && (
-                                            <Typography variant="subtitle2" sx={{ color: '#777', marginBottom: 1 }}>
+                                            <Typography variant="subtitle2" sx={{ color: '#777', marginBottom: 1, wordBreak: "break-word"}}>
                                                 Author: <strong>{post.author.username}</strong> ({post.author.email})
                                             </Typography>
                                         )}
@@ -174,7 +174,7 @@ export default function AdminPage() {
                                             <MenuItem value="High">High</MenuItem>
                                         </Select>
 
-                                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
+                                        <Box sx={{ display: 'flex', justifyContent: 'flex-end',flexWrap: "wrap", gap: 1 }}>
                                             <Button
                                                 variant="contained"
                                                 color="secondary"
@@ -224,7 +224,7 @@ export default function AdminPage() {
                                             {user.username}
                                         </Typography>
 
-                                        <Typography variant="body2" sx={{ color: '#555', marginBottom: 1 }}>
+                                        <Typography variant="body2" sx={{ color: '#555', marginBottom: 1, wordBreak: "break-word"}}>
                                             {user.email}
                                         </Typography>
 
