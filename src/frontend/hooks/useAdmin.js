@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import axios from "axios"; // API Calls
 import { useUserAuthContext } from "../contexts/UserAuthContext"; // Import Token from context
+import { useSnackbar } from "../contexts/SnackbarContext";
 
 export function useAdmin() {
     const [token] = useUserAuthContext(); // Get token from context
     const [users, setUsers] = useState([]); // Set state for users
     const [posts, setPosts] = useState([]); // Set state for posts
     const [loading, setLoading] = useState(false); // Set state for loading
+
+    const showSnackbar = useSnackbar();
 
     // Fetch users
     const fetchUsers = async (email = "") => {
@@ -88,6 +91,7 @@ export function useAdmin() {
                 headers: { Authorization: `Bearer ${token}` }
             });
             await fetchUsers();
+            showSnackbar("User has been deleted successfully");
         } catch (error) {
             console.error("Error deleting user:", error);
         }
@@ -101,6 +105,7 @@ export function useAdmin() {
                 headers: { Authorization: `Bearer ${token}` }
             });
             await fetchPosts(); // Refresh post list
+            showSnackbar("Post has been deleted successfully");
         } catch (error) {
             console.error("Error deleting post:", error);
         }

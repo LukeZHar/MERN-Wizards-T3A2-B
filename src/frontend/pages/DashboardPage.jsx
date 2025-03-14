@@ -124,8 +124,8 @@ export default function DashboardPage() {
                         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} whileHover={{ scale: 1.02 }}>
                             <Card sx={{ borderRadius: "12px", backgroundColor: "#fffff0", overflow: "hidden", boxShadow: "0px 2px 10px rgba(0,0,0,0.1)", transition: "0.3s" }}>
                                 <CardContent sx={{ borderTop: "1px solid #eee" }}>
-                                    <Typography variant="caption" sx={{ mt: 1, color: "#888" }}>
-                                        <strong>Published on:</strong> {post.createdAt || "Date not available"}
+                                    <Typography variant="caption" sx={{ mt: 1 }}>
+                                        <strong>Published on:</strong> {post.createdAt || "Date not available"} {" by "} {post.author?.username || "Unknown Author"}
                                     </Typography>
                                     <Typography variant="body2" sx={{ mt: 1, mb: "8px", fontStyle: "italic", color: "#708090" }}>
                                         Priority: {post.priority} | Category: {post.category}
