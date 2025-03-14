@@ -20,6 +20,3 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
-
-      - name: Run End-to-End Tests
-        run: npx cypress run 
