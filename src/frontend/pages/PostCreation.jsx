@@ -14,7 +14,7 @@ export default function PostCreation() {
         title: "",
         content: "",
         priority: "Low",
-        category: "Option 1"
+        category: "Web Team"
     });
 
     const { isLoggedIn } = useAuth(); // Get auth status
@@ -69,7 +69,7 @@ export default function PostCreation() {
             title: "",
             content: "",
             priority: "Low",
-            category: "Option 1"
+            category: "Web Team"
         });
 
         console.log("Form has been cleared!");
@@ -161,10 +161,10 @@ export default function PostCreation() {
                         onChange={handleChange}
                         sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
                     >
-                        <MenuItem value="Option 1">Option 1</MenuItem>
-                        <MenuItem value="Option 2">Option 2</MenuItem>
-                        <MenuItem value="Option 3">Option 3</MenuItem>
-                        <MenuItem value="Option 4">Option 4</MenuItem>
+                        <MenuItem value="Web Team">Web Team</MenuItem>
+                        <MenuItem value="Web Team">Web Team</MenuItem>
+                        <MenuItem value="IT Team">IT Team</MenuItem>
+                        <MenuItem value="Other">Other</MenuItem>
                     </Select>
 
                     {/* Buttons */}
