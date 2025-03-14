@@ -23,7 +23,7 @@ const PostSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        enum: ["Option 1", "Option 2", "Option 3", "Option 4"],
+        enum: ["Web Team", "Data Team", "IT Team", "Other"],
         required: true,
         index: true
     },

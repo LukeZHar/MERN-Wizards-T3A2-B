@@ -41,7 +41,7 @@ const mockPostData = {
     content: 'This is a test post content.',
     createdAt: '2023-08-01T12:00:00Z',
     priority: 'High',
-    category: 'Option 1',
+    category: 'Web Team',
 };
 
 describe('ReplyPost Component Tests', () => {
