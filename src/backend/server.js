@@ -39,7 +39,7 @@ let corsOptions = {
 
 // Middlewares
 app.use(express.json()); // Enable JSON parsing for incoming requests
-app.use(cors()); // Enable CORS for all routes
+app.use(cors(corsOptions)); // Enable CORS for all routes
 app.use(helmet()); // Secure HTTP headers
 
 // Connect to MongoDB

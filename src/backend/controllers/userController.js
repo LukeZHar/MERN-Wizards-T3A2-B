@@ -62,14 +62,21 @@ async function updateUserProfile(req, res) {
             return res.status(404).json({ message: "User not found" });
         }
 
-        // Send the updated user data (omit sensitive data if necessary)
+        // Update user fields
+        if (username) user.username = username;
+        if (email) user.email = email;
+
+        // Save updated user
+        await user.save();
+
+        // Send the updated user data 
         res.status(200).json({
             message: "User updated successfully",
             user: {
-                username: updatedUser.username,
-                email: updatedUser.email,
-                userClass: updatedUser.userClass,
-                registrationDate: updatedUser.registrationDate,
+                username: user.username,
+                email: user.email,
+                userClass: user.userClass,
+                registrationDate: user.registrationDate,
             }
         });
     } catch (error) {
