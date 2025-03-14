@@ -25,7 +25,7 @@ const Home = () => {
                 justifyContent: "center",
                 textAlign: "center",
                 backgroundColor: "background.default",
-                padding: { xs: 3, sm: 4 }
+                padding: { xs: 3, sm: 4 },
             }}
         >
             <Container component="main" maxWidth="sm">
@@ -65,7 +65,6 @@ const Home = () => {
                             gutterBottom
                             sx={{
                                 color: "text.secondary",
-                                wordBreak: "break-word",
                                 fontWeight: 700,
                                 letterSpacing: "0.5px",
                                 textTransform: "capitalize",
@@ -80,7 +79,6 @@ const Home = () => {
                                     fontStyle: "italic",
                                     fontWeight: "bold",
                                     display: "inline-block",
-                                    wordBreak: "break-word"
                                 }}
                             >
                                 Friendly & Efficient Task Management

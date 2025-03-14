@@ -43,7 +43,7 @@ async function registerUser(req, res) {
 
     try {
         // Check if username already exists
-        const existingUser = await User.findOne({ username: username.toLowerCase() });
+        const existingUser = await User.findOne({ username });
         if (existingUser) {
             return res.status(400).json({ message: "Username already in use" });
         }
@@ -58,7 +58,7 @@ async function registerUser(req, res) {
         const hashedPassword = await bcrypt.hash(password, 10);
         
         // Create new user
-        const user = new User({ username: username.toLowerCase(), email, passwordHash: hashedPassword });
+        const user = new User({ username, email, passwordHash: hashedPassword });
         await user.save();
 
         res.status(201).json({ message: "User registered successfully" });
@@ -77,7 +77,7 @@ async function loginUser(req, res) {
     }
 
     try {
-        const user = await User.findOne({ username: username.toLowerCase() });
+        const user = await User.findOne({ username });
         if (!user) {
             return res.status(400).json({ message: "User does not exist" });
         }

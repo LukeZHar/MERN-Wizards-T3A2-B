@@ -64,7 +64,6 @@ export default function ProfilePage() {
         setUser((prevUser) => ({
             ...prevUser,
             [name]: value,
-            [name]: name === "username" ? value.toLowerCase() : value,
         }));
     };
 
@@ -83,7 +82,7 @@ export default function ProfilePage() {
             try {
                 await axios.patch(
                     `${import.meta.env.VITE_AUTH_API_URL}/api/users/update-profile`,
-                    { ...user, username: user.username.toLowerCase() }, // Ensure case-insensitive 
+                    user,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
