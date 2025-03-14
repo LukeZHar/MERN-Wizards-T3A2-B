@@ -8,7 +8,6 @@ const userSchema = new mongoose.Schema({
         unique: true,
         minLength: 3,
         trim: true,
-        lowercase: true // Ensures case-insensitive
     },
     email: {
         type: String,
