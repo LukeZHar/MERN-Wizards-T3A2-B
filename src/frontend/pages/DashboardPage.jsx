@@ -187,7 +187,7 @@ export default function DashboardPage() {
                                                                 <Box>
                                                                     <Stack spacing={0.5}>
                                                                         <Typography variant="body2" sx={{ fontWeight: "bold", color: "primary.main" }}>{reply.userId?.username}</Typography>
-                                                                        <Typography variant="body2" sx={{ color: "#333", wordBreak: "break-word" }}>{reply.content}</Typography>
+                                                                        <Typography variant="body2" sx={{ color: "#333", wordBreak: "break-word"}}>{reply.content}</Typography>
                                                                         <Typography variant="body2" sx={{ fontStyle: "italic", textAlign: "right", mt: 1 }}>
                                                                             {reply.createdAt || "Date not available"}
                                                                         </Typography>

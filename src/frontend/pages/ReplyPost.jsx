@@ -68,7 +68,7 @@ function ReplyPost() {
             component="main"
             maxWidth="md"
             sx={{
-                minHeight: "100vh",
+                height: "auto",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",

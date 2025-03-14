@@ -15,7 +15,7 @@ const NotFoundPage = () => {
             component="main"
             maxWidth="sm"
             sx={{
-                minHeight: "100vh",
+                height: "auto",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",

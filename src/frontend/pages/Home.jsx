@@ -19,7 +19,7 @@ const Home = () => {
     return (
         <Box
             sx={{
-                minHeight: "100vh",
+                height: "auto",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",

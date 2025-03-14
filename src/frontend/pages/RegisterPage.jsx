@@ -57,7 +57,7 @@ export default function RegisterPage() {
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minHeight: "100vh", // Center content on the page
+                height: "auto"
             }}
         >
             {/* Logo with Responsive Sizing */}

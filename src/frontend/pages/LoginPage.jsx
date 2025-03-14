@@ -44,7 +44,7 @@ export default function LoginPage() {
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minHeight: "100vh", // Center content on the page
+                height: "auto"
             }}
         >
             {/* Logo with Responsive Sizing */}
