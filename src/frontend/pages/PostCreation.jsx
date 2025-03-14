@@ -162,7 +162,7 @@ export default function PostCreation() {
                         sx={{ marginBottom: 2, backgroundColor: "#fffff0" }}
                     >
                         <MenuItem value="Web Team">Web Team</MenuItem>
-                        <MenuItem value="Web Team">Web Team</MenuItem>
+                        <MenuItem value="Data Team">Data Team</MenuItem>
                         <MenuItem value="IT Team">IT Team</MenuItem>
                         <MenuItem value="Other">Other</MenuItem>
                     </Select>
