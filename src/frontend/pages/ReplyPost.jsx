@@ -164,6 +164,7 @@ function ReplyPost() {
                             value={replyContent}
                             onChange={(e) => setReplyContent(e.target.value)}
                             sx={{ marginBottom: 2, marginTop: 4 }}
+                            inputProps={{ 'aria-label': 'Add a reply' }}
                         />
 
                         {/* Submit Button with Hover Effect */}

@@ -13,6 +13,7 @@
 ## Table of Contents
 - [Links](#links)
 - [Project Overview](#project-overview)
+- [Explanation of Each Section](#explanation-of-each-section)
 - [Technologies Used](#technologies-used)
 - [Key Features](#key-features)
 - [Installation](#installation)
@@ -20,16 +21,31 @@
 - [Security Measures](#security-measures)
 - [User Interface](#user-interface)
 - [User Testing](#user-testing)
-- [Task Delegation Methodology](#task-delegation-methodology)
-- [Code Quality](#code-quality)
 - [Testing Framework](#testing-framework)
 - [Source Control Methodology](#source-control-methodology)
+- [Task Delegation Methodology](#task-delegation-methodology)
+- [Code Quality](#code-quality)
 - [Future Enhancements](#future-enhancements)
 - [License](#license)
-- [Explanation of Each Section](#explanation-of-each-section)
 - [Acknowledgments](#acknowledgments)
 - [Full Folder Structure](#full-folder-structure)
 
+### Explanation of Each Section:
+- **Links:** Direct URLs to both the deployed application and the GitHub repository.
+- **Project Overview:** Provides a brief description of the application, its purpose, and technological foundation.
+- **Technologies Used:** Clearly lists each technology used in the development of the application, including details on libraries like MUI, Axios, and testing frameworks like Vitest and Cypress.
+- **Key Features:** Highlights core functionalities that enhance user experience and usability, including user stories, performance metrics, and admin functionalities.
+- **Installation:** Detailed instructions for setting up the project locally, including necessary dependencies and environment variable configurations.
+- **Deployment:** Information on how the application is hosted and accessed, with details on cloud hosting services, environment variables, custom domain names, and CI/CD practices.
+- **Security Measures:** Describes various security features implemented to protect the application and users, including Helmet.js, JWT, CORS, and error handling mechanisms.
+- **User Interface:** Provides insight into the application's design, focusing on user experience, intuitive navigation, consistent UI elements, and overall accessibility.
+- **User Testing:** Evidence of testing done in both development and production environments, showcasing user acceptance testing (UAT), usability tests, and feedback iterations.
+- **Testing Framework:** Details the use of Vitest for running unit and integration tests, achieving at least 90% code coverage with a comprehensive test suite.
+- **End-to-End Testing:** Covers the integration of Cypress for automated end-to-end tests that ensure critical user flows (such as post creation and user registration) are functioning as intended.
+- **Source Control Methodology:** Describes the use of Git for version control, including frequent commits, branch strategies, and pull request processes, ensuring effective collaboration among team members.
+- **Task Delegation Methodology:** Covers how tasks were managed, including the Kanban approach, task assignment based on strengths, regular team meetings, and documentation of progress.
+- **Code Quality:** A summary of the principles and practices applied to ensure clean, maintainable code, focusing on DRY principles, code flow control, and object-oriented design.
+- **License:** Information about the project's license, helping users understand their rights concerning the code.
 
 ## Technologies Used
 - **MongoDB:** NoSQL database for flexible data storage and retrieval.
@@ -42,6 +58,7 @@
 - **bcrypt:** A library for hashing passwords, ensuring that user passwords are securely stored during registration.
 - **dotenv:** Used to load environment variables from a `.env` file, managing sensitive information like database credentials and JWT secrets.
 - **Vitest:** A testing framework designed for Vite projects, utilized for running unit and integration tests to ensure application functionality.
+- **Cypress:** A robust framework for end-to-end testing, validating critical user flows within the application.
 - **@mui/icons-material:** Provides a collection of Material Design icons that can be easily integrated into React components for enhanced UI.
 - **framer-motion:** Library used for enhancing component animations and transitions, improving the overall user experience.
 - **GitHub Desktop:** A GUI for Git that simplifies version control, making it easier to manage repositories and collaborate within the team.
@@ -67,6 +84,9 @@
    - Users can reply to posts, encouraging interaction and discussion.
 8. **Custom Hooks for Logic Sharing**:
    - Use of custom React hooks (such as `useAdmin`, `useUserDetails`, and `useAuth`) to handle shared logic across components.
+9. **End-to-End Testing**:
+   - Integration of [Cypress](https://www.cypress.io) for comprehensive end-to-end testing. Automated tests for post creation and user flow have been implemented to ensure application functionality.
+   - E2E tests ensure that users can successfully create posts, register, and log in seamlessly.
 
 ## Installation
 1. Clone the GitHub repository:
@@ -139,16 +159,65 @@ To run the application, use the following command to start both the backend and 
 	- **Manual Testing:** Manually test application features to validate user stories and functionality.
 	- **Feedback Iteration:** Gathering feedback from team members during development to make iterative improvements based on testing results.
 - **Production Testing:** 
-	- **User Acceptance Testing (UAT):** Simulated real users and tested the application to validate the functionality based on requirements and expectations.
+	- **Simulated User Acceptance Testing (UAT):** Simulated real users and tested the application to validate the functionality based on requirements and expectations.
 	- **Performance Testing:** Assessing how the application performs under various loads, identifying potential bottlenecks, and ensuring stability and speed.
 	- **End-to-End Testing:** Testing the complete flow of the application from start to finish to verify that all components are functioning correctly together in the production environment.
 	- **Monitoring:** Continuously monitoring the application for any issues, bugs, or performance metrics after it goes live.
+
+- **Real User Acceptance Testing (UAT):**
+  - After presenting the application, feedback was collected from the client, who is a content perfectionist. The feedback included:
+    - **Aesthetic Preferences**: Dislikes Times New Roman with a passion, which is used in the footer.
+    - **Form Field Tags**: In some instances, form field tags are not sitting above the field but are slightly on it.
+    - **System Alerts**: Alerts are a bit small, and their position is outside the line of sight. The client missed a few as a result, though they noted it’s not a deal breaker.
+    - **Category Changing**: A request for the ability to change categories would be highly desired, but again, it's not a deal breaker.
+    - **Security Considerations**: The client complimented the security considerations, noting they were well thought out.
+
+### Next Steps
+Based on this feedback, the team will prioritise the following enhancements:
+- Adjust the footer font to a more preferred typeface.
+- Ensure form field tags are correctly positioned above the fields to enhance usability.
+- Increase the size and reposition system alerts for better visibility.
+- Explore options for allowing category changes within the application.
+- Link to Feedback [User Feedback](./src/test/UserTest/App%20feedback.pdf)
+
 
 ## Testing Framework
 - **Unit and Integration Testing**: 
   - The project utilises **Vitest** as the formal testing framework, which allows for both unit and integration tests to be executed across the application
   - A comprehensive test suite has been established, covering key components and functionalities, ensuring that at least **90% code coverage** is achieved. 
   - Unit tests are written for crucial components (like user forms and authentication processes), while integration tests assess how these components work together, ensuring seamless interaction throughout the application.
+- **End-to-End Testing**:
+  - The implementation of **Cypress** for end-to-end testing ensures the application's critical user flows are tested in a real browser environment. 
+    - **Post Creation Test:** Validates that users can create posts successfully.
+    - **User Flow Test:** Confirms that users can register and subsequently log in without issues.
+- **CI/CD:**
+	- Utilised GitHub Actions for continuous integration, where automated tests are executed on each push to the **main** branch. The configuration is defined in the `ci.yml` file, automating the testing process.
+	- The CI workflow runs on every push to the **main** branch, ensuring code quality by running tests before any changes are merged into the production environment.
+### Workflow Implementation
+```yaml
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '23.8.0'
+
+      - name: Install Dependencies
+        run: npm install
+```
   
 ### Testing Link
 [Link to all the tests and screenshots](./src/test/)
@@ -183,12 +252,10 @@ To run the application, use the following command to start both the backend and 
   - **Reusable Components:** Modular components such as `Header` and `Footer` are defined separately, allowing for reuse without duplication.
   - **Custom Hooks:** Business logic is encapsulated in custom hooks (`useAdmin`, `useAuth`, `useProfile`), enabling shared functionality across components without repeated code.
   - **Abstracted API Logic:** API calls are centralized in `apiService.js`, reducing redundancy and improving maintainability by providing a single source of truth for data fetching.
-
 - **Code Flow Control:** 
   - The application employs **React's state management** effectively, particularly using hooks (`useEffect`, `useState`) to manage component lifecycles and asynchronous data fetching. This provides a clear and logical flow for user interactions.
   - API request handling is combined with error handling to ensure graceful degradation of user experience. For example, if a network request fails (as seen in the `DashboardPage.jsx`), descriptive error messages are displayed, guiding users appropriately.
   - Input validation is consistently applied across forms, ensuring that users can't submit invalid data, which contributes to a seamless flow through various user stories.
-
 - **Object-Oriented Principles:**
   - Object-oriented design patterns are applied through the use of **context providers** for managing state throughout the application, allowing for encapsulation of related logic and separation of concerns.
   - The application structure is modular, with distinct responsibilities assigned to each component. For example, the `AdminPage.jsx` manages all aspects of user and post management, while other component files focus on their specific roles. This encapsulation promotes maintainability and clarity, allowing for easier updates and debugging.
@@ -199,25 +266,10 @@ To run the application, use the following command to start both the backend and 
 - **Notification System:** Enhancements to the current notification system, aiming for real-time alerts for user interactions.
 - **JIRA Integration:** Investigating options for integrating JIRA card functionalities to track progress of tasks directly within the application interface.
 - **Testing Framework Expansion:** Expanding the test suite to cover more components to ensure robustness, with the goal of achieving 100% code coverage.
+- **Expanded Testing Suite:** Adding more Cypress tests to cover additional user flows and functionality.
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
-### Explanation of Each Section:
-- **Links:** Direct URLs to both the deployed application and the GitHub repository.
-- **Project Overview:** Provides a brief description of the application, its purpose, and technological foundation.
-- **Technologies Used:** Clearly lists each technology used in the development of the application, including details on libraries like MUI, Axios, and testing frameworks like Vitest.
-- **Key Features:** Highlights core functionalities that enhance user experience and usability, including user stories, performance metrics, and admin functionalities.
-- **Installation:** Detailed instructions for setting up the project locally, including necessary dependencies and environment variable configurations.
-- **Deployment:** Information on how the application is hosted and accessed, with details on cloud hosting services, environment variables, custom domain names, and CI/CD practices.
-- **Security Measures:** Describes various security features implemented to protect the application and users, including Helmet.js, JWT, CORS, and error handling mechanisms.
-- **User Interface:** Provides insight into the application's design, focusing on user experience, intuitive navigation, consistent UI elements, and overall accessibility.
-- **User Testing:** Evidence of testing done in both development and production environments, showcasing user acceptance testing (UAT), usability tests, and feedback iterations.
-- **Task Delegation Methodology:** Covers how tasks were managed, including the Kanban approach, task assignment based on strengths, regular team meetings, and documentation of progress.
-- **Code Quality:** A summary of the principles and practices applied to ensure clean, maintainable code, focusing on DRY principles, code flow control, and object-oriented design.
-- **Testing Framework:** Details the use of Vitest for running unit and integration tests, achieving at least 90% code coverage with a comprehensive test suite.
-- **Source Control Methodology:** Describes the use of Git for version control, including frequent commits, branch strategies, and pull request processes, ensuring effective collaboration among team members.
-- **License:** Information about the project's license, helping users understand their rights concerning the code.
 
 ## Acknowledgments
 - Special thanks to the mentors and collaborators who supported the development process and provided valuable insights.
