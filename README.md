@@ -117,6 +117,17 @@ To run the application, use the following command to start both the backend and 
 	```
 	- This should be set in your package.json to start both servers concurrently.
 
+## Login Credentials
+To test the application, you can use the following credentials:
+
+### Admin Login
+- **Username:** Lois Lane
+- **Password:** Superman1
+
+### General User Login
+- **Username:** Bruce Banner
+- **Password:** Hulksmash1
+
 ## Deployment
 - **Render:** The application is deployed on Render for server-side operations, which hosts the backend API securely and provides scalability.
 - **MongoAtlas:** For the database, we utilised MongoDB Atlas, a cloud-based solution that allows for efficient and secure data management with features like automated backups and high availability.
@@ -227,7 +238,7 @@ jobs:
   - **Frequent Commits:** Regular commits were made to the repository with clear and descriptive commit messages that outline the changes implemented. This practice keeps track of project changes over time and facilitates collaboration among team members.
   - **Branch Strategy:** Multiple feature branches were created for new features, bug fixes, and testing. This allows developers to work in isolation without affecting the main codebase until code is thoroughly reviewed and merged.
   - **Pull Requests:** All code changes were managed through pull requests, promoting code review practices among team members prior to merging changes into the main branch. This ensures that multiple eyes examine the code, further improving code quality.
-  - Check Part-A for screenshots [MERN_Wizards-T3A2-A](https://github.com/She2024/MERN-Wizards-T3A2-A)
+  - Check out the Graphs here [Git commit Graphs](./doc/GitGraphs/) as well as here [MERN_Wizards-T3A2-A](https://github.com/She2024/MERN-Wizards-T3A2-A)
 
 ## Task Delegation Methodology
 - **Task Management Tool**: The project utilised **Trello** for task management, which facilitated the organisation and tracking of project tasks efficiently.
