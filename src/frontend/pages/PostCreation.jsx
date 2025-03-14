@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import logo from "../assets/Mern.png"
 import { TextField, Button, Typography, Container, Select, MenuItem, Box } from "@mui/material";
 import axios from "axios";
 import { useSnackbar } from "../contexts/SnackbarContext";
@@ -88,17 +87,6 @@ export default function PostCreation() {
                 justifyContent: 'center',
                 marginTop: { xs: '60px', sm: '100px' }, // Adjust margin for better responsiveness
             }}>
-                <img
-                    src={logo}
-                    alt="Logo"
-                    style={{
-                        display: 'block',
-                        margin: '0 auto',
-                        width: "30%", // Slightly larger for small screens
-                        maxWidth: '200px',
-                        borderRadius: '50%'
-                    }}
-                />
 
                 <Typography
                     variant="h5"
