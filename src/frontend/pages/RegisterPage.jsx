@@ -100,6 +100,7 @@ export default function RegisterPage() {
                     required
                     fullWidth
                     label="Username"
+                    inputProps={{ 'data-testid': 'username-input' }}
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     InputProps={{
@@ -118,6 +119,7 @@ export default function RegisterPage() {
                     fullWidth
                     label="Email"
                     type="email"
+                    inputProps={{ 'data-testid': 'email-input' }}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     InputProps={{
@@ -136,6 +138,7 @@ export default function RegisterPage() {
                     fullWidth
                     label="Password"
                     type="password"
+                    inputProps={{ 'data-testid': 'password-input' }}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     InputProps={{

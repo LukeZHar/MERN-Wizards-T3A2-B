@@ -87,6 +87,7 @@ export default function LoginPage() {
                     required
                     fullWidth
                     label="Username"
+                    inputProps={{ 'data-testid': 'login-username-input' }}
                     autoFocus
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
@@ -106,6 +107,7 @@ export default function LoginPage() {
                     fullWidth
                     label="Password"
                     type="password"
+                    inputProps={{ 'data-testid': 'login-password-input' }}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     InputProps={{
