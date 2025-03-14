@@ -134,18 +134,26 @@ export default function DashboardPage() {
                                     <Typography variant="body2" sx={{ mt: 1, mb: 1, color: "#000" }}>
                                         {expandedPostContent[post._id] ? post.content : post.content.substring(0, 100) + "..."}
                                     </Typography>
-                                    <Button onClick={() => togglePostContent(post._id)} size="small">
-                                        {expandedPostContent[post._id] ? "Show Less" : "Read More"}
-                                    </Button>
                                 </CardContent>
-                                <CardActions sx={{ justifyContent: "space-between", px: 2, pb: 2 }}>
-                                    <Button size="small" onClick={() => toggleReplies(post._id)}>
-                                        {expandedPosts[post._id] ? "Hide Replies" : "View Replies"}
+                                <CardActions sx={{ justifyContent: "space-between", px: 2, pb: 2, flexWrap: "wrap" }}>
+                                    <Box
+                                        sx={{
+                                            display: "flex",
+                                            gap: 1,
+                                            flexWrap: "wrap",
+                                            justifyContent: "center",
+                                            width: "100%"
+                                        }}
+                                    >
+                                        <Button variant="outlined" onClick={() => togglePostContent(post._id)} size="small">
+                                        {expandedPostContent[post._id] ? "Show Less" : "View full post"}
                                     </Button>
-                                    <Box>
-                                        <Button size="small" onClick={() => navigate(`/reply/${post._id}`)}>Reply</Button>
-                                        <Button size="small" onClick={() => navigate(`/edit-post/${post._id}`)}>Edit</Button>
-                                        <Button size="small" onClick={() => handleDelete(post._id)}>Delete</Button>
+                                        <Button size="small" variant="contained" onClick={() => toggleReplies(post._id)}>
+                                            {expandedPosts[post._id] ? "Hide Replies" : "View Replies"}
+                                        </Button>
+                                        <Button size="small" variant="contained" onClick={() => navigate(`/reply/${post._id}`)}>Reply</Button>
+                                        <Button size="small" variant="contained" onClick={() => navigate(`/edit-post/${post._id}`)}>Edit</Button>
+                                        <Button size="small" variant="contained" onClick={() => handleDelete(post._id)}>Delete</Button>
                                     </Box>
                                 </CardActions>
                                 <AnimatePresence>
@@ -187,7 +195,7 @@ export default function DashboardPage() {
                                                                 <Box>
                                                                     <Stack spacing={0.5}>
                                                                         <Typography variant="body2" sx={{ fontWeight: "bold", color: "primary.main" }}>{reply.userId?.username}</Typography>
-                                                                        <Typography variant="body2" sx={{ color: "#333", wordBreak: "break-word"}}>{reply.content}</Typography>
+                                                                        <Typography variant="body2" sx={{ color: "#333", wordBreak: "break-word" }}>{reply.content}</Typography>
                                                                         <Typography variant="body2" sx={{ fontStyle: "italic", textAlign: "right", mt: 1 }}>
                                                                             {reply.createdAt || "Date not available"}
                                                                         </Typography>

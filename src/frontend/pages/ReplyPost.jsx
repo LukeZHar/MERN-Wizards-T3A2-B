@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { TextField, Button, Typography, Container, Alert, Box } from '@mui/material';
+import { IconButton, TextField, Button, Typography, Container, Alert, Box } from '@mui/material';
 import axios from 'axios';
 import { useUserAuthContext } from '../contexts/UserAuthContext';
 import { useSnackbar } from "../contexts/SnackbarContext";
 import { motion } from "framer-motion";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function ReplyPost() {
     const { id } = useParams(); // Extract the post ID from URL
@@ -75,6 +76,24 @@ function ReplyPost() {
                 padding: { xs: 2, sm: 4 }
             }}
         >
+            {/* Go back button */}
+            <Box sx={{ display: "flex", justifyContent: "flex-start", mb: 2 }}>
+                <IconButton
+                    onClick={() => navigate(-1)}
+                    sx={{
+                        border: "2px solid",
+                        borderColor: "primary.main",
+                        borderRadius: "50%",
+                        color: "primary.main",
+                        "&:hover": { backgroundColor: "rgba(0, 0, 255, 0.1)" },
+                        width: 40,
+                        height: 40
+                    }}
+                >
+                    <ArrowBackIcon />
+                </IconButton>
+            </Box>
+
             {/* Page Title */}
             <Typography
                 variant="h3"
